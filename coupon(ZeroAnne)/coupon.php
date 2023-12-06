@@ -1,14 +1,17 @@
 <?php
+if(!isset($_GET["id"])){                                                                            
+    header("location: coupon-list.php");
+}
+$id=$_GET["id"];
 require_once("./db_conntect_govent.php");
 
 $sql="SELECT coupon.* ,coupon_valid_name, activity_name 
 FROM coupon 
 JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
-JOIN activity_category ON coupon.activity_num=activity_category.id";
-$result = $conn->query($sql);
-$rows=$result->fetch_all(MYSQLI_ASSOC);
-$couponCount=$result->num_rows;
-// var_dump($rows)
+JOIN activity_category ON coupon.activity_num=activity_category.id WHERE coupon.id=$id";
+$result=$conn->query($sql);
+$row=$result->fetch_assoc();
+// var_dump($row);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +24,7 @@ $couponCount=$result->num_rows;
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>優惠券清單</title>
+    <title>個別優惠券資訊</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -199,73 +202,52 @@ $couponCount=$result->num_rows;
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">優惠券清單</h1>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div>
-                        <div class="py-2">
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search.." name="search">
-                                    <button class="btn btn-danger text-white" type="submit" id=""><i class="fs-5 bi bi-search"></i></button>
-                                </div>
-                            </form>
+                    <div class="container">
+                        <div class="p-2">
+                            <a class="btn btn-danger" href="coupon-list.php">回使用者列表</a>
                         </div>
-                        <div class="pb-2 d-flex justify-content-between orders align-items-center">
-                            <div class="btn-group">
-                                <a class="btn btn-danger text-white " href="">可使用</a>
-                                <a class="btn btn-danger text-white " href="">已停用</a>
-                            </div>
-                            <div>
-                                搜尋??的結果,
-                                共 <?= $couponCount ?> 人
-                            </div>
-                            <div>
-                                <a class="btn btn-danger text-white " href="add-coupon.php">新增</a>
-                            </div>
-                        </div>
-                        <table class="table table-bordered text-center text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>兌換代碼</th>
-                                    <th>優惠券名稱</th>
-                                    <th>使用狀態</th>
-                                    <th>折扣類型</th>
-                                    <th>打折/金額折價</th>
-                                    <th>開始日期</th>
-                                    <th>到期日期</th>
-                                    <th>最低消費</th>
-                                    <th>剩餘張數</th>
-                                    <th>適用活動</th>
-                                    <th>詳細資訊</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($rows as $row) : ?>
-                                    <tr>
-                                        <td><?= $row["id"] ?></td>
-                                        <td><?= $row["coupon_code"] ?></td>
-                                        <td><?= $row["coupon_name"] ?></td>
-                                        <td><?= $row["coupon_valid_name"] ?></td>
-                                        <td><?= $row["discount_type"] ?></td>
-                                        <td><?= $row["discount_valid"] ?></td>
-                                        <td><?= $row["start_at"] ?></td>
-                                        <td><?= $row["expires_at"] ?></td>
-                                        <td><?= $row["price_min"] ?></td>
-                                        <td><?= $row["max_usage"] ?></td>
-                                        <td><?= $row["activity_name"] ?></td>
-                                        <td>
-                                            <a class="btn text-danger" href="coupon.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-ticket-perforated-fill fs-5"></i></a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
+                        
+                        <table class="table table-bordered ">
+                            <tr>
+                                <th>ID</th>
+                                <td colspan="3"><?= $row["id"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>優惠券名稱</th>
+                                <td colspan="3"><?= $row["coupon_name"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>使用狀態</th>
+                                <td colspan="3"><?= $row["coupon_valid_name"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>折扣類型</th>
+                                <td><?= $row["discount_type"] ?></td>
+                                <th>打折/金額折價</th>
+                                <td><?= $row["discount_valid"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>開始日期</th>
+                                <td><?= $row["start_at"] ?></td>
+                                <th>到期日期</th>
+                                <td><?= $row["expires_at"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>最低消費</th>
+                                <td colspan="3"><?= $row["price_min"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>剩餘張數</th>
+                                <td colspan="3"><?= $row["max_usage"] ?></td>
+                            </tr>
+                            <tr>
+                                <th>適用活動</th>
+                                <td colspan="3"><?= $row["activity_name"] ?></td>
+                            </tr>
                         </table>
+                        <div class="py-1">
+                            <a href="" class="btn text-danger btn-lg" title="修改資料"><i class="bi bi-pencil-square"></i>修改</a>
+                        </div>
                     </div>
                 </div>
                 <!-- /.container-fluid -->
