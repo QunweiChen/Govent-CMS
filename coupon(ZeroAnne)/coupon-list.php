@@ -257,7 +257,7 @@ $couponCount=$result->num_rows;
                                         <td><?= $row["max_usage"] ?></td>
                                         <td><?= $row["activity_num"] ?></td>
                                         <td>
-                                            <a class="btn text-danger" href="" title="詳細資料"><i class="bi bi-ticket-perforated-fill fs-4"></i></a>
+                                            <a class="btn text-danger" href="" title="詳細資料"><i class="bi bi-ticket-perforated-fill fs-5"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

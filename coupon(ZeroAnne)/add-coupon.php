@@ -203,9 +203,9 @@
                             <div class="row mb-3">
                                 <label for="code" class="col-sm-2 col-form-label">兌換代碼</label>
                                 <div class="col-sm-8">
-                                    <input type="button" class="form-control" id="" name="code"  placeholder="例 : ABC1234">
+                                    <input type="text" class="form-control" id="code" name="code" placeholder="例: ABC1234">
                                 </div>
-                                <button class="col-sm-2 btn text-danger" type="text" name="codeRandom">隨機生成一組亂碼</button>
+                                <button type="button" class="col-sm-2 btn text-danger" id="codebtn">隨機生成一組亂碼</button>
                                 <p class="fs-6">(自定義前三個字母後四個數字)</p>
                             </div>
                             <div class="row mb-3 align-items-center">
@@ -327,17 +327,51 @@
     </div>
 
     <script>
-        function generateRandomCode() {
-            var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            var code = '';
+        // 生成多个随机字母
+        function generateRandomLetters(length) {
+            const letters = Array.from({
+                length: 26
+            }, (_, i) => String.fromCharCode('A'.charCodeAt(0) + i));
+            let randomLettersString = '';
 
-            for (var i = 0; i < 8; i++) {
-                code += characters.charAt(Math.floor(Math.random() * characters.length));
+            for (let i = 0; i < length; i++) {
+                const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                randomLettersString += randomLetter;
             }
 
-            // 将生成的随机码设置为输入框的值
-            document.getElementById('codeRandomInput').value = code;
+            return randomLettersString;
         }
+
+        // 生成多个随机数字
+        function generateRandomNumbers(length) {
+            const numbers = Array.from({
+                length: 2
+            }, (_, i) => (i + 1).toString());
+            let numberString = '';
+
+            for (let i = 0; i < length; i++) {
+                const randomNumber = numbers[Math.floor(Math.random() * numbers.length)];
+                numberString += randomNumber;
+            }
+
+            return numberString;
+        }
+
+        // 生成随机代码
+        function generateRandomCode() {
+            const numberOfRandomLetters = 3;
+            const numberOfRandomNumbers = 4;
+
+            const randomLettersString = generateRandomLetters(numberOfRandomLetters);
+            const numberString = generateRandomNumbers(numberOfRandomNumbers);
+
+            const codeRandom = randomLettersString + numberString;
+            console.log(codeRandom); 
+            document.getElementById('code').value = codeRandom;
+        }
+        document.getElementById('codebtn').addEventListener('click', generateRandomCode);
+        // 示例调用
+        generateRandomCode();
     </script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

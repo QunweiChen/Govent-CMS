@@ -21,7 +21,7 @@ $priceMin = $_POST["priceMin"];
 $maxUsage = $_POST["maxUsage"];
 $activityNum = $_POST["activityNum"];
 
-if (empty($code) || empty($name) || empty($couponValid) || empty($discountType) || empty($discountValid) || empty($startAt) || empty($expiresAt) || empty($priceMin) || empty($maxUsage) || empty($activityNum)) {
+if (empty($name) || empty($couponValid) || empty($discountType) || empty($discountValid) || empty($startAt) || empty($expiresAt) || empty($priceMin) || empty($maxUsage) || empty($activityNum)) {
     echo "請輸入資料";
     die;
 }
