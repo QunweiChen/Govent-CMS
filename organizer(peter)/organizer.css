@@ -2,7 +2,7 @@
     background-color: #fd7e14;
     color: #fff;
 }
-.btn-main-color:hover{
-    background-color: rgb(253, 20, 20);
+.btn-main-color:hover, .btn-main-color:focus{
+    background-color: rgb(253, 82, 20);
     color: #fff;
 }
