@@ -204,7 +204,7 @@ $row=$result->fetch_assoc();
                 <div class="container-fluid">
                     <div class="container">
                         <div class="p-2">
-                            <a class="btn btn-danger" href="coupon-list.php">回使用者列表</a>
+                            <a class="btn btn-primary" href="coupon-list.php">回使用者列表</a>
                         </div>
                         
                         <table class="table table-bordered ">
@@ -246,7 +246,7 @@ $row=$result->fetch_assoc();
                             </tr>
                         </table>
                         <div class="py-1">
-                            <a href="" class="btn text-danger btn-lg" title="修改資料"><i class="bi bi-pencil-square"></i>修改</a>
+                            <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn text-primary btn-lg" title="修改資料"><i class="bi bi-pencil-fill"></i>修改</a>
                         </div>
                     </div>
                 </div>
