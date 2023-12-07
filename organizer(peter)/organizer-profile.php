@@ -1,54 +1,16 @@
 <?php
 require_once("../connect_server.php");
 
-$sqlTotal = "SELECT * FROM organizer";
-$resultTotal = $conn->query($sqlTotal);
-$totalUser = $resultTotal->num_rows;
-$perPage = 10;
-
-$pageCount = ceil($totalUser / $perPage); //celi=無條件進位
-
-if (isset($_GET["search"])) {
-    $search = $_GET["search"];
-    $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.name LIKE '%$search%'
-    ORDER BY id ASC";
-    // $sql = "SELECT * FROM organizer WHERE name LIKE '%$search%'";
-} elseif (isset($_GET["page"]) && isset($_GET["order"])) {
-    $page = $_GET["page"];
-    $order = $_GET["order"];
-    switch ($order) {
-        case 1:
-            $orderSql = "id ASC"; //ASC升幕
-            break;
-        case 2:
-            $orderSql = "id DESC"; //DESC降幕
-            break;
-        case 3:
-            $orderSql = "name ASC"; //ASC升幕
-            break;
-        case 4:
-            $orderSql = "name DESC"; //DESC降幕
-            break;
-        default:
-            $orderSql = "id ASC"; //ASC升幕
-    }
-    $startItem = ($page - 1) * $perPage;
-    $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id
-    ORDER BY $orderSql LIMIT $startItem,$perPage";
-} else {
-    $order = 1;
-    $page = 1;
-    $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id
-    ORDER BY id ASC LIMIT 0,$perPage";
+if (!isset($_GET["id"])) {
+    header("location: organizer-list.php");
 }
+$id = $_GET["id"];
+
+$sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email, member_list.phone AS user_phone FROM organizer
+JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.id = $id";
 $result = $conn->query($sql);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+$row = $result->fetch_assoc();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +23,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>主辦單位清單</title>
+    <title>主辦單位資料</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -74,6 +36,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this template-->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="css/govent.css" rel="stylesheet">
     <link href="organizer.css" rel="stylesheet">
@@ -244,77 +207,167 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
                     <!-- Page Heading -->
 
-                    <div class="d-sm-flex align-items-center mb-4 mx-4">
-                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">主辦單位清單</h1>
-                        <?php if (!isset($_GET["search"])): ?>
-                                <div class="dropdown">
-                                    <a class="btn btn-main-color dropdown-toggle py-1 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        列表分頁
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
-                                            <li><a class="dropdown-item" href="organizer-list.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
-                                        <?php endfor ?>
-                                    </ul>
-                                </div>
-                            <div class="text-gray-600">
-                                目前在第<?= $page ?>頁
-                            </div>
-                        <?php else : ?>
+                    <div class="d-sm-flex align-items-center mb-4 justify-content-between mx-4">
+                        <div class="d-flex">
+                            <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">主辦單位資料</h1>
                             <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3">回全部列表</a>
-                        <?php endif ?>
-                        <div class="ms-auto">
-                            <form action="">
-                                <div class="input-group rounded">
-                                <?php if (!isset($_GET["search"])): ?>
-                                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="search" />
-                                <?php else: ?>
-                                    <input type="search" class="form-control rounded" placeholder="<?=$_GET["search"]?>" aria-label="Search" aria-describedby="search-addon" name="search" />
-                                <?php endif ?>
-                                    <button class="input-group-text rounded border-0 ms-2" id="search-addon" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
                         </div>
+                        <button class="btn btn-main-color">編輯資訊</button>
                     </div>
                     <!-- Content Row -->
+                    <div class="mx-4">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card mb-4 border-0 shadow">
+                                    <div class="card-body text-center">
+                                        <style>
+                                            .organizer-avatar {
+                                                display: inline-block;
+                                                width: 200px;
+                                                height: 200px;
+                                                background: url("organizer_avatar/<?= $row["avatar"] ?>");
+                                                background-size: 100%;
+                                            }
+                                        </style>
+                                        <div class="organizer-avatar rounded-circle mt-2"></div>
+                                        <h4 class="my-3 font-weight-bolder"><?= $row["name"] ?></h4>
 
-                    <div>
-                        <table class="table table-hover table-light mx-3">
-                            <thead>
-                                <tr class="text-nowrap">
-                                    <th scope="col">主辦單位名稱</th>
-                                    <th scope="col">身分</th>
-                                    <th scope="col">關聯會員名稱</th>
-                                    <th scope="col">email</th>
-                                    <th scope="col">統一編號</th>
-                                    <th scope="col">註冊時間</th>
-                                    <th scope="col">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($rows as $row) : ?>
-                                    <tr class="text-nowrap">
-                                        <td><?= $row["name"] ?></td>
-                                        <?php if ($row["organizer_type"] == 1) : ?>
-                                            <td>公司<i class="bi bi-record-fill mx-1" style="color: #588afe"></i></td>
-                                        <?php else : ?>
-                                            <td>個人<i class="bi bi-record-fill mx-1" style="color: #fd7e14"></i></td>
-                                        <?php endif ?>
-                                        <td><?= $row["user_name"] ?></td>
-                                        <td><?= $row["user_email"] ?></td>
-                                        <td><?= $row["id"] ?></td>
-                                        <td><?= $row["created_at"] ?></td>
-                                        <td>
-                                            <a href="organizer-profile.php?id=<?=$row["id"]?>" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-eye-fill"></i></span></a>
-                                            <a href="" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-pencil-square"></i></span></a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach ?>
-                            </tbody>
-                        </table>
+                                    </div>
+                                </div>
+                                <div class="card mb-4 mb-lg-0 border-0 shadow">
+                                    <div class="card-body p-0">
+                                        <ul class="list-group list-group-flush rounded-3">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                <span><i class="bi bi-person-fill me-2"></i>關聯會員名稱</span>
+                                                <p class="mb-0"><?= $row["user_name"] ?></p>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                <span><i class="bi bi-envelope-fill me-2"></i>email</span>
+                                                <p class="mb-0"><?= $row["user_email"] ?></p>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                <span><i class="bi bi-telephone-fill me-2"></i>連絡電話</span>
+                                                <p class="mb-0"><?= $row["user_phone"] ?></p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <?php if($row["organizer_type"] == 1): ?>
+                                <div class="card mb-4 border-0 shadow">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">用戶類別</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <span class="mb-0 text-bg-company px-2 py-1 rounded">企業用戶</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">前台顯示名稱</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0"><?= $row["name"] ?></p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">公司抬頭</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0"><?= $row["business_name"] ?></p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">統一編號</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0"><?= $row["business_invoice"] ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php else: ?>
+                                    <div class="card mb-4 border-0 shadow">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">用戶類別</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <span class="mb-0 text-bg-main-color px-2 py-1 rounded">個人用戶</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">前台顯示名稱</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0"><?= $row["name"] ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endif ?>
+                                <div class="card mb-4 border-0 shadow">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">銀行代碼</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0"><?= $row["bank_code"] ?></p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">分行</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0"><?= $row["bank_branch"] ?></p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">銀行帳號</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0"><?= $row["amount_number"] ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mb-4 mb-md-0 border-0 shadow">
+                                        <div class="card-body">
+                                            <p class="mb-4">上架活動</p>
+                                            <p class="mb-1" style="font-size: .77rem;">Web Design</p>
+                                            <div class="progress rounded" style="height: 5px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
+                                            <div class="progress rounded" style="height: 5px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
+                                            <div class="progress rounded" style="height: 5px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
                 <!-- /.container-fluid -->
 
