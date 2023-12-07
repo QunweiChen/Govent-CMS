@@ -1,15 +1,54 @@
 <?php
 require_once("../connect_server.php");
 
-$sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-JOIN member_list ON organizer.user_id = member_list.id
-ORDER BY id ASC";
+$sqlTotal = "SELECT * FROM organizer";
+$resultTotal = $conn->query($sqlTotal);
+$totalUser = $resultTotal->num_rows;
+$perPage = 12;
 
+$pageCount = ceil($totalUser / $perPage); //celi=無條件進位
+
+if (isset($_GET["search"])) {
+    $search = $_GET["search"];
+    $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
+    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.name LIKE '%$search%'
+    ORDER BY id ASC";
+    // $sql = "SELECT * FROM organizer WHERE name LIKE '%$search%'";
+} elseif (isset($_GET["page"]) && isset($_GET["order"])) {
+    $page = $_GET["page"];
+    $order = $_GET["order"];
+    switch ($order) {
+        case 1:
+            $orderSql = "id ASC"; //ASC升幕
+            break;
+        case 2:
+            $orderSql = "id DESC"; //DESC降幕
+            break;
+        case 3:
+            $orderSql = "name ASC"; //ASC升幕
+            break;
+        case 4:
+            $orderSql = "name DESC"; //DESC降幕
+            break;
+        default:
+            $orderSql = "id ASC"; //ASC升幕
+    }
+    $startItem = ($page - 1) * $perPage;
+    $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
+    JOIN member_list ON organizer.user_id = member_list.id
+    ORDER BY $orderSql LIMIT $startItem,$perPage";
+} else {
+    $order = 1;
+    $page = 1;
+    $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
+    JOIN member_list ON organizer.user_id = member_list.id
+    ORDER BY id ASC LIMIT 0,$perPage";
+}
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,8 +74,9 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="css/govent.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="organizer.css" rel="stylesheet">
 
 </head>
 
@@ -166,7 +206,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
+                        <li class="nav-item dropdown no-arrow mx-3">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-3 d-none d-lg-inline text-gray-600 x-small">平台管理員</span>
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">妙蛙種子</span>
@@ -203,38 +243,74 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">主辦單位清單</h1>
+
+                    <div class="d-sm-flex align-items-center mb-4">
+                        <h1 class="h3 mb-0 text-gray-800 mx-4 font-weight-bolder">主辦單位清單</h1>
+                        <?php if (!isset($_GET["search"])): ?>
+                                <div class="dropdown">
+                                    <a class="btn btn-main-color dropdown-toggle py-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        列表分頁
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
+                                            <li><a class="dropdown-item" href="organizer-list.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                                        <?php endfor ?>
+                                    </ul>
+                                </div>
+                            <div class="mx-2 text-gray-600">
+                                目前在第<?= $page ?>頁
+                            </div>
+                        <?php else : ?>
+                            <a href="organizer-list.php" class="btn btn-main-color py-1">回全部列表</a>
+                        <?php endif ?>
+                        <div class="ms-auto">
+                            <form action="">
+                                <div class="input-group rounded">
+                                <?php if (!isset($_GET["search"])): ?>
+                                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="search" />
+                                <?php else: ?>
+                                    <input type="search" class="form-control rounded" placeholder="<?=$_GET["search"]?>" aria-label="Search" aria-describedby="search-addon" name="search" />
+                                <?php endif ?>
+                                    <button class="input-group-text border-0" id="search-addon" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <!-- Content Row -->
+
                     <div>
-                        <table class="table">
+                        <table class="table table-hover table-light mx-3">
                             <thead>
                                 <tr class="text-nowrap">
                                     <th scope="col">主辦單位名稱</th>
-                                    <th scope="col">主辦單位身分</th>
+                                    <th scope="col">身分</th>
                                     <th scope="col">關聯會員名稱</th>
                                     <th scope="col">email</th>
                                     <th scope="col">統一編號</th>
                                     <th scope="col">註冊時間</th>
-                                    <th scope="col">更新時間</th>
+                                    <th scope="col">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($rows as $row): ?>
-                                <tr>
-                                    <td><?=$row["name"]?></td>
-                                    <?php if($row["organizer_type"] == 1): ?>
-                                        <td><i class="fa-solid fa-circle mx-1" style="color: #588afe"></i>公司</td>
-                                    <?php else: ?>
-                                        <td><i class="fa-solid fa-circle mx-1" style="color: #fd7e14"></i>個人</td>
-                                    <?php endif ?>
-                                    <td><?=$row["user_name"]?></td>
-                                    <td><?=$row["user_email"]?></td>
-                                    <td><?=$row["business_invoice"]?></td>
-                                    <td><?=$row["created_at"]?></td>
-                                    <td><?=$row["update_at"]?></td>
-                                </tr>
+                                <?php foreach ($rows as $row) : ?>
+                                    <tr class="text-nowrap">
+                                        <td><?= $row["name"] ?></td>
+                                        <?php if ($row["organizer_type"] == 1) : ?>
+                                            <td>公司<i class="bi bi-record-fill mx-1" style="color: #588afe"></i></td>
+                                        <?php else : ?>
+                                            <td>個人<i class="bi bi-record-fill mx-1" style="color: #fd7e14"></i></td>
+                                        <?php endif ?>
+                                        <td><?= $row["user_name"] ?></td>
+                                        <td><?= $row["user_email"] ?></td>
+                                        <td><?= $row["business_invoice"] ?></td>
+                                        <td><?= $row["created_at"] ?></td>
+                                        <td>
+                                            <a href="" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-eye-fill"></i></span></a>
+                                            <a href="" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-pencil-square"></i></span></a>
+                                        </td>
+                                    </tr>
                                 <?php endforeach ?>
                             </tbody>
                         </table>
@@ -286,6 +362,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     </div>
 
     <!-- Bootstrap core JavaScript-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

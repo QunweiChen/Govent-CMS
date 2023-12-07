@@ -1496,7 +1496,7 @@ pre code {
 .table th,
 .table td {
   padding: 0.75rem;
-  vertical-align: top;
+  vertical-align: middle;
   border-top: 1px solid #e3e6f0;
 }
 
@@ -3606,7 +3606,7 @@ input[type="button"].btn-block {
 .custom-control-label {
   position: relative;
   margin-bottom: 0;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 .custom-control-label::before {
