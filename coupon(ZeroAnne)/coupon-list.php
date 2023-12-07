@@ -19,17 +19,35 @@ if (isset($_GET["search"])) {
     FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
     JOIN activity_category ON coupon.activity_num=activity_category.id AND coupon_valid=$use";
-} elseif(isset($_GET["page"])){
-    $page=$_GET["page"];
-    $starItem=($page - 1) * $perPage;
+} elseif (isset($_GET["page"]) && isset($_GET["order"])) {
+    $page = $_GET["page"];
+    $order = $_GET["order"];
+
+    $starItem = ($page - 1) * $perPage;
+    switch ($order) {
+        case 1:
+            $orderSql = "id ASC";
+            break;
+        case 2:
+            $orderSql = "id DESC";
+            break;
+        case 3:
+            $orderSql = "activity_num ASC";
+            break;
+        case 4:
+            $orderSql = "activity_num DESC";
+            break;
+        default:
+            $orderSql = "id ASC";
+    }
     $sql = "SELECT coupon.* ,coupon_valid_name, activity_name 
     FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
     JOIN activity_category ON coupon.activity_num=activity_category.id WHERE(coupon_valid=0 OR coupon_valid=1)
-    LIMIT $starItem,$perPage";
-}
-else {
+    ORDER BY $orderSql LIMIT $starItem,$perPage";
+} else {
     $page = 1;
+    $order = 1;
     $sql = "SELECT coupon.* ,coupon_valid_name, activity_name 
     FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
@@ -267,8 +285,16 @@ $couponCount = $result->num_rows;
                                     共 <?= $couponCount ?> 筆
                                 </div>
                             <?php endif; ?>
-                            <div>
-                                <a class="btn btn-primary" href="add-coupon.php">新增</a>
+                            <div class="orders">
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" href="coupon-list.php?page=<?= $page ?>&order=1">ID<i class="fs-5 bi bi-sort-down-alt"></i></a>
+                                    <a class="btn btn-primary" href="coupon-list.php?page=<?= $page ?>&order=2">ID<i class="fs-5 bi bi-sort-down"></i></a>
+                                    <a class="btn btn-primary" href="coupon-list.php?page=<?= $page ?>&order=3">活動類別<i class="fs-5 bi bi-sort-down-alt"></i></a>
+                                    <a class="btn btn-primary" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別<i class="fs-5 bi bi-sort-down"></i></a>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" href="add-coupon.php">新增</a>
+                                </div>
                             </div>
                         </div>
                         <table class="table table-bordered text-center text-nowrap">
@@ -284,7 +310,7 @@ $couponCount = $result->num_rows;
                                     <th>到期日期</th>
                                     <th>最低消費</th>
                                     <th>剩餘張數</th>
-                                    <th>適用活動</th>
+                                    <th>適用活動<i class="bi bi-arrow-down-up"></i></th>
                                     <th>詳細資訊</th>
                                 </tr>
                             </thead>
@@ -294,7 +320,7 @@ $couponCount = $result->num_rows;
                                         <td><?= $row["id"] ?></td>
                                         <td><?= $row["coupon_code"] ?></td>
                                         <td><?= $row["coupon_name"] ?></td>
-                                        <td class="<?php if ($row["coupon_valid"] == 0) echo "text-danger";?>"><?= $row["coupon_valid_name"] ?></td>
+                                        <td class="<?php if ($row["coupon_valid"] == 0) echo "text-danger"; ?>"><?= $row["coupon_valid_name"] ?></td>
                                         <td><?= $row["discount_type"] ?></td>
                                         <td><?= $row["discount_valid"] ?></td>
                                         <td><?= $row["start_at"] ?></td>
@@ -310,24 +336,30 @@ $couponCount = $result->num_rows;
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-                        <?php if(!isset($_GET["use"]) && !isset($_GET["search"])) : ?>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <?php for($i=1;$i<=$pageCount;$i++) : ?>
-                                <li class="page-item <?php if ($page == $i) echo "active";?>"><a class="page-link" href="coupon-list.php?page=<?=$i?>"><?=$i?></a></li>
-                                <?php endfor; ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <?php if (!isset($_GET["use"]) && !isset($_GET["search"])) : ?>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <?php if ($page == 1) : ?>
+                                            <a class="page-link" href="coupon-list.php?page=<?= $page ?>&order=<?= $order ?>" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        <?php else : ?>
+                                            <a class="page-link" href="coupon-list.php?page=<?= $page - 1 ?>&order=<?= $order ?>" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        <?php endif; ?>
+                                    </li>
+                                    <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
+                                        <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="coupon-list.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                                    <?php endfor; ?>
+                                    <li class="page-item">
+                                        <a class="page-link" href="coupon-list.php?page=<?= $page + 1 ?>&order=<?= $order ?>" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         <?php endif; ?>
                     </div>
                 </div>

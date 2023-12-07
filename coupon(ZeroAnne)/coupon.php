@@ -1,16 +1,16 @@
 <?php
-if(!isset($_GET["id"])){                                                                            
+if (!isset($_GET["id"])) {
     header("location: coupon-list.php");
 }
-$id=$_GET["id"];
+$id = $_GET["id"];
 require_once("./db_conntect_govent.php");
 
-$sql="SELECT coupon.* ,coupon_valid_name, activity_name 
+$sql = "SELECT coupon.* ,coupon_valid_name, activity_name 
 FROM coupon 
 JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
 JOIN activity_category ON coupon.activity_num=activity_category.id WHERE coupon.id=$id";
-$result=$conn->query($sql);
-$row=$result->fetch_assoc();
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
 // var_dump($row);
 ?>
 <!DOCTYPE html>
@@ -202,11 +202,13 @@ $row=$result->fetch_assoc();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="container">
-                        <div class="p-2">
-                            <a class="btn btn-primary" href="coupon-list.php">回使用者列表</a>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">個別優惠券資訊</h1>
+                        <div class="">
+                            <a href="coupon-list.php" class="text-primary">回優惠券列表</a>
                         </div>
-                        
+                    </div>
+                    <div class="container">
                         <table class="table table-bordered ">
                             <tr>
                                 <th>ID</th>

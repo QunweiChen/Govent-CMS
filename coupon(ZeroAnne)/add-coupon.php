@@ -189,7 +189,7 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">新增優惠券</h1>
                         <div class="">
-                            <a href="coupon-list.php" class="text-danger">回優惠券列表</a>
+                            <a href="coupon-list.php" class="text-primary">回優惠券列表</a>
                         </div>
                     </div>
                     <div class="container">
@@ -205,7 +205,7 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="code" name="code" placeholder="例: ABC1234">
                                 </div>
-                                <button type="button" class="col-sm-2 btn text-danger" id="codebtn">隨機生成一組亂碼</button>
+                                <button type="button" class="col-sm-2 btn text-primary" id="codebtn">隨機生成一組亂碼</button>
                                 <p class="fs-6">(自定義前三個字母後四個數字)</p>
                             </div>
                             <div class="row mb-3 align-items-center">
@@ -277,7 +277,7 @@
                                     <option name="activity8" value="8">景點門票</option>
                                 </select>
                             </div>
-                            <button class="btn btn-danger" type="submit">送出</button>
+                            <button class="btn btn-primary" type="submit">送出</button>
                         </form>
                     </div>
                 </div>
