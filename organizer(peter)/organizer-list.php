@@ -101,7 +101,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="../image/drawkit-transport-scene-5.png" alt="...">
+                <img class="sidebar-card-illustration" src="../image/drawkit-transport-scene-8.png" alt="...">
             </div>
 
             <!-- Nav Item - Dashboard -->
