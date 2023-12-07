@@ -212,7 +212,7 @@ $row = $result->fetch_assoc();
                             <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">主辦單位資料</h1>
                             <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3">回全部列表</a>
                         </div>
-                        <button class="btn btn-main-color">編輯資訊</button>
+                        <a class="btn btn-main-color" href="organizer-edit.php?id=<?=$row["id"]?>">編輯資訊<i class="bi bi-pencil-square ms-2"></i></a>
                     </div>
                     <!-- Content Row -->
                     <div class="mx-4">

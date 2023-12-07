@@ -208,11 +208,11 @@ $row = $result->fetch_assoc();
                     <!-- Page Heading -->
 
                     <div class="d-sm-flex align-items-center mb-4 justify-content-between mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">編輯資料</h1>
                         <div class="d-flex">
-                            <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">主辦單位資料</h1>
-                            <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3">回全部列表</a>
+                            <a class="btn btn-secondary mx-2" href="organizer-profile.php?id=<?= $row["id"] ?>">取消</a>
+                            <input class="btn btn-main-color" type="submit" name="submit" value="儲存"></input>
                         </div>
-                        <button class="btn btn-main-color">編輯資訊</button>
                     </div>
                     <!-- Content Row -->
                     <div class="mx-4">
@@ -254,116 +254,118 @@ $row = $result->fetch_assoc();
                                 </div>
                             </div>
                             <div class="col-lg-8">
-                                <?php if($row["organizer_type"] == 1): ?>
-                                <div class="card mb-4 border-0 shadow">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">用戶類別</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <span class="mb-0 text-bg-company px-2 py-1 rounded">企業用戶</span>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">前台顯示名稱</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["name"] ?></p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">公司抬頭</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["business_name"] ?></p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">統一編號</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["business_invoice"] ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php else: ?>
+                                <?php if ($row["organizer_type"] == 1) : ?>
                                     <div class="card mb-4 border-0 shadow">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">用戶類別</p>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">用戶類別</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <span class="mb-0 text-bg-company px-2 py-1 rounded">企業用戶</span>
+                                                    <span class="mb-0 text-bg-danger px-2 py-1 rounded">無法變更</span>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-9">
-                                                <span class="mb-0 text-bg-main-color px-2 py-1 rounded">個人用戶</span>
+                                            <hr>
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">前台顯示名稱</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="name" placeholder="<?= $row["name"] ?>">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">前台顯示名稱</p>
+                                            <hr>
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">公司抬頭</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="business_name" placeholder="<?= $row["business_name"] ?>">
+                                                </div>
                                             </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["name"] ?></p>
+                                            <hr>
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">統一編號</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="business_invoice" placeholder="<?= $row["business_invoice"] ?>">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php else : ?>
+                                    <div class="card mb-4 border-0 shadow">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">用戶類別</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <span class="mb-0 text-bg-main-color px-2 py-1 rounded">個人用戶</span>
+                                                    <span class="mb-0 text-bg-danger px-2 py-1 rounded">無法變更</span>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">前台顯示名稱</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="name" placeholder="<?= $row["name"] ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php endif ?>
                                 <div class="card mb-4 border-0 shadow">
                                     <div class="card-body">
-                                        <div class="row">
+                                        <div class="row align-items-center">
                                             <div class="col-sm-3">
                                                 <p class="mb-0">銀行代碼</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["bank_code"] ?></p>
+                                                <input type="text" class="form-control" id="bank_code" placeholder="<?= $row["bank_code"] ?>">
                                             </div>
                                         </div>
                                         <hr>
-                                        <div class="row">
+                                        <div class="row align-items-center">
                                             <div class="col-sm-3">
                                                 <p class="mb-0">分行</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["bank_branch"] ?></p>
+                                                <input type="text" class="form-control" id="bank_branch" placeholder="<?= $row["bank_branch"] ?>">
                                             </div>
                                         </div>
                                         <hr>
-                                        <div class="row">
+                                        <div class="row align-items-center">
                                             <div class="col-sm-3">
                                                 <p class="mb-0">銀行帳號</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["amount_number"] ?></p>
+                                                <input type="text" class="form-control" id="amount_number" placeholder="<?= $row["amount_number"] ?>">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card mb-4 mb-md-0 border-0 shadow">
-                                        <div class="card-body">
-                                            <p class="mb-4">上架活動</p>
-                                            <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
+                                    <div class="card-body">
+                                        <p class="mb-4">上架活動</p>
+                                        <p class="mb-1" style="font-size: .77rem;">Web Design</p>
+                                        <div class="progress rounded" style="height: 5px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
+                                        <div class="progress rounded" style="height: 5px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
+                                        <div class="progress rounded" style="height: 5px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
