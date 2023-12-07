@@ -4,7 +4,7 @@ require_once("../connect_server.php");
 $sqlTotal = "SELECT * FROM organizer";
 $resultTotal = $conn->query($sqlTotal);
 $totalUser = $resultTotal->num_rows;
-$perPage = 12;
+$perPage = 10;
 
 $pageCount = ceil($totalUser / $perPage); //celi=無條件進位
 
@@ -101,7 +101,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="../image/1.png" alt="...">
+                <img class="sidebar-card-illustration mb-2" src="../image/drawkit-transport-scene-5.png" alt="...">
             </div>
 
             <!-- Nav Item - Dashboard -->
@@ -304,7 +304,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                         <?php endif ?>
                                         <td><?= $row["user_name"] ?></td>
                                         <td><?= $row["user_email"] ?></td>
-                                        <td><?= $row["business_invoice"] ?></td>
+                                        <td><?= $row["id"] ?></td>
                                         <td><?= $row["created_at"] ?></td>
                                         <td>
                                             <a href="" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-eye-fill"></i></span></a>
