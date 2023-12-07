@@ -216,7 +216,9 @@ $row = $result->fetch_assoc();
                             </tr>
                             <tr>
                                 <th>優惠券名稱</th>
-                                <td colspan="3"><?= $row["coupon_name"] ?></td>
+                                <td><?= $row["coupon_name"] ?></td>
+                                <th>兌換代碼</th>
+                                <td><?= $row["coupon_code"] ?></td>
                             </tr>
                             <tr>
                                 <th>使用狀態</th>
