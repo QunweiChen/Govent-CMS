@@ -3,7 +3,7 @@ require_once("./db_conntect_govent.php");
 $sqlTotal = "SELECT * FROM coupon WHERE (coupon_valid=0 OR coupon_valid=1)";
 $resultTotal = $conn->query($sqlTotal);
 $totalUser = $resultTotal->num_rows;
-$perPage = 6;
+$perPage = 4;
 $pageCount = ceil($totalUser / $perPage);
 
 if (isset($_GET["search"])) {
@@ -24,6 +24,7 @@ if (isset($_GET["search"])) {
     $order = $_GET["order"];
 
     $starItem = ($page - 1) * $perPage;
+    // var_dump( $starItem,$perPage);
     switch ($order) {
         case 1:
             $orderSql = "id ASC";
@@ -275,16 +276,6 @@ $couponCount = $result->num_rows;
                                 <a class="btn btn-primary text-white" href="coupon-list.php?use=1">可使用</a>
                                 <a class="btn btn-primary text-white" href="coupon-list.php?use=0">已停用</a>
                             </div>
-                            <?php if (!isset($_GET["search"])) : ?>
-                                <div>
-                                    共 <?= $couponCount ?> 筆
-                                </div>
-                            <?php else : ?>
-                                <div>
-                                    搜尋"<?= $_GET['search'] ?>"的結果,
-                                    共 <?= $couponCount ?> 筆
-                                </div>
-                            <?php endif; ?>
                             <div class="orders">
                                 <div class="btn-group">
                                     <a class="btn btn-primary" href="coupon-list.php?page=<?= $page ?>&order=1">ID<i class="fs-5 bi bi-sort-down-alt"></i></a>
@@ -297,6 +288,16 @@ $couponCount = $result->num_rows;
                                 </div>
                             </div>
                         </div>
+                        <?php if (!isset($_GET["search"])) : ?>
+                            <div class="pb-2">
+                                共 <?= $couponCount ?> 筆
+                            </div>
+                        <?php else : ?>
+                            <div class="pb-2">
+                                搜尋"<?= $_GET['search'] ?>"的結果,
+                                共 <?= $couponCount ?> 筆
+                            </div>
+                        <?php endif; ?>
                         <table class="table table-bordered text-center text-nowrap">
                             <thead>
                                 <tr>
@@ -354,9 +355,16 @@ $couponCount = $result->num_rows;
                                         <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="coupon-list.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
                                     <?php endfor; ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="coupon-list.php?page=<?= $page + 1 ?>&order=<?= $order ?>" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
+                                        <?php if ($page == 5) : ?>
+                                            <a class="page-link" href="coupon-list.php?page=<?= $page ?>&order=<?= $order ?>" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        <?php else : ?>
+                                            <a class="page-link" href="coupon-list.php?page=<?= $page + 1 ?>&order=<?= $order ?>" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        <?php endif; ?>
+
                                     </li>
                                 </ul>
                             </nav>
