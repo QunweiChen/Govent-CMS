@@ -304,11 +304,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                         <?php endif ?>
                                         <td><?= $row["user_name"] ?></td>
                                         <td><?= $row["user_email"] ?></td>
-                                        <td><?= $row["id"] ?></td>
+                                        <td><?= $row["business_invoice"] ?></td>
                                         <td><?= $row["created_at"] ?></td>
                                         <td>
                                             <a href="organizer-profile.php?id=<?=$row["id"]?>" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-eye-fill"></i></span></a>
-                                            <a href="" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-pencil-square"></i></span></a>
+                                            <a href="organizer-edit.php?id=<?=$row["id"]?>" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-pencil-square"></i></span></a>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>

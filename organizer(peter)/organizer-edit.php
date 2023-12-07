@@ -222,14 +222,16 @@ $row = $result->fetch_assoc();
                                     <div class="card-body text-center">
                                         <style>
                                             .organizer-avatar {
-                                                display: inline-block;
+                                                opacity: 50%;
                                                 width: 200px;
                                                 height: 200px;
                                                 background: url("organizer_avatar/<?= $row["avatar"] ?>");
                                                 background-size: 100%;
                                             }
                                         </style>
-                                        <div class="organizer-avatar rounded-circle mt-2"></div>
+                                        <div class="d-inline-flex">
+                                            <a href="#" class="organizer-avatar rounded-circle mt-2 text-white d-flex align-items-center justify-content-center"><i class="h1 bi bi-pencil-square"></i></a>
+                                        </div>
                                         <h4 class="my-3 font-weight-bolder"><?= $row["name"] ?></h4>
 
                                     </div>
