@@ -189,8 +189,9 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">新增優惠券</h1>
-                        <div class="">
-                            <a href="coupon-list.php" class="text-primary">回優惠券列表</a>
+                        <div class="d-flex align-items-center">
+                            <a href="coupon-list.php" class="text-primary pe-3">回優惠券列表</a>
+                            <a href="coupon-list.php" class=""><i class="bi bi-box-arrow-right fs-4" ></i></a>
                         </div>
                     </div>
                     <div class="container">
@@ -219,7 +220,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="0">
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="2">
                                         <label class="form-check-label" for="couponValid0">
                                             已停用
                                         </label>

@@ -4,7 +4,7 @@ if (isset($_GET["use"])) {
     $use = $_GET["use"];
     $sqlTotal = "SELECT * FROM coupon WHERE coupon_valid=$use ";
 } else {
-    $sqlTotal = "SELECT * FROM coupon WHERE (coupon_valid=0 OR coupon_valid=1)";
+    $sqlTotal = "SELECT * FROM coupon WHERE (coupon_valid=2 OR coupon_valid=1)";
 }
 $resultTotal = $conn->query($sqlTotal);
 $totalUser = $resultTotal->num_rows;
@@ -17,7 +17,7 @@ if (isset($_GET["search"])) {
     FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
     JOIN activity_category ON coupon.activity_num=activity_category.id 
-    WHERE activity_name LIKE '%$search%'AND (coupon_valid=0 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=0 OR coupon_valid=1)";
+    WHERE activity_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1)";
 } elseif (isset($_GET["use"]) && isset($_GET["page"])) {
     $use = $_GET["use"];
     $page = $_GET["page"];
@@ -52,7 +52,7 @@ if (isset($_GET["search"])) {
     $sql = "SELECT coupon.* ,coupon_valid_name, activity_name 
     FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
-    JOIN activity_category ON coupon.activity_num=activity_category.id WHERE(coupon_valid=0 OR coupon_valid=1)
+    JOIN activity_category ON coupon.activity_num=activity_category.id WHERE(coupon_valid=2 OR coupon_valid=1)
     ORDER BY $orderSql LIMIT $starItem,$perPage";
 } else {
     $page = 1;
@@ -60,7 +60,7 @@ if (isset($_GET["search"])) {
     $sql = "SELECT coupon.* ,coupon_valid_name, activity_name 
     FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
-    JOIN activity_category ON coupon.activity_num=activity_category.id WHERE(coupon_valid=0 OR coupon_valid=1)
+    JOIN activity_category ON coupon.activity_num=activity_category.id WHERE(coupon_valid=2 OR coupon_valid=1)
     LIMIT 0,$perPage";
 }
 
@@ -73,9 +73,9 @@ if (isset($_GET["use"])) {
     FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
     JOIN activity_category ON coupon.activity_num=activity_category.id 
-    WHERE activity_name LIKE '%$search%'AND (coupon_valid=0 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=0 OR coupon_valid=1)";
+    WHERE activity_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1)";
 } else {
-    $sqlCount = "SELECT * FROM coupon WHERE(coupon_valid=0 OR coupon_valid=1)";
+    $sqlCount = "SELECT * FROM coupon WHERE(coupon_valid=2 OR coupon_valid=1)";
 }
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -288,11 +288,11 @@ $couponCount = $resultCount->num_rows;
                                 <?php if (!isset($_GET["use"])) :  ?>
                                 <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>">總票券量</a>
                                 <a class="btn btn-outline-primary " href="coupon-list.php?page=<?= $page ?>&use=1">可使用</a>
-                                <a class="btn btn-outline-primary " href="coupon-list.php?page=<?= $page ?>&use=0">已停用</a>
+                                <a class="btn btn-outline-primary " href="coupon-list.php?page=<?= $page ?>&use=2">已停用</a>
                                 <?php else : ?>
                                 <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>">總票券量</a>
                                 <a class="btn btn-outline-primary <?php if ($use == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&use=1">可使用</a>
-                                <a class="btn btn-outline-primary <?php if ($use == 0) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&use=0">已停用</a>
+                                <a class="btn btn-outline-primary <?php if ($use == 0) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&use=2">已停用</a>
                                 <?php endif; ?>
                             </div>
                             <div class="orders">
@@ -305,7 +305,7 @@ $couponCount = $resultCount->num_rows;
                                     <a class="btn btn-outline-primary <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別<i class="bi bi-sort-down"></i></a>
                                 </div>
                                 <div class="btn-group ms-2">
-                                    <a class="btn btn-outline-primary" href="add-coupon.php">新增<i class="bi bi-person-add"></i></a>
+                                    <a class="btn btn-outline-primary " href="add-coupon.php">新增　<i class="bi bi-clipboard-plus"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +319,7 @@ $couponCount = $resultCount->num_rows;
                                 共 <?= $couponCount ?> 筆
                             </div>
                         <?php endif; ?>
-                        <table class="table table-bordered text-center text-nowrap align-items-center ">
+                        <table class="table text-center text-nowrap align-items-center table-hover ">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -336,13 +336,13 @@ $couponCount = $resultCount->num_rows;
                                     <th>詳細資訊</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="">
                                 <?php foreach ($rows as $row) : ?>
                                     <tr>
                                         <td><?= $row["id"] ?></td>
                                         <td><?= $row["coupon_code"] ?></td>
                                         <td><?= $row["coupon_name"] ?></td>
-                                        <td class="<?php if ($row["coupon_valid"] == 0) echo "text-danger"; ?>"><?= $row["coupon_valid_name"] ?></td>
+                                        <td class="<?php if ($row["coupon_valid"] == 2) echo "text-danger"; ?>"><?= $row["coupon_valid_name"] ?></td>
                                         <td><?= $row["discount_type"] ?></td>
                                         <td><?= $row["discount_valid"] ?></td>
                                         <td><?= $row["start_at"] ?></td>

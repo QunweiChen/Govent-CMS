@@ -33,11 +33,15 @@ VALUES ('$code', '$name', '$couponValid', '$discountType', '$discountValid', '$s
 
 if ($conn->query($sql) === TRUE) {
     echo "新增資料完成";
-    $last_id=$conn->insert_id; //抓新增id名
-    echo "最新一筆序號".$last_id;
-
+    $last_id = $conn->insert_id; //抓新增id名
+    echo "最新一筆序號" . $last_id;
+    $sqlcoupon = "SELECT * FROM coupon WHERE id=$last_id";
+    $resultcoupon = $conn->query($sqlcoupon);
+    $rowcoupon = $resultcoupon->fetch_assoc();
+    var_dump($rowcoupon);
+    header("location:coupon.php?id={$last_id}");
+    
 } else {
     echo "新增資料錯誤: " . $conn->error;
 }
 $conn->close();
-
