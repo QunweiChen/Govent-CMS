@@ -4,22 +4,82 @@ require_once("../connect_server.php");
 $eventCategory = "SELECT * FROM event_category";
 $resultCategory = $conn->query($eventCategory);
 $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
-// echo count($rowsCategory);
-// var_dump($rowsCategory);
+//--------------------------------------------------------//
+
+//計算頁數
+if (isset($_GET['status'])) {
+  $status = $_GET['status'];
+  if ($status == 1) {
+    $sql = "SELECT * FROM user_order WHERE valid = 1";
+  } else if ($status == 0) {
+    $sql = "SELECT * FROM user_order WHERE valid = 0";
+  } else if ($status == 3) {
+    $sql = "SELECT * FROM user_order WHERE valid IN (1, 0)";
+  }
+} else {
+  $sql = "SELECT * FROM user_order";
+}
+$resultCount = $conn->query($sql);
+$AllresultCount = $resultCount->num_rows;
+$perPage = 4;
+$pages = ceil($AllresultCount / $perPage);
+//--------------------------------------------------------//
+
+if (isset($_GET['status']) || isset($_GET['page'])) {
+  // 檢查訂單是否取消
+  $status = $_GET["status"];
+  $page = $_GET['page'];
+  $startItem = ($page - 1) * $perPage;
+
+  // 獲取 status=1 和 status=0 的資料
+  if ($status == 3) {
+    $sql = "SELECT user_order.*, campaign.*, ticket.qr_code, user.user_name, event_category.event_name
+        FROM user_order 
+        JOIN campaign ON campaign.id = user_order.event_id
+        JOIN ticket ON ticket.id = user_order.ticket_number
+        JOIN user ON user.id = user_order.user_id
+        JOIN event_category ON event_category.id = campaign.event_type_id
+        WHERE user_order.valid IN (1, 0)
+        ORDER BY campaign.start_date ASC 
+        LIMIT $startItem, $perPage";
+  } else {
+    $sql = "SELECT user_order.*, campaign.*, ticket.qr_code, user.user_name, event_category.event_name
+        FROM user_order 
+        JOIN campaign ON campaign.id = user_order.event_id
+        JOIN ticket ON ticket.id = user_order.ticket_number
+        JOIN user ON user.id = user_order.user_id
+        JOIN event_category ON event_category.id = campaign.event_type_id
+        WHERE user_order.valid = $status
+        ORDER BY campaign.start_date ASC 
+        LIMIT $startItem, $perPage";
+  }
+
+  $result = $conn->query($sql);
+  $rows = $result->fetch_all(MYSQLI_ASSOC);
+} else {
+  // 預設情況
+  $status = 1;
+  $page = 1;
+  // 訂單資料庫串聯
+  $sql = "SELECT user_order.*, campaign.*, ticket.qr_code, user.user_name, event_category.event_name
+    FROM user_order
+    JOIN campaign ON campaign.id = user_order.event_id
+    JOIN ticket ON ticket.id = user_order.ticket_number
+    JOIN user ON user.id = user_order.user_id
+    JOIN event_category ON event_category.id = campaign.event_type_id
+    ORDER BY campaign.start_date ASC
+    LIMIT 0, $perPage";
+  $result = $conn->query($sql);
+  $rows = $result->fetch_all(MYSQLI_ASSOC);
+}
+//重制頁數
+if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
+  $page = 1;
+}
 
 
-//訂單資料庫串聯
-$sql = "SELECT user_order.*, campaign.event_name, campaign.start_date, campaign.end_date,campaign.event_type_id, ticket.qr_code, user.user_name, event_category.event_name
-FROM user_order
-JOIN campaign ON campaign.id = user_order.event_id
-JOIN ticket ON ticket.id = user_order.ticket_number
-JOIN user ON user.id = user_order.user_id
-JOIN event_category ON event_category.id = campaign.event_type_id";
-$result = $conn->query($sql);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
-var_dump($rows);
 
-?>;
+?>
 
 
 <!doctype html>
@@ -198,17 +258,30 @@ var_dump($rows);
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">訂單資訊</h1>
           <!-- 訂單資訊選項 -->
+
           <div class="btn-group" role="group" aria-label="Basic outlined example">
-            <button type="button" class="btn btn-outline-primary">
-              完成訂單
-            </button>
-            <button type="button" class="btn btn-outline-primary">
-              已結束
-            </button>
-            <button type="button" class="btn btn-outline-primary">
-              已取消
-            </button>
+            <a href="index-Abo.php?status=<?= 3 ?>&page=<?= $page ?>">
+              <button type="button" class="btn btn-outline-primary">
+                全部
+              </button>
+            </a>
+            <a href="index-Abo.php?status=<?= 1 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
+                已下單
+              </button></a>
+            <a href="index-Abo.php?status=<?= 0 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
+                已取消
+              </button></a>
+
           </div>
+
+          <!-- 頁數 -->
+          <nav aria-label="Page navigation example ">
+            <ul class="pagination justify-content-center">
+              <?php for ($i = 1; $i <= $pages; $i++) : ?>
+                <li class="page-item"><a class="page-link" href="index-Abo.php?status=<?= $status ?>&page=<?= $i ?>"><?= $i ?></a></li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
           <!-- 訂單內容 -->
           <div class="container my-3">
             <?php foreach ($rows as  $row) : ?>
@@ -251,12 +324,19 @@ var_dump($rows);
                           <td><?= $row["qr_code"] ?></td>
                           <td><?= $row["user_name"] ?></td>
                           <td><?= $row["event_name"] ?></td>
-                          <td>1200</td>
+                          <td><?= $row["event_price"] ?></td>
                           <td>
-                            2023-12-29 12:42:12 ~ <br />
-                            2023-12-29 15:35:35
+                            <?= $row["start_date"] ?> ~<br /> <?= $row["end_date"] ?>
                           </td>
-                          <td>未使用</td>
+                          <td><?php
+                              if ($row["valid"] == 1) {
+                                echo "已下單";
+                              } else if ($row["valid"] == 0) {
+                                echo "取消訂單";
+                              } else {
+                                echo "未下單";
+                              }
+                              ?></td>
                         </tr>
                       </tbody>
                     </table>
