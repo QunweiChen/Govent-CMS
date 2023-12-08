@@ -18,7 +18,6 @@ if (isset($_GET["search"])) {
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
     JOIN activity_category ON coupon.activity_num=activity_category.id 
     WHERE activity_name LIKE '%$search%'AND (coupon_valid=0 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=0 OR coupon_valid=1)";
-    
 } elseif (isset($_GET["use"]) && isset($_GET["page"])) {
     $use = $_GET["use"];
     $page = $_GET["page"];
@@ -66,17 +65,16 @@ if (isset($_GET["search"])) {
 }
 
 //判斷幾筆資料
-if(isset($_GET["use"])){
-    $use=$_GET["use"];
+if (isset($_GET["use"])) {
+    $use = $_GET["use"];
     $sqlCount = "SELECT * FROM coupon WHERE coupon_valid=$use ";
-}elseif(isset(($_GET["search"]))){
+} elseif (isset(($_GET["search"]))) {
     $sqlCount = "SELECT coupon.* ,coupon_valid_name, activity_name 
     FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
     JOIN activity_category ON coupon.activity_num=activity_category.id 
     WHERE activity_name LIKE '%$search%'AND (coupon_valid=0 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=0 OR coupon_valid=1)";
-}
-else{
+} else {
     $sqlCount = "SELECT * FROM coupon WHERE(coupon_valid=0 OR coupon_valid=1)";
 }
 $result = $conn->query($sql);
@@ -106,6 +104,7 @@ $couponCount = $resultCount->num_rows;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- bootstrap icon link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <!-- 字體連結 -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -249,19 +248,6 @@ $couponCount = $resultCount->num_rows;
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     登出
@@ -286,36 +272,45 @@ $couponCount = $resultCount->num_rows;
                     <div>
                         <div class="py-2">
                             <form action="">
-                                <div class="input-group">
+                                <div class="input-group mb-3 ">
                                     <?php if (isset($_GET["search"])) : ?>
                                         <input type="text" class="form-control" value="<?= $_GET['search'] ?>" name="search">
-                                        <button class="btn btn-primary text-white" type="submit" id=""><i class="fs-5 bi bi-search"></i></button>
+                                        <button class="btn btn-primary" type="submit" id=""><i class="bi bi-search"></i></button>
                                     <?php else : ?>
                                         <input type="text" class="form-control" placeholder="Search.." name="search">
-                                        <button class="btn btn-primary text-white" type="submit" id=""><i class="fs-5 bi bi-search"></i></button>
+                                        <button class="btn btn-primary" type="submit" id=""><i class=" bi bi-search"></i></button>
                                     <?php endif; ?>
                                 </div>
                             </form>
                         </div>
                         <div class="pb-2 d-flex justify-content-between orders align-items-center">
                             <div class="btn-group">
-                                <a class="btn btn-primary text-white" href="coupon-list.php?page=<?= $page ?>&use=1">可使用</a>
-                                <a class="btn btn-primary text-white" href="coupon-list.php?page=<?= $page ?>&use=0">已停用</a>
+                                <?php if (!isset($_GET["use"])) :  ?>
+                                <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>">總票券量</a>
+                                <a class="btn btn-outline-primary " href="coupon-list.php?page=<?= $page ?>&use=1">可使用</a>
+                                <a class="btn btn-outline-primary " href="coupon-list.php?page=<?= $page ?>&use=0">已停用</a>
+                                <?php else : ?>
+                                <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>">總票券量</a>
+                                <a class="btn btn-outline-primary <?php if ($use == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&use=1">可使用</a>
+                                <a class="btn btn-outline-primary <?php if ($use == 0) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&use=0">已停用</a>
+                                <?php endif; ?>
                             </div>
                             <div class="orders">
                                 <div class="btn-group">
-                                    <a class="btn btn-primary" href="coupon-list.php?page=<?= $page ?>&order=1">ID<i class="fs-5 bi bi-sort-down-alt"></i></a>
-                                    <a class="btn btn-primary" href="coupon-list.php?page=<?= $page ?>&order=2">ID<i class="fs-5 bi bi-sort-down"></i></a>
-                                    <a class="btn btn-primary" href="coupon-list.php?page=<?= $page ?>&order=3">活動類別<i class="fs-5 bi bi-sort-down-alt"></i></a>
-                                    <a class="btn btn-primary" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別<i class="fs-5 bi bi-sort-down"></i></a>
+                                    <?php if (!isset($_GET["order"])) : $order = 1; ?>
+                                    <?php endif; ?>
+                                    <a class="btn btn-outline-primary <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1">ID<i class="bi bi-sort-down-alt"></i></a>
+                                    <a class="btn btn-outline-primary <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2">ID<i class="bi bi-sort-down"></i></a>
+                                    <a class="btn btn-outline-primary <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3">活動類別<i class="bi bi-sort-down-alt"></i></a>
+                                    <a class="btn btn-outline-primary <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別<i class="bi bi-sort-down"></i></a>
                                 </div>
-                                <div class="btn-group">
-                                    <a class="btn btn-primary" href="add-coupon.php">新增</a>
+                                <div class="btn-group ms-2">
+                                    <a class="btn btn-outline-primary" href="add-coupon.php">新增<i class="bi bi-person-add"></i></a>
                                 </div>
                             </div>
                         </div>
                         <?php if (!isset($_GET["search"])) : ?>
-                            <div class="pb-2">
+                            <div class="pb-2 text-end">
                                 共 <?= $couponCount ?> 筆
                             </div>
                         <?php else : ?>
@@ -324,7 +319,7 @@ $couponCount = $resultCount->num_rows;
                                 共 <?= $couponCount ?> 筆
                             </div>
                         <?php endif; ?>
-                        <table class="table table-bordered text-center text-nowrap">
+                        <table class="table table-bordered text-center text-nowrap align-items-center ">
                             <thead>
                                 <tr>
                                     <th>ID</th>

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- bootstrap icon link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <!-- 字體連結 -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -210,36 +211,40 @@
                             </div>
                             <div class="row mb-3 align-items-center">
                                 <label for="couponValid" class="col-sm-2 col-form-label">優惠券狀態</label>
-                                <div class="form-check col-sm-2">
-                                    <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="1">
-                                    <label class="form-check-label" for="couponValid1">
-                                        可使用
-                                    </label>
-                                </div>
-                                <div class="form-check col-sm-2">
-                                    <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="0">
-                                    <label class="form-check-label" for="couponValid0">
-                                        已停用
-                                    </label>
+                                <div class="col-sm-8">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="1">
+                                        <label class="form-check-label" for="couponValid1">
+                                            可使用
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="0">
+                                        <label class="form-check-label" for="couponValid0">
+                                            已停用
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-3 align-items-center">
                                 <label for="discountType" class="col-sm-2 col-form-label">折扣類型</label>
-                                <div class="form-check col-sm-2">
-                                    <input class="form-check-input" type="radio" name="discountType" id="discountType" value="打折">
-                                    <label class="form-check-label" for="discountType1">
-                                        依百分比折扣
-                                    </label>
-                                </div>
-                                <div class="form-check col-sm-2">
-                                    <input class="form-check-input" type="radio" name="discountType" id="discountType" value="金額">
-                                    <label class="form-check-label" for="discountType2">
-                                        依金額折價
-                                    </label>
+                                <div class="col-sm-8">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="打折">
+                                        <label class="form-check-label" for="discountType1">
+                                            依百分比折扣
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="金額">
+                                        <label class="form-check-label" for="discountType2">
+                                            依金額折價
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="discountValid" class="col-sm-2 col-form-label">優惠券百分比折扣/金額折價</label>
+                                <label for="discountValid" class="col-sm-2 col-form-label">優惠券百分比折扣<br>/金額折價</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="discountValid" name="discountValid" placeholder="優惠券百分比折扣/金額折價 例:0.75/50">
                                 </div>
@@ -264,9 +269,9 @@
                                     <input type="text" class="form-control" id="priceMin" name="maxUsage">
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="activityNum" class="col-form-label col-sm-2">活動類型：</label>
-                                <select class="col-form-select col-sm-10" id="" name="activityNum">
+                            <div class="row mb-3 ">
+                                <label for="activityNum" class="col-form-label col-sm-2">活動類型</label>
+                                <select class="form-select col-sm-10 " id="" name="activityNum">
                                     <option name="activity1" value="1">演唱會</option>
                                     <option name="activity2" value="2">展覽</option>
                                     <option name="activity3" value="3">快閃限定活動</option>
@@ -366,7 +371,7 @@
             const numberString = generateRandomNumbers(numberOfRandomNumbers);
 
             const codeRandom = randomLettersString + numberString;
-            console.log(codeRandom); 
+            console.log(codeRandom);
             document.getElementById('code').value = codeRandom;
         }
         document.getElementById('codebtn').addEventListener('click', generateRandomCode);

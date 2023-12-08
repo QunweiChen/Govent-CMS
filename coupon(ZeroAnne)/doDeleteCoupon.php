@@ -7,7 +7,7 @@ if(!isset($_GET["id"])) {
 }
 $id = $_GET["id"];
 
-$sql = "UPDATE coupon SET coupon_valid='0' WHERE id=$id";
+$sql = "UPDATE coupon SET coupon_valid='-1' WHERE id=$id";
 // echo $sql;
 // exit;
 
@@ -18,4 +18,4 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
-header("location:user-list.php");
+header("location:coupon-list.php");

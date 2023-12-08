@@ -32,6 +32,7 @@ $row = $result->fetch_assoc();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- bootstrap icon link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <!-- 字體連結 -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -201,6 +202,23 @@ $row = $result->fetch_assoc();
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
+                <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">警告</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                確認刪除?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                                <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>" type="button" class="btn btn-danger">確定刪除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">更改優惠券</h1>
@@ -210,7 +228,7 @@ $row = $result->fetch_assoc();
                     </div>
                     <div class="container">
                         <form action="doUpdateCoupon.php" method="post">
-                            <input type="hidden" name="id" value="<?=$row["id"]?>">
+                            <input type="hidden" name="id" value="<?= $row["id"] ?>">
                             <div class="row mb-3 align-items-center">
                                 <label for="code" class="col-sm-2 col-form-label">ID</label>
                                 <div class="col-sm-8">
@@ -232,36 +250,35 @@ $row = $result->fetch_assoc();
                             <div class="row mb-3 align-items-center">
                                 <label for="couponValid" class="col-sm-2 col-form-label">優惠券狀態</label>
                                 <div class="col-sm-8">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="1" <?php if($row["coupon_valid"]==1) echo "checked" ?> >
-                                    <label class="form-check-label" for="couponValid1">
-                                        可使用
-                                    </label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="1" <?php if ($row["coupon_valid"] == 1) echo "checked" ?>>
+                                        <label class="form-check-label" for="couponValid1">
+                                            可使用
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="0" <?php if ($row["coupon_valid"] == 0) echo "checked" ?>>
+                                        <label class="form-check-label" for="couponValid0">
+                                            已停用
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="0" <?php if($row["coupon_valid"]==0) echo "checked" ?> >
-                                    <label class="form-check-label" for="couponValid0">
-                                        已停用
-                                    </label>
-                                </div>
-                                </div>
-                                
                             </div>
                             <div class="row mb-3 align-items-center">
                                 <label for="discountType" class="col-sm-2 col-form-label">折扣類型</label>
                                 <div class="col-sm-8">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="discountType" id="discountType" value="打折" <?php if($row["discount_type"]=="打折") echo "checked" ?> >
-                                    <label class="form-check-label" for="discountType1">
-                                        依百分比折扣
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="discountType" id="discountType" value="金額" <?php if($row["discount_type"]=="金額") echo "checked" ?>>
-                                    <label class="form-check-label" for="discountType2">
-                                        依金額折價
-                                    </label>
-                                </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="打折" <?php if ($row["discount_type"] == "打折") echo "checked" ?>>
+                                        <label class="form-check-label" for="discountType1">
+                                            依百分比折扣
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="金額" <?php if ($row["discount_type"] == "金額") echo "checked" ?>>
+                                        <label class="form-check-label" for="discountType2">
+                                            依金額折價
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -291,20 +308,25 @@ $row = $result->fetch_assoc();
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="activityNum" class="col-form-label col-sm-2">活動類型：</label>
-                                <select class="col-form-select col-sm-10" id="" name="activityNum"  >
-                                    <option name="activity1" value="1" <?php if($row["activity_num"]==1) echo "selected" ?>>演唱會</option>
-                                    <option name="activity2" value="2" <?php if($row["activity_num"]==2) echo "selected" ?>>展覽</option>
-                                    <option name="activity3" value="3" <?php if($row["activity_num"]==3) echo "selected" ?>>快閃限定活動</option>
-                                    <option name="activity4" value="4" <?php if($row["activity_num"]==4) echo "selected" ?>>市集</option>
-                                    <option name="activity5" value="5" <?php if($row["activity_num"]==5) echo "selected" ?>>粉絲見面會</option>
-                                    <option name="activity6" value="6" <?php if($row["activity_num"]==6) echo "selected" ?>>課程講座</option>
-                                    <option name="activity7" value="7" <?php if($row["activity_num"]==7) echo "selected" ?>>體育賽事</option>
-                                    <option name="activity8" value="8" <?php if($row["activity_num"]==8) echo "selected" ?>>景點門票</option>
+                                <label for="activityNum" class="col-form-label col-sm-2">活動類型</label>
+                                <select class="form-select col-sm-10" id="" name="activityNum">
+                                    <option name="activity1" value="1" <?php if ($row["activity_num"] == 1) echo "selected" ?>>演唱會</option>
+                                    <option name="activity2" value="2" <?php if ($row["activity_num"] == 2) echo "selected" ?>>展覽</option>
+                                    <option name="activity3" value="3" <?php if ($row["activity_num"] == 3) echo "selected" ?>>快閃限定活動</option>
+                                    <option name="activity4" value="4" <?php if ($row["activity_num"] == 4) echo "selected" ?>>市集</option>
+                                    <option name="activity5" value="5" <?php if ($row["activity_num"] == 5) echo "selected" ?>>粉絲見面會</option>
+                                    <option name="activity6" value="6" <?php if ($row["activity_num"] == 6) echo "selected" ?>>課程講座</option>
+                                    <option name="activity7" value="7" <?php if ($row["activity_num"] == 7) echo "selected" ?>>體育賽事</option>
+                                    <option name="activity8" value="8" <?php if ($row["activity_num"] == 8) echo "selected" ?>>景點門票</option>
                                 </select>
                             </div>
-                            <button class="btn btn-primary" type="submit">儲存</button>
-                            <a class="btn btn-primary" href="coupon.php?id=<?= $id ?>" >取消</a>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <button class="btn btn-primary" type="submit">儲存</button>
+                                    <a class="btn btn-primary" href="coupon.php?id=<?= $id ?>">取消</a>
+                                </div>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#alertModal" class="btn btn-danger">刪除</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -356,6 +378,17 @@ $row = $result->fetch_assoc();
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
