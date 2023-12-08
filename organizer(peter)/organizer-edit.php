@@ -205,173 +205,153 @@ $row = $result->fetch_assoc();
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-
-                    <div class="d-sm-flex align-items-center mb-4 justify-content-between mx-4">
-                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">編輯資料</h1>
-                        <div class="d-flex">
-                            <a class="btn btn-secondary mx-2" href="organizer-profile.php?id=<?= $row["id"] ?>">取消</a>
-                            <input class="btn btn-main-color" type="submit" name="submit" value="儲存"></input>
-                        </div>
-                    </div>
-                    <!-- Content Row -->
-                    <div class="mx-4">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="card mb-4 border-0 shadow">
-                                    <div class="card-body text-center">
-                                        <style>
-                                            .organizer-avatar {
-                                                opacity: 50%;
-                                                width: 200px;
-                                                height: 200px;
-                                                background: url("organizer_avatar/<?= $row["avatar"] ?>");
-                                                background-size: 100%;
-                                            }
-                                        </style>
-                                        <div class="d-inline-flex">
-                                            <a href="#" class="organizer-avatar rounded-circle mt-2 text-white d-flex align-items-center justify-content-center"><i class="h1 bi bi-pencil-square"></i></a>
-                                        </div>
-                                        <h4 class="my-3 font-weight-bolder"><?= $row["name"] ?></h4>
-
-                                    </div>
-                                </div>
-                                <div class="card mb-4 mb-lg-0 border-0 shadow">
-                                    <div class="card-body p-0">
-                                        <ul class="list-group list-group-flush rounded-3">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                                <span><i class="bi bi-person-fill me-2"></i>關聯會員名稱</span>
-                                                <p class="mb-0"><?= $row["user_name"] ?></p>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                                <span><i class="bi bi-envelope-fill me-2"></i>email</span>
-                                                <p class="mb-0"><?= $row["user_email"] ?></p>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                                <span><i class="bi bi-telephone-fill me-2"></i>連絡電話</span>
-                                                <p class="mb-0"><?= $row["user_phone"] ?></p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                    <form action="organizer-doUpload.php" method="post" enctype="multipart/form-data">
+                        <!-- Page Heading -->
+                        <input type="text" class="d-none" name="id" value="<?= $row["id"] ?>">
+                        <input type="text" class="d-none" name="organizerType" value="<?= $row["organizer_type"] ?>">
+                        <div class="d-sm-flex align-items-center mb-4 justify-content-between mx-4 pt-3">
+                            <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">編輯資料</h1>
+                            <div class="d-flex">
+                                <a class="btn btn-secondary mx-2" href="organizer-profile.php?id=<?= $row["id"] ?>">取消</a>
+                                <input class="btn btn-main-color" type="submit" name="submit" value="儲存"></input>
                             </div>
-                            <div class="col-lg-8">
-                                <?php if ($row["organizer_type"] == 1) : ?>
+                        </div>
+                        <!-- Content Row -->
+                        <div class="mx-4 pb-4">
+                            <div class="row">
+                                <div class="col-lg-4">
                                     <div class="card mb-4 border-0 shadow">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">用戶類別</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <span class="mb-0 text-bg-company px-2 py-1 rounded">企業用戶</span>
-                                                    <span class="mb-0 text-bg-danger px-2 py-1 rounded">無法變更</span>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row align-items-center">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">前台顯示名稱</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="name" placeholder="<?= $row["name"] ?>">
+                                        <div class="card-body text-center">
+                                            <style>
+                                                .organizer-avatar-edit {
+                                                    width: 200px;
+                                                    height: 200px;
+                                                    background: url("organizer_avatar/<?= $row["avatar"] ?>");
+                                                    background-size: cover;
+                                                    background-position: 50% 50%;
+                                                    transition: 0.3s;
+                                                }
+                                            </style>
+                                            <div class="d-inline-flex">
+                                                <div class="organizer-avatar-edit rounded-circle mt-2 text-white d-flex align-items-center justify-content-center">
+
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <div class="row align-items-center">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">公司抬頭</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="business_name" placeholder="<?= $row["business_name"] ?>">
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row align-items-center">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">統一編號</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="business_invoice" placeholder="<?= $row["business_invoice"] ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php else : ?>
-                                    <div class="card mb-4 border-0 shadow">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">用戶類別</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <span class="mb-0 text-bg-main-color px-2 py-1 rounded">個人用戶</span>
-                                                    <span class="mb-0 text-bg-danger px-2 py-1 rounded">無法變更</span>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row align-items-center">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0">前台顯示名稱</p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="name" placeholder="<?= $row["name"] ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endif ?>
-                                <div class="card mb-4 border-0 shadow">
-                                    <div class="card-body">
-                                        <div class="row align-items-center">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">銀行代碼</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="bank_code" placeholder="<?= $row["bank_code"] ?>">
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row align-items-center">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">分行</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="bank_branch" placeholder="<?= $row["bank_branch"] ?>">
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row align-items-center">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">銀行帳號</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="amount_number" placeholder="<?= $row["amount_number"] ?>">
-                                            </div>
+                                            <h4 class="my-3 font-weight-bolder"><?= $row["name"] ?></h4>
+
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card mb-4 mb-md-0 border-0 shadow">
-                                    <div class="card-body">
-                                        <p class="mb-4">上架活動</p>
-                                        <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                                        <div class="progress rounded" style="height: 5px;">
-                                            <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="col-lg-8">
+                                    <?php if ($row["organizer_type"] == 1) : ?>
+                                        <div class="card mb-4 border-0 shadow">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">用戶類別</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <span class="mb-0 text-bg-company px-2 py-1 rounded">企業用戶</span>
+                                                        <span class="mb-0 text-bg-danger px-2 py-1 rounded">無法變更</span>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">前台顯示名稱</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="name" value="<?= $row["name"] ?>">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">公司抬頭</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="businessName" value="<?= $row["business_name"] ?>">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">統一編號</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="businessInvoice" maxlength="8" value="<?= $row["business_invoice"] ?>">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                                        <div class="progress rounded" style="height: 5px;">
-                                            <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <?php else : ?>
+                                        <div class="card mb-4 border-0 shadow">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">用戶類別</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <span class="mb-0 text-bg-main-color px-2 py-1 rounded">個人用戶</span>
+                                                        <span class="mb-0 text-bg-danger px-2 py-1 rounded">無法變更</span>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">前台顯示名稱</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="name" value="<?= $row["name"] ?>">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                                        <div class="progress rounded" style="height: 5px;">
-                                            <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <?php endif ?>
+                                    <div class="card mb-4 border-0 shadow">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">銀行戶名</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="bankName" value="<?= $row["bank_name"] ?>">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">銀行代碼</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="bankCode" maxlength="3" value="<?= $row["bank_code"] ?>">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">分行</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="bankBranch" value="<?= $row["bank_branch"] ?>">
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row align-items-center">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">銀行帳號</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="amountNumber" value="<?= $row["amount_number"] ?>">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    </form>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -417,7 +397,15 @@ $row = $result->fetch_assoc();
             </div>
         </div>
     </div>
-
+    <script>
+        import Swal from 'sweetalert2/dist/sweetalert2.js';
+        import 'sweetalert2/src/sweetalert2.scss';
+        Swal.fire({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success"
+        });
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -435,6 +423,7 @@ $row = $result->fetch_assoc();
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 

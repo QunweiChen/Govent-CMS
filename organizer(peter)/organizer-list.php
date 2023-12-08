@@ -11,7 +11,7 @@ $pageCount = ceil($totalUser / $perPage); //celi=無條件進位
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
     $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.name LIKE '%$search%'
+    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.name LIKE '%$search%' AND valid = 1
     ORDER BY id ASC";
     // $sql = "SELECT * FROM organizer WHERE name LIKE '%$search%'";
 } elseif (isset($_GET["page"]) && isset($_GET["order"])) {
@@ -22,16 +22,31 @@ if (isset($_GET["search"])) {
             $orderSql = "id ASC"; //ASC升幕
             break;
         case 2:
-            $orderSql = "id DESC"; //DESC降幕
+            $orderSql = "name ASC";
             break;
         case 3:
-            $orderSql = "name ASC"; //ASC升幕
+            $orderSql = "name DESC";
             break;
         case 4:
-            $orderSql = "name DESC"; //DESC降幕
+            $orderSql = "organizer_type ASC";
+            break;
+        case 5:
+            $orderSql = "organizer_type DESC";
+            break;
+        case 6:
+            $orderSql = "user_name ASC";
+            break;
+        case 7:
+            $orderSql = "user_name DESC";
+            break;
+        case 8:
+            $orderSql = "created_at ASC";
+            break;
+        case 9:
+            $orderSql = "created_at DESC";
             break;
         default:
-            $orderSql = "id ASC"; //ASC升幕
+            $orderSql = "id ASC";
     }
     $startItem = ($page - 1) * $perPage;
     $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
@@ -244,19 +259,19 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
                     <!-- Page Heading -->
 
-                    <div class="d-sm-flex align-items-center mb-4 mx-4">
+                    <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
                         <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">主辦單位清單</h1>
-                        <?php if (!isset($_GET["search"])): ?>
-                                <div class="dropdown">
-                                    <a class="btn btn-main-color dropdown-toggle py-1 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        列表分頁
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
-                                            <li><a class="dropdown-item" href="organizer-list.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
-                                        <?php endfor ?>
-                                    </ul>
-                                </div>
+                        <?php if (!isset($_GET["search"])) : ?>
+                            <div class="dropdown">
+                                <a class="btn btn-main-color dropdown-toggle py-1 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    列表分頁
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
+                                        <li><a class="dropdown-item" href="organizer-list.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                                    <?php endfor ?>
+                                </ul>
+                            </div>
                             <div class="text-gray-600">
                                 目前在第<?= $page ?>頁
                             </div>
@@ -266,11 +281,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <div class="ms-auto">
                             <form action="">
                                 <div class="input-group rounded">
-                                <?php if (!isset($_GET["search"])): ?>
-                                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="search" />
-                                <?php else: ?>
-                                    <input type="search" class="form-control rounded" placeholder="<?=$_GET["search"]?>" aria-label="Search" aria-describedby="search-addon" name="search" />
-                                <?php endif ?>
+                                    <?php if (!isset($_GET["search"])) : ?>
+                                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="search" />
+                                    <?php else : ?>
+                                        <input type="search" class="form-control rounded" placeholder="<?= $_GET["search"] ?>" aria-label="Search" aria-describedby="search-addon" name="search" />
+                                    <?php endif ?>
                                     <button class="input-group-text rounded border-0 ms-2" id="search-addon" type="submit">
                                         <i class="fas fa-search"></i>
                                     </button>
@@ -282,17 +297,57 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
                     <div>
                         <table class="table table-hover table-light mx-3">
-                            <thead>
-                                <tr class="text-nowrap">
-                                    <th scope="col">主辦單位名稱</th>
-                                    <th scope="col">身分</th>
-                                    <th scope="col">關聯會員名稱</th>
-                                    <th scope="col">email</th>
-                                    <th scope="col">統一編號</th>
-                                    <th scope="col">註冊時間</th>
-                                    <th scope="col">操作</th>
-                                </tr>
-                            </thead>
+                            <?php if (!isset($_GET["search"])) : ?>
+                                <thead>
+                                    <tr class="text-nowrap">
+                                        <th scope="col">
+                                            主辦單位名稱
+                                            <?php if ($order != 2) : ?>
+                                                <a href="organizer-list.php?page=<?= $page ?>&order=2" class=""><i class="bi bi-caret-down-square-fill"></i></a>
+                                            <?php else : ?>
+                                                <a href="organizer-list.php?page=<?= $page ?>&order=3" class=""><i class="bi bi-caret-up-square-fill"></i></a>
+                                            <?php endif ?>
+                                        </th>
+                                        <th scope="col">
+                                            身分
+                                            <?php if ($order != 4) : ?>
+                                                <a href="organizer-list.php?page=<?= $page ?>&order=4" class=""><i class="bi bi-caret-down-square-fill"></i></a>
+                                            <?php else : ?>
+                                                <a href="organizer-list.php?page=<?= $page ?>&order=5" class=""><i class="bi bi-caret-up-square-fill"></i></a>
+                                            <?php endif ?>
+                                        </th>
+                                        <th scope="col">
+                                            關聯會員名稱
+                                            <?php if ($order != 6) : ?>
+                                                <a href="organizer-list.php?page=<?= $page ?>&order=6" class=""><i class="bi bi-caret-down-square-fill"></i></a>
+                                            <?php else : ?>
+                                                <a href="organizer-list.php?page=<?= $page ?>&order=7" class=""><i class="bi bi-caret-up-square-fill"></i></a>
+                                            <?php endif ?>
+                                        </th>
+                                        <th scope="col">email</th>
+                                        <th scope="col">
+                                            註冊時間
+                                            <?php if ($order != 8) : ?>
+                                                <a href="organizer-list.php?page=<?= $page ?>&order=8" class=""><i class="bi bi-caret-down-square-fill"></i></a>
+                                            <?php else : ?>
+                                                <a href="organizer-list.php?page=<?= $page ?>&order=9" class=""><i class="bi bi-caret-up-square-fill"></i></a>
+                                            <?php endif ?>
+                                        </th>
+                                        <th scope="col">操作</th>
+                                    </tr>
+                                </thead>
+                            <?php else : ?>
+                                <thead>
+                                    <tr class="text-nowrap">
+                                        <th scope="col">主辦單位名稱</th>
+                                        <th scope="col">身分</th>
+                                        <th scope="col">關聯會員名稱</th>
+                                        <th scope="col">email</th>
+                                        <th scope="col">註冊時間</th>
+                                        <th scope="col">操作</th>
+                                    </tr>
+                                </thead>
+                            <?php endif ?>
                             <tbody>
                                 <?php foreach ($rows as $row) : ?>
                                     <tr class="text-nowrap">
@@ -304,11 +359,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                         <?php endif ?>
                                         <td><?= $row["user_name"] ?></td>
                                         <td><?= $row["user_email"] ?></td>
-                                        <td><?= $row["business_invoice"] ?></td>
                                         <td><?= $row["created_at"] ?></td>
                                         <td>
-                                            <a href="organizer-profile.php?id=<?=$row["id"]?>" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-eye-fill"></i></span></a>
-                                            <a href="organizer-edit.php?id=<?=$row["id"]?>" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-pencil-square"></i></span></a>
+                                            <a href="organizer-profile.php?id=<?= $row["id"] ?>" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-eye-fill"></i></span></a>
+                                            <a href="organizer-edit.php?id=<?= $row["id"] ?>" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-pencil-square"></i></span></a>
+                                            <!-- <a href="organizer-edit.php?id=<?= $row["id"] ?>" class="btn btn-danger p-0 px-2"><span class="small"><i class="bi bi-trash-fill"></i></span></a> -->
                                         </td>
                                     </tr>
                                 <?php endforeach ?>

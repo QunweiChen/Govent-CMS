@@ -6,10 +6,18 @@ if (!isset($_GET["id"])) {
 }
 $id = $_GET["id"];
 
-$sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email, member_list.phone AS user_phone FROM organizer
-JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.id = $id";
+$sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email, member_list.phone AS user_phone 
+FROM organizer
+JOIN member_list ON organizer.user_id = member_list.id 
+WHERE organizer.id = $id";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+
+$organizer_id = $row["id"];
+
+$sqlEvent = "SELECT * FROM event WHERE merchant_id = $organizer_id";
+$resultEvent = $conn->query($sqlEvent);
+$rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -207,15 +215,52 @@ $row = $result->fetch_assoc();
 
                     <!-- Page Heading -->
 
-                    <div class="d-sm-flex align-items-center mb-4 justify-content-between mx-4">
+                    <div class="d-sm-flex align-items-center mb-4 justify-content-between mx-4 pt-3">
                         <div class="d-flex">
                             <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">主辦單位資料</h1>
                             <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3">回全部列表</a>
                         </div>
-                        <a class="btn btn-main-color" href="organizer-edit.php?id=<?=$row["id"]?>">編輯資訊<i class="bi bi-pencil-square ms-2"></i></a>
+                        <div>
+                            <a class="btn btn-main-color me-1" href="organizer-edit.php?id=<?= $row["id"] ?>">
+                                編輯資訊<i class="bi bi-pencil-square ms-2"></i>
+                            </a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                刪除資料<i class="bi bi-trash-fill ms-2"></i>
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">確定要刪除這筆資料嗎？</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row mb-3">
+                                                <div class="col-4">前台顯示名稱</div>
+                                                <div class="col-6"><?= $row["name"] ?></div>
+                                            </div>
+                                            <hr>
+                                            <div class="text-gray-600 mb-2 small">關聯會員資料</div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">會員姓名</div>
+                                                <div class="col-6"><?= $row["user_name"] ?></div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">會員email</div>
+                                                <div class="col-6"><?= $row["user_email"] ?></div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                            <button type="button" class="btn btn-danger">確定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- Content Row -->
-                    <div class="mx-4">
+                    <div class="mx-4 pb-4">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="card mb-4 border-0 shadow">
@@ -226,10 +271,42 @@ $row = $result->fetch_assoc();
                                                 width: 200px;
                                                 height: 200px;
                                                 background: url("organizer_avatar/<?= $row["avatar"] ?>");
-                                                background-size: 100%;
+                                                background-size: cover;
+                                                background-position: 50% 50%;
+                                                background-repeat: no-repeat;
+                                                transition: 0.3s;
                                             }
                                         </style>
                                         <div class="organizer-avatar rounded-circle mt-2"></div>
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-main-color" data-bs-toggle="modal" data-bs-target="#avatar">
+                                                更換大頭貼<i class="ms-2 bi bi-pencil-square"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal fade" id="avatar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">更換大頭貼</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ...
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-between">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                                        <form action="organizer-avatar-doUpload.php" method="post" enctype="multipart/form-data">
+                                                            <input type="text" class="d-none" name="id" value="<?= $row["id"] ?>">
+                                                            <label class="btn btn-main-color mt-2 me-1">
+                                                                <div>上傳</div>
+                                                                <input class="d-none" type="file" name="avatar" accept="image/gif,image/jpeg,image/png,.svg">
+                                                            </label>
+                                                            <input type="submit" class="btn btn-main-color" name="" id="" value="送出">
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <h4 class="my-3 font-weight-bolder"><?= $row["name"] ?></h4>
 
                                     </div>
@@ -252,73 +329,96 @@ $row = $result->fetch_assoc();
                                         </ul>
                                     </div>
                                 </div>
+                                <div class="card mt-4 mb-lg-0 border-0 shadow">
+                                    <div class="card-body p-0">
+                                        <ul class="list-group list-group-flush rounded-3">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                <span><i class="bi bi-clock-fill me-2"></i>資料建立時間</span>
+                                                <p class="mb-0"><?= $row["created_at"] ?></p>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                <span><i class="bi bi-pencil-fill me-2"></i>更新時間</span>
+                                                <p class="mb-0"><?= $row["update_at"] ?></p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-8">
-                                <?php if($row["organizer_type"] == 1): ?>
-                                <div class="card mb-4 border-0 shadow">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">用戶類別</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <span class="mb-0 text-bg-company px-2 py-1 rounded">企業用戶</span>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">前台顯示名稱</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["name"] ?></p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">公司抬頭</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["business_name"] ?></p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">統一編號</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["business_invoice"] ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php else: ?>
+                                <?php if ($row["organizer_type"] == 1) : ?>
                                     <div class="card mb-4 border-0 shadow">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">用戶類別</p>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">用戶類別</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <span class="mb-0 text-bg-company px-2 py-1 rounded">企業用戶</span>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-9">
-                                                <span class="mb-0 text-bg-main-color px-2 py-1 rounded">個人用戶</span>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">前台顯示名稱</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0"><?= $row["name"] ?></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">前台顯示名稱</p>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">公司抬頭</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0"><?= $row["business_name"] ?></p>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0"><?= $row["name"] ?></p>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">統一編號</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0"><?= $row["business_invoice"] ?></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php else : ?>
+                                    <div class="card mb-4 border-0 shadow">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">用戶類別</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <span class="mb-0 text-bg-main-color px-2 py-1 rounded">個人用戶</span>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">前台顯示名稱</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0"><?= $row["name"] ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php endif ?>
                                 <div class="card mb-4 border-0 shadow">
                                     <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <p class="mb-0">銀行戶名</p>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <p class="text-muted mb-0"><?= $row["bank_name"] ?></p>
+                                            </div>
+                                        </div>
+                                        <hr>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <p class="mb-0">銀行代碼</p>
@@ -348,22 +448,15 @@ $row = $result->fetch_assoc();
                                     </div>
                                 </div>
                                 <div class="card mb-4 mb-md-0 border-0 shadow">
-                                        <div class="card-body">
-                                            <p class="mb-4">上架活動</p>
-                                            <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                                            <div class="progress rounded" style="height: 5px;">
-                                                <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
+                                    <div class="card-body">
+                                        <p class="mb-4">上架活動</p>
+                                        <ul class="p-0">
+                                            <?php foreach ($rowsEvent as $row) : ?>
+                                                <li class="mb-2 list-unstyled"><i class="bi bi-record-fill me-2" style="color: #588afe"></i><?= $row["event_name"] ?></li>
+                                            <?php endforeach ?>
+                                        </ul>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
