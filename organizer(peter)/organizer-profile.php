@@ -116,7 +116,7 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Orangizer Management</h6>
                         <a class="collapse-item" href="organizer-list.php">主辦單位清單</a>
-                        <a class="collapse-item" href="#">修改／新增</a>
+                        <a class="collapse-item" href="organizer-review-list.php">待審核清單</a>
                     </div>
                 </div>
             </li>
@@ -231,7 +231,7 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">確定要刪除這筆資料嗎？</h1>
+                                            <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel"><i class="bi bi-exclamation-triangle-fill me-2"></i>確定要刪除這筆資料嗎？</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -252,7 +252,7 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                            <button type="button" class="btn btn-danger">確定</button>
+                                            <a href="organizer-doDelete.php?id=<?=$row["id"]?>" class="btn btn-danger">確定</a>
                                         </div>
                                     </div>
                                 </div>
@@ -388,12 +388,12 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                                 <?php else : ?>
                                     <div class="card mb-4 border-0 shadow">
                                         <div class="card-body">
-                                            <div class="row">
+                                            <div class="row align-items-center">
                                                 <div class="col-sm-3">
                                                     <p class="mb-0">用戶類別</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <span class="mb-0 text-bg-main-color px-2 py-1 rounded">個人用戶</span>
+                                                <span class="btn mb-0 px-2 py-1 rounded disabled btn-warning text-black me-2">個人用戶</span>
                                                 </div>
                                             </div>
                                             <hr>

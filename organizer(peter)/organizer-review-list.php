@@ -1,7 +1,7 @@
 <?php
 require_once("../connect_server.php");
 
-$sqlTotal = "SELECT * FROM organizer WHERE valid = 1";
+$sqlTotal = "SELECT * FROM organizer WHERE valid = -1";
 $resultTotal = $conn->query($sqlTotal);
 $totalUser = $resultTotal->num_rows;
 $perPage = 10;
@@ -11,7 +11,7 @@ $pageCount = ceil($totalUser / $perPage); //celi=無條件進位
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
     $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.name LIKE '%$search%' AND organizer.valid = 1
+    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.name LIKE '%$search%' AND organizer.valid = -1
     ORDER BY id ASC";
     // $sql = "SELECT * FROM organizer WHERE name LIKE '%$search%'";
 } elseif (isset($_GET["page"]) && isset($_GET["order"])) {
@@ -50,13 +50,13 @@ if (isset($_GET["search"])) {
     }
     $startItem = ($page - 1) * $perPage;
     $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.valid = 1
+    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.valid = -1
     ORDER BY $orderSql LIMIT $startItem,$perPage";
 } else {
     $order = 1;
     $page = 1;
     $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.valid = 1
+    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.valid = -1
     ORDER BY id ASC LIMIT 0,$perPage";
 }
 $result = $conn->query($sql);
@@ -76,7 +76,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>主辦單位清單</title>
+    <title>待審核清單</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -260,8 +260,9 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <!-- Page Heading -->
 
                     <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
-                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">主辦單位清單</h1>
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">待審核清單</h1>
                         <?php if (!isset($_GET["search"])) : ?>
+                            <?php if($pageCount != 0): ?>
                             <div class="dropdown">
                                 <a class="btn btn-main-color dropdown-toggle py-1 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     列表分頁
@@ -275,6 +276,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                             <div class="text-gray-600">
                                 目前在第<?= $page ?>頁
                             </div>
+                            <?php endif ?>
                         <?php else : ?>
                             <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3">回全部列表</a>
                         <?php endif ?>
@@ -353,9 +355,9 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                     <tr class="text-nowrap">
                                         <td><?= $row["name"] ?></td>
                                         <?php if ($row["organizer_type"] == 1) : ?>
-                                            <td>公司<i class="bi bi-record-fill mx-1" style="color: #6dbbb3"></i></td>
+                                            <td>公司<i class="bi bi-record-fill mx-1" style="color: #588afe"></i></td>
                                         <?php else : ?>
-                                            <td>個人<i class="bi bi-record-fill mx-1" style="color: #f9d781"></i></td>
+                                            <td>個人<i class="bi bi-record-fill mx-1" style="color: #fd7e14"></i></td>
                                         <?php endif ?>
                                         <td><?= $row["user_name"] ?></td>
                                         <td><?= $row["user_email"] ?></td>
