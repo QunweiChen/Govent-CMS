@@ -1,11 +1,29 @@
 <?php
 require_once("./db_conntect_govent.php");
-if (isset($_GET["use"])) {
+
+$use = isset($_GET["use"]) ? $_GET["use"] : null;
+$search = isset($search) ? $search : '';
+
+if ($use !== null) {
     $use = $_GET["use"];
-    $sqlTotal = "SELECT * FROM coupon WHERE coupon_valid=$use ";
+    $sqlTotal = "SELECT * FROM coupon WHERE coupon_valid='$use' ";
+    $sqlCount = "SELECT * FROM coupon WHERE coupon_valid='$use' "; //判斷幾筆資料
+} elseif (isset(($_GET["search"]))) {
+    $sqlTotal = "SELECT * FROM coupon WHERE (coupon_valid=2 OR coupon_valid=1)";
+    $sqlCount = "SELECT coupon.* ,coupon_valid_name, activity_name 
+    FROM coupon 
+    JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
+    JOIN activity_category ON coupon.activity_num=activity_category.id 
+    WHERE activity_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1)"; //幾筆資料
 } else {
     $sqlTotal = "SELECT * FROM coupon WHERE (coupon_valid=2 OR coupon_valid=1)";
+    $sqlCount = "SELECT * FROM coupon WHERE(coupon_valid=2 OR coupon_valid=1)"; //判斷幾筆資料
 }
+//幾筆資料
+$resultCount = $conn->query($sqlCount);
+$rowsCount = $resultCount->fetch_all(MYSQLI_ASSOC);
+$couponCount = $resultCount->num_rows;
+//查詢資料
 $resultTotal = $conn->query($sqlTotal);
 $totalUser = $resultTotal->num_rows;
 $perPage = 5;
@@ -18,21 +36,10 @@ if (isset($_GET["search"])) {
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
     JOIN activity_category ON coupon.activity_num=activity_category.id 
     WHERE activity_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1)";
-} elseif (isset($_GET["use"]) && isset($_GET["page"])) {
+} elseif (isset($_GET["use"]) && isset($_GET["page"]) && isset($_GET["order"])) {
     $use = $_GET["use"];
     $page = $_GET["page"];
-    // var_dump($use);
-    $starItem = ($page - 1) * $perPage;
-    $sql = "SELECT coupon.* ,coupon_valid_name, activity_name 
-    FROM coupon 
-    JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
-    JOIN activity_category ON coupon.activity_num=activity_category.id AND coupon_valid=$use LIMIT $starItem,$perPage";
-} elseif (isset($_GET["page"]) && isset($_GET["order"])) {
-    $page = $_GET["page"];
     $order = $_GET["order"];
-
-    $starItem = ($page - 1) * $perPage;
-    // var_dump( $starItem,$perPage);
     switch ($order) {
         case 1:
             $orderSql = "id ASC";
@@ -49,11 +56,37 @@ if (isset($_GET["search"])) {
         default:
             $orderSql = "id ASC";
     }
+    // var_dump($use);
+    $starItem = ($page - 1) * $perPage;
     $sql = "SELECT coupon.* ,coupon_valid_name, activity_name 
     FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
-    JOIN activity_category ON coupon.activity_num=activity_category.id WHERE(coupon_valid=2 OR coupon_valid=1)
-    ORDER BY $orderSql LIMIT $starItem,$perPage";
+    JOIN activity_category ON coupon.activity_num=activity_category.id AND coupon_valid='$use' ORDER BY $orderSql LIMIT $starItem,$perPage";
+} elseif (isset($_GET["page"]) && isset($_GET["order"])) {
+    $page = $_GET["page"];
+    $order = $_GET["order"];
+    switch ($order) {
+        case 1:
+            $orderSql = "id ASC";
+            break;
+        case 2:
+            $orderSql = "id DESC";
+            break;
+        case 3:
+            $orderSql = "activity_num ASC";
+            break;
+        case 4:
+            $orderSql = "activity_num DESC";
+            break;
+        default:
+            $orderSql = "id ASC";
+    }
+    // var_dump($use);
+    $starItem = ($page - 1) * $perPage;
+    $sql = "SELECT coupon.* ,coupon_valid_name, activity_name 
+    FROM coupon 
+    JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
+    JOIN activity_category ON coupon.activity_num=activity_category.id AND (coupon_valid=2 OR coupon_valid=1) ORDER BY $orderSql LIMIT $starItem,$perPage";
 } else {
     $page = 1;
     $order = 1;
@@ -63,27 +96,12 @@ if (isset($_GET["search"])) {
     JOIN activity_category ON coupon.activity_num=activity_category.id WHERE(coupon_valid=2 OR coupon_valid=1)
     LIMIT 0,$perPage";
 }
+//判斷超過頁碼
 
-//判斷幾筆資料
-if (isset($_GET["use"])) {
-    $use = $_GET["use"];
-    $sqlCount = "SELECT * FROM coupon WHERE coupon_valid=$use ";
-} elseif (isset(($_GET["search"]))) {
-    $sqlCount = "SELECT coupon.* ,coupon_valid_name, activity_name 
-    FROM coupon 
-    JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
-    JOIN activity_category ON coupon.activity_num=activity_category.id 
-    WHERE activity_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1)";
-} else {
-    $sqlCount = "SELECT * FROM coupon WHERE(coupon_valid=2 OR coupon_valid=1)";
-}
+
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 // var_dump($rows)
-//幾筆資料
-$resultCount = $conn->query($sqlCount);
-$rowsCount = $resultCount->fetch_all(MYSQLI_ASSOC);
-$couponCount = $resultCount->num_rows;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -201,10 +219,18 @@ $couponCount = $resultCount->num_rows;
                     <i class="bi bi-border-width"></i>
                     <span>訂單管理</span></a>
             </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="coupon-list.php">
-                    <i class="bi bi-ticket-fill"></i>
-                    <span>優惠卷管理</span></a>
+            <li class="nav-item">
+                <a class="nav-link collapsed text-shadow-20" href="coupon-list.php" data-toggle="collapse" data-target="#collapseCoupon" aria-expanded="true" aria-controls="collapseCoupon">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>優惠卷管理</span>
+                </a>
+                <div id="collapseCoupon" class="collapse" aria-labelledby="headingCoupon" data-parent="#accordionSidebar">
+                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
+                        <h6 class="collapse-header">Coupon Management</h6>
+                        <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
+                        <a class="collapse-item" href="add-coupon.php">優惠券新增</a>
+                    </div>
+                </div>
             </li>
             <!-- Divider -->
 
@@ -285,27 +311,25 @@ $couponCount = $resultCount->num_rows;
                         </div>
                         <div class="pb-2 d-flex justify-content-between orders align-items-center">
                             <div class="btn-group">
-                                <?php if (!isset($_GET["use"])) :  ?>
-                                <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>">總票券量</a>
-                                <a class="btn btn-outline-primary " href="coupon-list.php?page=<?= $page ?>&use=1">可使用</a>
-                                <a class="btn btn-outline-primary " href="coupon-list.php?page=<?= $page ?>&use=2">已停用</a>
-                                <?php else : ?>
-                                <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>">總票券量</a>
-                                <a class="btn btn-outline-primary <?php if ($use == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&use=1">可使用</a>
-                                <a class="btn btn-outline-primary <?php if ($use == 0) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&use=2">已停用</a>
-                                <?php endif; ?>
+                                <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=1&order=<?= $order ?>">總票券量</a>
+                                <a class="btn btn-outline-primary <?php if ($use == 1) echo "active"; ?>" href="coupon-list.php?page=1&use=1&order=<?= $order ?>">可使用</a>
+                                <a class="btn btn-outline-primary <?php if ($use == 2) echo "active"; ?>" href="coupon-list.php?page=1&use=2&order=<?= $order ?>">已停用</a>
                             </div>
                             <div class="orders">
                                 <div class="btn-group">
                                     <?php if (!isset($_GET["order"])) : $order = 1; ?>
                                     <?php endif; ?>
-                                    <a class="btn btn-outline-primary <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1">ID<i class="bi bi-sort-down-alt"></i></a>
-                                    <a class="btn btn-outline-primary <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2">ID<i class="bi bi-sort-down"></i></a>
-                                    <a class="btn btn-outline-primary <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3">活動類別<i class="bi bi-sort-down-alt"></i></a>
-                                    <a class="btn btn-outline-primary <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別<i class="bi bi-sort-down"></i></a>
-                                </div>
-                                <div class="btn-group ms-2">
-                                    <a class="btn btn-outline-primary " href="add-coupon.php">新增　<i class="bi bi-clipboard-plus"></i></a>
+                                    <?php if (isset($_GET["use"])) : ?>
+                                        <a class="btn btn-outline-primary <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1&use=<?= $use ?>">ID<i class="bi bi-sort-down-alt"></i></a>
+                                        <a class="btn btn-outline-primary <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2&use=<?= $use ?>">ID<i class="bi bi-sort-down"></i></a>
+                                        <a class="btn btn-outline-primary <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3&use=<?= $use ?>">活動類別<i class="bi bi-sort-down-alt"></i></a>
+                                        <a class="btn btn-outline-primary <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4&use=<?= $use ?>">活動類別<i class="bi bi-sort-down"></i></a>
+                                    <?php else : ?>
+                                        <a class="btn btn-outline-primary <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1">ID<i class="bi bi-sort-down-alt"></i></a>
+                                        <a class="btn btn-outline-primary <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2">ID<i class="bi bi-sort-down"></i></a>
+                                        <a class="btn btn-outline-primary <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3">活動類別<i class="bi bi-sort-down-alt"></i></a>
+                                        <a class="btn btn-outline-primary <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別<i class="bi bi-sort-down"></i></a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -359,35 +383,39 @@ $couponCount = $resultCount->num_rows;
                             </tbody>
                         </table>
                         <?php if (!isset($_GET["search"])) : ?>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <?php if (isset($_GET["use"])) : ?>
+                            <?php if (isset($_GET["use"])) : ?>
+                                <nav aria-label="Page navigation example d-flex justify-content-between align-items-center">
+                                    <ul class="pagination">
                                         <li class="page-item">
                                             <?php if ($page == 1) : ?>
-                                                <a class="page-link" href="coupon-list.php?page=<?= $page ?>&use=<?= $use ?>" aria-label="Previous">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             <?php else : ?>
-                                                <a class="page-link" href="coupon-list.php?page=<?= $page - 1 ?>&use=<?= $use ?>" aria-label="Previous">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page - 1 ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             <?php endif; ?>
                                         </li>
                                         <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
-                                            <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="coupon-list.php?page=<?= $i ?>&use=<?= $use ?>"><?= $i ?></a></li>
+                                            <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="coupon-list.php?page=<?= $i ?>&use=<?= $use ?>&order=<?= $order ?>"><?= $i ?></a></li>
                                         <?php endfor; ?>
                                         <li class="page-item">
                                             <?php if ($page == $pageCount) : ?>
-                                                <a class="page-link" href="coupon-list.php?page=<?= $page ?>&use=<?= $use ?>" aria-label="Next">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             <?php else : ?>
-                                                <a class="page-link" href="coupon-list.php?page=<?= $page + 1 ?>&use=<?= $use ?>" aria-label="Next">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page + 1 ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             <?php endif; ?>
                                         </li>
-                                    <?php else : ?>
+                                    </ul>
+                                </nav>
+                            <?php else : ?>
+                                <nav aria-label="Page navigation example d-flex justify-content-between align-items-center">
+                                    <ul class="pagination">
                                         <li class="page-item">
                                             <?php if ($page == 1) : ?>
                                                 <a class="page-link" href="coupon-list.php?page=<?= $page ?>&order=<?= $order ?>" aria-label="Previous">
@@ -413,9 +441,9 @@ $couponCount = $resultCount->num_rows;
                                                 </a>
                                             <?php endif; ?>
                                         </li>
-                                    <?php endif; ?>
-                                </ul>
-                            </nav>
+                                    </ul>
+                                </nav>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 </div>

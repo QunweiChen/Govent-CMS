@@ -1,13 +1,21 @@
 <?php
 require_once("./db_conntect_govent.php");
-
+session_start();
 if (!isset($_POST["name"])) {
     echo "請循正常管道進入";
     die;
 }
-if (!isset($_POST["couponValid"], $_POST["discountType"])) {
-    echo "請輸入資料";
-    die;
+
+// if (!isset($_POST["couponValid"], $_POST["discountType"])) {
+//     echo "請輸入資料";
+//     die;
+// }
+$_SESSION["error"]["filledData"] = $_POST;
+if(empty($_POST["name"] && $_POST["couponValid"] && $_POST["discountType"] && $_POST["discountValid"] && $_POST["startAt"] && $_POST["expiresAt"] && $_POST["priceMin"] && $_POST["maxUsage"] && $_POST["activityNum"] )){
+    $message="請輸入所有欄位資料";
+    $_SESSION["error"]["message"]=$message;
+    header("location: add-coupon.php");
+    exit;
 }
 
 $code = $_POST["code"];
@@ -20,11 +28,6 @@ $expiresAt = $_POST["expiresAt"];
 $priceMin = $_POST["priceMin"];
 $maxUsage = $_POST["maxUsage"];
 $activityNum = $_POST["activityNum"];
-
-if (empty($name) || empty($couponValid) || empty($discountType) || empty($discountValid) || empty($startAt) || empty($expiresAt) || empty($priceMin) || empty($maxUsage) || empty($activityNum)) {
-    echo "請輸入資料";
-    die;
-}
 
 //echo "$couponValid,$discountType,$code,$name,$discountValid,$startAt,$expiresAt,$priceMin,$maxUsage,$activityNum";
 
@@ -39,6 +42,7 @@ if ($conn->query($sql) === TRUE) {
     $resultcoupon = $conn->query($sqlcoupon);
     $rowcoupon = $resultcoupon->fetch_assoc();
     var_dump($rowcoupon);
+    session_destroy();
     header("location:coupon.php?id={$last_id}");
     
 } else {

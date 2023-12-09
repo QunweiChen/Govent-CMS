@@ -11,7 +11,13 @@ JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id
 JOIN activity_category ON coupon.activity_num=activity_category.id WHERE coupon.id=$id";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
-// var_dump($row);
+
+//活動類別分類
+$sqlActivity = "SELECT * FROM activity_category ";
+$resultActivity = $conn->query($sqlActivity);
+$rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,10 +135,18 @@ $row = $result->fetch_assoc();
                     <i class="bi bi-border-width"></i>
                     <span>訂單管理</span></a>
             </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="coupon-list.php">
-                    <i class="bi bi-ticket-fill"></i>
-                    <span>優惠卷管理</span></a>
+            <li class="nav-item">
+                <a class="nav-link collapsed text-shadow-20" href="coupon-list.php" data-toggle="collapse" data-target="#collapseCoupon" aria-expanded="true" aria-controls="collapseCoupon">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>優惠卷管理</span>
+                </a>
+                <div id="collapseCoupon" class="collapse" aria-labelledby="headingCoupon" data-parent="#accordionSidebar">
+                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
+                        <h6 class="collapse-header">Coupon Management</h6>
+                        <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
+                        <a class="collapse-item" href="add-coupon.php">優惠券新增</a>
+                    </div>
+                </div>
             </li>
             <!-- Divider -->
 
@@ -311,14 +325,9 @@ $row = $result->fetch_assoc();
                             <div class="row mb-3">
                                 <label for="activityNum" class="col-form-label col-sm-2">活動類型</label>
                                 <select class="form-select col-sm-10" id="" name="activityNum">
-                                    <option name="activity1" value="1" <?php if ($row["activity_num"] == 1) echo "selected" ?>>演唱會</option>
-                                    <option name="activity2" value="2" <?php if ($row["activity_num"] == 2) echo "selected" ?>>展覽</option>
-                                    <option name="activity3" value="3" <?php if ($row["activity_num"] == 3) echo "selected" ?>>快閃限定活動</option>
-                                    <option name="activity4" value="4" <?php if ($row["activity_num"] == 4) echo "selected" ?>>市集</option>
-                                    <option name="activity5" value="5" <?php if ($row["activity_num"] == 5) echo "selected" ?>>粉絲見面會</option>
-                                    <option name="activity6" value="6" <?php if ($row["activity_num"] == 6) echo "selected" ?>>課程講座</option>
-                                    <option name="activity7" value="7" <?php if ($row["activity_num"] == 7) echo "selected" ?>>體育賽事</option>
-                                    <option name="activity8" value="8" <?php if ($row["activity_num"] == 8) echo "selected" ?>>景點門票</option>
+                                    <?php foreach ($rowsActivity as $rowActivity) : ?>
+                                        <option name="activity<?= $rowActivity["id"] ?>" value="<?= $rowActivity["id"] ?>" <?php if ($row["activity_num"] == $rowActivity["id"]) echo "selected" ?>><?= $rowActivity["activity_name"] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="d-flex justify-content-between">

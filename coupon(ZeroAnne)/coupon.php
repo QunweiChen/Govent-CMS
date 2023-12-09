@@ -129,10 +129,18 @@ $row = $result->fetch_assoc();
                     <i class="bi bi-border-width"></i>
                     <span>訂單管理</span></a>
             </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="coupon-list.php">
-                    <i class="bi bi-ticket-fill"></i>
-                    <span>優惠卷管理</span></a>
+            <li class="nav-item">
+                <a class="nav-link collapsed text-shadow-20" href="coupon-list.php" data-toggle="collapse" data-target="#collapseCoupon" aria-expanded="true" aria-controls="collapseCoupon">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>優惠卷管理</span>
+                </a>
+                <div id="collapseCoupon" class="collapse" aria-labelledby="headingCoupon" data-parent="#accordionSidebar">
+                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
+                        <h6 class="collapse-header">Coupon Management</h6>
+                        <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
+                        <a class="collapse-item" href="add-coupon.php">優惠券新增</a>
+                    </div>
+                </div>
             </li>
             <!-- Divider -->
 

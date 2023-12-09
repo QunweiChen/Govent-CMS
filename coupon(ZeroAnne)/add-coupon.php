@@ -1,3 +1,12 @@
+<?php
+session_start();
+session_destroy();
+require_once("./db_conntect_govent.php");
+$sqlActivity = "SELECT * FROM activity_category ";
+$resultActivity=$conn->query($sqlActivity);
+$rowsActivity=$resultActivity->fetch_all(MYSQLI_ASSOC);
+// var_dump($rows)
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -114,10 +123,18 @@
                     <i class="bi bi-border-width"></i>
                     <span>訂單管理</span></a>
             </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="coupon-list.php">
-                    <i class="bi bi-ticket-fill"></i>
-                    <span>優惠卷管理</span></a>
+            <li class="nav-item">
+                <a class="nav-link collapsed text-shadow-20" href="coupon-list.php" data-toggle="collapse" data-target="#collapseCoupon" aria-expanded="true" aria-controls="collapseCoupon">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span>優惠卷管理</span>
+                </a>
+                <div id="collapseCoupon" class="collapse" aria-labelledby="headingCoupon" data-parent="#accordionSidebar">
+                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
+                        <h6 class="collapse-header">Coupon Management</h6>
+                        <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
+                        <a class="collapse-item" href="add-coupon.php">優惠券新增</a>
+                    </div>
+                </div>
             </li>
             <!-- Divider -->
 
@@ -188,10 +205,17 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">新增優惠券</h1>
+                        <div class="d-flex align-items-end ">
+                            <h1 class="h3 mb-0 text-gray-800">新增優惠券</h1>
+                            <!-- session -->
+                            <?php if (isset($_SESSION["error"]["message"])) : ?>
+                                <div class="ms-3 px-2 alert-danger text-danger" role="alert"><?= $_SESSION["error"]["message"] ?></div>
+                            <?php endif; ?>
+                            <!-- session -->
+                        </div>
                         <div class="d-flex align-items-center">
                             <a href="coupon-list.php" class="text-primary pe-3">回優惠券列表</a>
-                            <a href="coupon-list.php" class=""><i class="bi bi-box-arrow-right fs-4" ></i></a>
+                            <a href="coupon-list.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
                         </div>
                     </div>
                     <div class="container">
@@ -199,13 +223,13 @@
                             <div class="row mb-3">
                                 <label for="name" class="col-sm-2 col-form-label">優惠券名稱</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="例 : 清涼優惠">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="例 : 清涼優惠" value="<?= isset($_SESSION['error']['filledData']['name']) ? $_SESSION['error']['filledData']['name'] : ' 例 : 清涼優惠 ' ?>" require>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="code" class="col-sm-2 col-form-label">兌換代碼</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="code" name="code" placeholder="例: ABC1234">
+                                    <input type="text" class="form-control" id="code" name="code" placeholder="例: ABC1234" require>
                                 </div>
                                 <button type="button" class="col-sm-2 btn text-primary" id="codebtn">隨機生成一組亂碼</button>
                                 <p class="fs-6">(自定義前三個字母後四個數字)</p>
@@ -214,13 +238,13 @@
                                 <label for="couponValid" class="col-sm-2 col-form-label">優惠券狀態</label>
                                 <div class="col-sm-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="1">
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="1" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 1) ? 'checked' : '' ?> require>
                                         <label class="form-check-label" for="couponValid1">
                                             可使用
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="2">
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="2" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 2) ? 'checked' : '' ?> require>
                                         <label class="form-check-label" for="couponValid0">
                                             已停用
                                         </label>
@@ -231,13 +255,13 @@
                                 <label for="discountType" class="col-sm-2 col-form-label">折扣類型</label>
                                 <div class="col-sm-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="打折">
+                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="打折" <?= (isset($_SESSION['error']['filledData']['discountType']) && $_SESSION['error']['filledData']['discountType'] == '打折') ? 'checked' : '' ?> require>
                                         <label class="form-check-label" for="discountType1">
                                             依百分比折扣
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="金額">
+                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="金額" <?= (isset($_SESSION['error']['filledData']['discountType']) && $_SESSION['error']['filledData']['discountType'] == '金額') ? 'checked' : '' ?> require>
                                         <label class="form-check-label" for="discountType2">
                                             依金額折價
                                         </label>
@@ -247,40 +271,35 @@
                             <div class="row mb-3">
                                 <label for="discountValid" class="col-sm-2 col-form-label">優惠券百分比折扣<br>/金額折價</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="discountValid" name="discountValid" placeholder="優惠券百分比折扣/金額折價 例:0.75/50">
+                                    <input type="text" class="form-control" id="discountValid" name="discountValid" placeholder="優惠券百分比折扣/金額折價 例:0.75/50" value="<?= isset($_SESSION['error']['filledData']['discountValid']) ? $_SESSION['error']['filledData']['discountValid'] : '優惠券百分比折扣/金額折價 例:0.75/50 ' ?>" require>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="startAt" class="col-sm-2 col-form-label">開始日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="startAt" name="startAt">
+                                    <input type="date" class="form-control" id="startAt" name="startAt" value="<?= isset($_SESSION['error']['filledData']['startAt']) ? $_SESSION['error']['filledData']['startAt'] : ' ' ?>" require>
                                 </div>
                                 <label for="expiresAt" class="col-sm-2 col-form-label">到期日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt">
+                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt" value="<?= isset($_SESSION['error']['filledData']['expiresAt']) ? $_SESSION['error']['filledData']['expiresAt'] : ' ' ?>" require>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="priceMin" class="col-sm-2 col-form-label">最低消費金額</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="priceMin" name="priceMin">
+                                    <input type="text" class="form-control" id="priceMin" name="priceMin" value="<?= isset($_SESSION['error']['filledData']['priceMin']) ? $_SESSION['error']['filledData']['priceMin'] : ' ' ?>" require>
                                 </div>
                                 <label for="maxUsage" class="col-sm-2 col-form-label">可使用張數</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="priceMin" name="maxUsage">
+                                    <input type="text" class="form-control" id="priceMin" name="maxUsage" value="<?= isset($_SESSION['error']['filledData']['maxUsage']) ? $_SESSION['error']['filledData']['maxUsage'] : ' ' ?>" require>
                                 </div>
                             </div>
                             <div class="row mb-3 ">
                                 <label for="activityNum" class="col-form-label col-sm-2">活動類型</label>
                                 <select class="form-select col-sm-10 " id="" name="activityNum">
-                                    <option name="activity1" value="1">演唱會</option>
-                                    <option name="activity2" value="2">展覽</option>
-                                    <option name="activity3" value="3">快閃限定活動</option>
-                                    <option name="activity4" value="4">市集</option>
-                                    <option name="activity5" value="5">粉絲見面會</option>
-                                    <option name="activity6" value="6">課程講座</option>
-                                    <option name="activity7" value="7">體育賽事</option>
-                                    <option name="activity8" value="8">景點門票</option>
+                                    <?php foreach($rowsActivity as $rowActivity) : ?>
+                                    <option name="activity<?= $rowActivity["id"] ?>" value="<?= $rowActivity["id"] ?>" <?= isset($_SESSION['error']['filledData']['activityNum']) && $_SESSION['error']['filledData']['activityNum'] == $rowActivity["id"] ? 'selected' : '' ?>><?= $rowActivity["activity_name"] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                             <button class="btn btn-primary" type="submit">送出</button>
