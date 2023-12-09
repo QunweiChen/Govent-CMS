@@ -218,7 +218,7 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                     <div class="d-sm-flex align-items-center mb-4 justify-content-between mx-4 pt-3">
                         <div class="d-flex">
                             <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">主辦單位資料</h1>
-                            <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3">回全部列表</a>
+                            <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3"><i class="bi bi-arrow-left me-1"></i>回全部列表</a>
                         </div>
                         <div>
                             <a class="btn btn-main-color me-1" href="organizer-edit.php?id=<?= $row["id"] ?>">

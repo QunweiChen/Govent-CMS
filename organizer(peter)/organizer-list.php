@@ -276,7 +276,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 目前在第<?= $page ?>頁
                             </div>
                         <?php else : ?>
-                            <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3">回全部列表</a>
+                            <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3"><i class="bi bi-arrow-left me-1"></i>回全部列表</a>
                         <?php endif ?>
                         <div class="ms-auto">
                             <form action="">
@@ -284,7 +284,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                     <?php if (!isset($_GET["search"])) : ?>
                                         <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="search" />
                                     <?php else : ?>
-                                        <input type="search" class="form-control rounded" placeholder="<?= $_GET["search"] ?>" aria-label="Search" aria-describedby="search-addon" name="search" />
+                                        <input type="search" class="form-control rounded" value="<?= $_GET["search"] ?>" aria-label="Search" aria-describedby="search-addon" name="search" />
                                     <?php endif ?>
                                     <button class="input-group-text rounded border-0 ms-2" id="search-addon" type="submit">
                                         <i class="fas fa-search"></i>
