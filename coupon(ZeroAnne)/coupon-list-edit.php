@@ -229,7 +229,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <h6 class="collapse-header">Coupon Management</h6>
                         <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
                         <a class="collapse-item" href="add-coupon.php">新增優惠券</a>
-                        <a class="collapse-item" href="coupon-list-edit.php">編輯優惠券</a>
+                        <a class="collapse-item" href="coupon-list-edit.php?page=1$order=1">編輯優惠券</a>
                     </div>
                 </div>
             </li>
@@ -361,7 +361,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                     <th>最低消費</th>
                                     <th>剩餘張數</th>
                                     <th>適用活動</th>
-                                    <th>詳細資訊</th>
+                                    <th>編輯資訊</th>
                                 </tr>
                             </thead>
                             <tbody class="">
@@ -379,7 +379,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                         <td><?= $row["max_usage"] ?></td>
                                         <td><?= $row["activity_name"] ?></td>
                                         <td>
-                                            <a class="btn text-primary" href="coupon.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-ticket-perforated-fill"></i></a>
+                                            <a class="btn text-primary" href="coupon-edit.php?id=<?= $row["id"] ?>" title="編輯資料"><i class="bi bi-pencil-fill"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

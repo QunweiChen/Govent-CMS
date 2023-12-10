@@ -30,7 +30,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>修改優惠券</title>
+    <title>編輯優惠券</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -145,6 +145,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                         <h6 class="collapse-header">Coupon Management</h6>
                         <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
                         <a class="collapse-item" href="add-coupon.php">優惠券新增</a>
+                        <a class="collapse-item" href="coupon-edit.php">編輯優惠券</a>
                     </div>
                 </div>
             </li>
@@ -235,10 +236,10 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                 </div>
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">更改優惠券</h1>
+                        <h1 class="h3 mb-0 text-gray-800">編輯優惠券</h1>
                         <div class="d-flex align-items-center">
-                            <a href="coupon-list.php" class="text-primary pe-3">回優惠券列表</a>
-                            <a href="coupon-list.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
+                            <a href="coupon-list-edit.php" class="text-primary pe-3">回編輯列表</a>
+                            <a href="coupon-list-edit.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
                         </div>
                     </div>
                     <div class="container">

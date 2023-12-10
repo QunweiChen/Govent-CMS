@@ -139,6 +139,7 @@ $row = $result->fetch_assoc();
                         <h6 class="collapse-header">Coupon Management</h6>
                         <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
                         <a class="collapse-item" href="add-coupon.php">優惠券新增</a>
+                        <a class="collapse-item" href="coupon-list-edit.php?page=1$order=1">編輯優惠券</a>
                     </div>
                 </div>
             </li>
@@ -214,8 +215,8 @@ $row = $result->fetch_assoc();
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">個別優惠券資訊</h1>
                         <div class="d-flex align-items-center">
-                            <a href="coupon-list.php" class="text-primary pe-3">回優惠券列表</a>
-                            <a href="coupon-list.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
+                            <a href="coupon-list-edit.php" class="text-primary pe-3">回編輯列表</a>
+                            <a href="coupon-list-edit.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
                         </div>
                     </div>
                     <div class="container">
@@ -260,7 +261,7 @@ $row = $result->fetch_assoc();
                             </tr>
                         </table>
                         <div class="py-1">
-                            <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn text-primary btn-lg" title="修改資料"><i class="bi bi-pencil-fill"></i>修改</a>
+                            <a href="coupon-edit.php?id=<?= $row["id"] ?>" class="btn text-primary btn-lg" title="編輯資料"><i class="bi bi-pencil-fill"></i>編輯修改</a>
                         </div>
                     </div>
                 </div>
