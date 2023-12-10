@@ -257,8 +257,8 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
         <div class="container-fluid">
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">訂單資訊</h1>
-          <!-- 訂單資訊選項 -->
 
+          <!-- 訂單資訊選項 -->
           <div class="btn-group" role="group" aria-label="Basic outlined example">
             <a href="index-Abo.php?status=<?= 3 ?>&page=<?= $page ?>">
               <button type="button" class="btn btn-outline-primary">
@@ -273,7 +273,24 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
               </button></a>
 
           </div>
-
+          <!-- 時間搜尋 -->
+          <div class="container mt-5 mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <form class="form-inline justify-content-center" action="date-range.php">
+                  <div class="form-group">
+                    <label for="startDateTime">開始日期：</label>
+                    <input type="date" class="form-control" id="startDateTime" name="startDateTime" required>
+                  </div>
+                  <div class="form-group ml-2">
+                    <label for="endDateTime">結束日期：</label>
+                    <input type="date" class="form-control" id="endDateTime" name="endDateTime" required>
+                  </div>
+                  <button class="btn btn-outline-secondary ml-2" type="submit" id="searchButton">搜尋</button>
+                </form>
+              </div>
+            </div>
+          </div>
           <!-- 頁數 -->
           <nav aria-label="Page navigation example ">
             <ul class="pagination justify-content-center">
