@@ -6,7 +6,7 @@ if (!isset($_GET["id"])) {
 }
 $id = $_GET["id"];
 
-if(isset($_GET["updateType"])) {
+if (isset($_GET["updateType"])) {
     $updateType = $_GET["updateType"];
 }
 
@@ -113,6 +113,7 @@ $row = $result->fetch_assoc();
                         <h6 class="collapse-header">Orangizer Management</h6>
                         <a class="collapse-item" href="organizer-list.php">主辦單位清單</a>
                         <a class="collapse-item" href="organizer-review-list.php">待審核清單</a>
+                        <a class="collapse-item" href="organizer-add.php">手動新增</a>
                     </div>
                 </div>
             </li>
@@ -213,15 +214,15 @@ $row = $result->fetch_assoc();
                         <!-- Page Heading -->
                         <input type="text" class="d-none" name="id" value="<?= $row["id"] ?>">
                         <input type="text" class="d-none" name="organizerType" value="<?= $row["organizer_type"] ?>">
-                        <?php if(isset($_GET["updateType"])): ?>
-                        <input type="text" class="d-none" name="updateType" value="<?= $updateType ?>">
+                        <?php if (isset($_GET["updateType"])) : ?>
+                            <input type="text" class="d-none" name="updateType" value="<?= $updateType ?>">
                         <?php endif ?>
 
                         <div class="d-sm-flex align-items-center mb-4 justify-content-between mx-4 pt-3">
                             <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">編輯資料
-                            <?php if(isset($_GET["updateType"])): ?>
-                            （升級企業用戶）
-                            <?php endif ?>
+                                <?php if (isset($_GET["updateType"])) : ?>
+                                    （升級企業用戶）
+                                <?php endif ?>
                             </h1>
                             <div class="d-flex">
                                 <a class="btn btn-secondary mx-2" href="organizer-profile.php?id=<?= $row["id"] ?>">取消</a>
@@ -304,10 +305,10 @@ $row = $result->fetch_assoc();
                                                         <p class="mb-0">用戶類別</p>
                                                     </div>
                                                     <div class="col-sm-9">
-                                                        <?php if(!isset($_GET["updateType"])): ?>
-                                                        <span class="btn mb-0 px-2 py-1 rounded disabled btn-warning text-black me-1">個人用戶</span>
-                                                        <a href="organizer-edit.php?id=<?=$id?>&updateType=1" class="btn mb-0 btn-danger px-2 py-1 rounded">升級企業用戶</a>
-                                                        <?php else: ?>
+                                                        <?php if (!isset($_GET["updateType"])) : ?>
+                                                            <span class="btn mb-0 px-2 py-1 rounded disabled btn-warning text-black me-1">個人用戶</span>
+                                                            <a href="organizer-edit.php?id=<?= $id ?>&updateType=1" class="btn mb-0 btn-danger px-2 py-1 rounded">升級企業用戶</a>
+                                                        <?php else : ?>
                                                             <span class="btn mb-0 px-2 py-1 rounded disabled btn-success me-1">企業用戶</span>
                                                         <?php endif ?>
                                                     </div>
@@ -321,25 +322,25 @@ $row = $result->fetch_assoc();
                                                         <input type="text" class="form-control" name="name" value="<?= $row["name"] ?>">
                                                     </div>
                                                 </div>
-                                                <?php if(isset($_GET["updateType"])): ?>
-                                                <hr>
-                                                <div class="row align-items-center">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">公司抬頭</p>
+                                                <?php if (isset($_GET["updateType"])) : ?>
+                                                    <hr>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-sm-3">
+                                                            <p class="mb-0">公司抬頭</p>
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" name="businessName" value="<?= $row["business_name"] ?>">
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control" name="businessName" value="<?= $row["business_name"] ?>">
+                                                    <hr>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-sm-3">
+                                                            <p class="mb-0">統一編號</p>
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="businessInvoice" maxlength="8" value="<?= $row["business_invoice"] ?>">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <hr>
-                                                <div class="row align-items-center">
-                                                    <div class="col-sm-3">
-                                                        <p class="mb-0">統一編號</p>
-                                                    </div>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="businessInvoice" maxlength="8" value="<?= $row["business_invoice"] ?>">
-                                                    </div>
-                                                </div>
                                                 <?php endif ?>
                                             </div>
                                         </div>
@@ -383,7 +384,7 @@ $row = $result->fetch_assoc();
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>

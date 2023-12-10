@@ -117,6 +117,7 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                         <h6 class="collapse-header">Orangizer Management</h6>
                         <a class="collapse-item" href="organizer-list.php">主辦單位清單</a>
                         <a class="collapse-item" href="organizer-review-list.php">待審核清單</a>
+                        <a class="collapse-item" href="organizer-add.php">手動新增</a>
                     </div>
                 </div>
             </li>
@@ -252,7 +253,7 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                            <a href="organizer-doDelete.php?id=<?=$row["id"]?>" class="btn btn-danger">確定</a>
+                                            <a href="organizer-doDelete.php?id=<?= $row["id"] ?>" class="btn btn-danger">確定</a>
                                         </div>
                                     </div>
                                 </div>
@@ -290,25 +291,39 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                                                         <h5 class="modal-title" id="exampleModalLabel">更換大頭貼</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        ...
-                                                    </div>
-                                                    <div class="modal-footer d-flex justify-content-between">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                                        <form action="organizer-avatar-doUpload.php" method="post" enctype="multipart/form-data">
+                                                    <form action="organizer-avatar-doUpload.php" method="post" enctype="multipart/form-data">
+                                                        <div class="modal-body row">
+                                                            <img src="" alt="" id="preview" class="col rounded-circle">
+                                                        </div>
+                                                        <div class="modal-footer d-flex justify-content-between">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                                                             <input type="text" class="d-none" name="id" value="<?= $row["id"] ?>">
-                                                            <label class="btn btn-main-color mt-2 me-1">
-                                                                <div>上傳</div>
-                                                                <input class="d-none" type="file" name="avatar" accept="image/gif,image/jpeg,image/png,.svg">
-                                                            </label>
-                                                            <input type="submit" class="btn btn-main-color" name="" id="" value="送出">
-                                                        </form>
-                                                    </div>
+                                                            <div>
+                                                                <label class="btn btn-main-color mt-2 me-1">
+                                                                    <div>上傳</div>
+                                                                    <input class="d-none" type="file" name="avatar" id="upload-avater" accept="image/gif,image/jpeg,image/png,.svg">
+                                                                </label>
+                                                                <input type="submit" class="btn btn-main-color" name="" id="" value="送出">
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
                                         <h4 class="my-3 font-weight-bolder"><?= $row["name"] ?></h4>
+                                        <script>
+                                            let input = document.getElementById("upload-avater");
+                                            // let previewImg = document.getElementsById("preview");
+                                            var previewImg = document.getElementsByTagName('img')[2];
 
+                                            function upload(e) {
+                                                let uploadImg = e.target.files || e.dataTransfer.files;
+                                                console.log(uploadImg);
+                                                previewImg.src = window.URL.createObjectURL(uploadImg[0]);
+                                            }
+
+                                            input.addEventListener('change', upload);
+                                        </script>
                                     </div>
                                 </div>
                                 <div class="card mb-4 mb-lg-0 border-0 shadow">
@@ -393,7 +408,7 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                                                     <p class="mb-0">用戶類別</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                <span class="btn mb-0 px-2 py-1 rounded disabled btn-warning text-black me-2">個人用戶</span>
+                                                    <span class="btn mb-0 px-2 py-1 rounded disabled btn-warning text-black me-2">個人用戶</span>
                                                 </div>
                                             </div>
                                             <hr>

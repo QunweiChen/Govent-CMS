@@ -161,6 +161,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <h6 class="collapse-header">Orangizer Management</h6>
                         <a class="collapse-item" href="organizer-list.php">主辦單位清單</a>
                         <a class="collapse-item" href="organizer-review-list.php">待審核清單</a>
+                        <a class="collapse-item" href="organizer-add.php">手動新增</a>
                     </div>
                 </div>
             </li>

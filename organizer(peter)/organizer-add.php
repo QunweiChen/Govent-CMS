@@ -1,69 +1,19 @@
 <?php
 require_once("../connect_server.php");
 
-$sqlTotal = "SELECT * FROM organizer WHERE valid = -1";
-$resultTotal = $conn->query($sqlTotal);
-$totalUser = $resultTotal->num_rows;
-$perPage = 10;
+$sqlMember = "SELECT name, username FROM member_list";
+$resultMember = $conn->query($sqlMember);
+$rows = $resultMember->fetch_all(MYSQLI_ASSOC);
 
-$pageCount = ceil($totalUser / $perPage); //celi=無條件進位
-
-if (isset($_GET["search"])) {
-    $search = $_GET["search"];
-    $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.name LIKE '%$search%' AND organizer.valid = -1
-    ORDER BY id ASC";
-    // $sql = "SELECT * FROM organizer WHERE name LIKE '%$search%'";
-} elseif (isset($_GET["page"]) && isset($_GET["order"])) {
-    $page = $_GET["page"];
-    $order = $_GET["order"];
-    switch ($order) {
-        case 1:
-            $orderSql = "id ASC"; //ASC升幕
-            break;
-        case 2:
-            $orderSql = "name ASC";
-            break;
-        case 3:
-            $orderSql = "name DESC";
-            break;
-        case 4:
-            $orderSql = "organizer_type ASC";
-            break;
-        case 5:
-            $orderSql = "organizer_type DESC";
-            break;
-        case 6:
-            $orderSql = "user_name ASC";
-            break;
-        case 7:
-            $orderSql = "user_name DESC";
-            break;
-        case 8:
-            $orderSql = "created_at ASC";
-            break;
-        case 9:
-            $orderSql = "created_at DESC";
-            break;
-        default:
-            $orderSql = "id ASC";
-    }
-    $startItem = ($page - 1) * $perPage;
-    $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.valid = -1
-    ORDER BY $orderSql LIMIT $startItem,$perPage";
-} else {
-    $order = 1;
-    $page = 1;
-    $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email FROM organizer
-    JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.valid = -1
-    ORDER BY id ASC LIMIT 0,$perPage";
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
+    $sql = "SELECT * FROM member_list WHERE id = $id";
+    // $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email, member_list.phone AS user_phone FROM organizer
+    // JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.id = $id";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
 }
-$result = $conn->query($sql);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +26,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>待審核清單</title>
+    <title>主辦單位資料</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -89,6 +39,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this template-->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="css/govent.css" rel="stylesheet">
     <link href="organizer.css" rel="stylesheet">
@@ -257,122 +208,29 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-
                     <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
-                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">待審核清單</h1>
-                        <?php if (!isset($_GET["search"])) : ?>
-                            <?php if ($pageCount != 0) : ?>
-                                <div class="dropdown">
-                                    <a class="btn btn-main-color dropdown-toggle py-1 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        列表分頁
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">手動新增（主辦單位）</h1>
+                    </div>
+                    <div class="dropdown mx-4">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown button
+                        </button>
+                        <!-- <?php print_r($rows) ?> -->
+                        <ul class="dropdown-menu" style="max-height: 500px; overflow-y:auto;">
+                            <?php foreach ($rows as $row) : ?>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="row" style="width: 450px">
+                                            <div class="col-4">會員名：<?= $row["name"] ?></div>
+                                            <div class="col">帳號：<?= $row["username"] ?></div>
+                                        </div>
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
-                                            <li><a class="dropdown-item" href="organizer-list.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
-                                        <?php endfor ?>
-                                    </ul>
-                                </div>
-                                <div class="text-gray-600">
-                                    目前在第<?= $page ?>頁
-                                </div>
-                            <?php endif ?>
-                        <?php else : ?>
-                            <a href="organizer-list.php" class="btn btn-main-color py-1 mx-3">回全部列表</a>
-                        <?php endif ?>
-                        <div class="ms-auto">
-                            <form action="">
-                                <div class="input-group rounded">
-                                    <?php if (!isset($_GET["search"])) : ?>
-                                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="search" />
-                                    <?php else : ?>
-                                        <input type="search" class="form-control rounded" placeholder="<?= $_GET["search"] ?>" aria-label="Search" aria-describedby="search-addon" name="search" />
-                                    <?php endif ?>
-                                    <button class="input-group-text rounded border-0 ms-2" id="search-addon" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                                </li>
+                                <hr class="m-1">
+                            <?php endforeach ?>
+                        </ul>
                     </div>
-                    <!-- Content Row -->
 
-                    <div>
-                        <table class="table table-hover table-light mx-3">
-                            <?php if (!isset($_GET["search"])) : ?>
-                                <thead>
-                                    <tr class="text-nowrap">
-                                        <th scope="col">
-                                            主辦單位名稱
-                                            <?php if ($order != 2) : ?>
-                                                <a href="organizer-list.php?page=<?= $page ?>&order=2" class=""><i class="bi bi-caret-down-square-fill"></i></a>
-                                            <?php else : ?>
-                                                <a href="organizer-list.php?page=<?= $page ?>&order=3" class=""><i class="bi bi-caret-up-square-fill"></i></a>
-                                            <?php endif ?>
-                                        </th>
-                                        <th scope="col">
-                                            身分
-                                            <?php if ($order != 4) : ?>
-                                                <a href="organizer-list.php?page=<?= $page ?>&order=4" class=""><i class="bi bi-caret-down-square-fill"></i></a>
-                                            <?php else : ?>
-                                                <a href="organizer-list.php?page=<?= $page ?>&order=5" class=""><i class="bi bi-caret-up-square-fill"></i></a>
-                                            <?php endif ?>
-                                        </th>
-                                        <th scope="col">
-                                            關聯會員名稱
-                                            <?php if ($order != 6) : ?>
-                                                <a href="organizer-list.php?page=<?= $page ?>&order=6" class=""><i class="bi bi-caret-down-square-fill"></i></a>
-                                            <?php else : ?>
-                                                <a href="organizer-list.php?page=<?= $page ?>&order=7" class=""><i class="bi bi-caret-up-square-fill"></i></a>
-                                            <?php endif ?>
-                                        </th>
-                                        <th scope="col">email</th>
-                                        <th scope="col">
-                                            註冊時間
-                                            <?php if ($order != 8) : ?>
-                                                <a href="organizer-list.php?page=<?= $page ?>&order=8" class=""><i class="bi bi-caret-down-square-fill"></i></a>
-                                            <?php else : ?>
-                                                <a href="organizer-list.php?page=<?= $page ?>&order=9" class=""><i class="bi bi-caret-up-square-fill"></i></a>
-                                            <?php endif ?>
-                                        </th>
-                                        <th scope="col">操作</th>
-                                    </tr>
-                                </thead>
-                            <?php else : ?>
-                                <thead>
-                                    <tr class="text-nowrap">
-                                        <th scope="col">主辦單位名稱</th>
-                                        <th scope="col">身分</th>
-                                        <th scope="col">關聯會員名稱</th>
-                                        <th scope="col">email</th>
-                                        <th scope="col">註冊時間</th>
-                                        <th scope="col">操作</th>
-                                    </tr>
-                                </thead>
-                            <?php endif ?>
-                            <tbody>
-                                <?php foreach ($rows as $row) : ?>
-                                    <tr class="text-nowrap">
-                                        <td><?= $row["name"] ?></td>
-                                        <?php if ($row["organizer_type"] == 1) : ?>
-                                            <td>公司<i class="bi bi-record-fill mx-1" style="color: #588afe"></i></td>
-                                        <?php else : ?>
-                                            <td>個人<i class="bi bi-record-fill mx-1" style="color: #fd7e14"></i></td>
-                                        <?php endif ?>
-                                        <td><?= $row["user_name"] ?></td>
-                                        <td><?= $row["user_email"] ?></td>
-                                        <td><?= $row["created_at"] ?></td>
-                                        <td>
-                                            <a href="organizer-profile.php?id=<?= $row["id"] ?>" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-eye-fill"></i></span></a>
-                                            <a href="organizer-edit.php?id=<?= $row["id"] ?>" class="btn btn-main-color p-0 px-2"><span class="small"><i class="bi bi-pencil-square"></i></span></a>
-                                            <!-- <a href="organizer-edit.php?id=<?= $row["id"] ?>" class="btn btn-danger p-0 px-2"><span class="small"><i class="bi bi-trash-fill"></i></span></a> -->
-                                        </td>
-                                    </tr>
-                                <?php endforeach ?>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -418,7 +276,15 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             </div>
         </div>
     </div>
-
+    <script>
+        import Swal from 'sweetalert2/dist/sweetalert2.js';
+        import 'sweetalert2/src/sweetalert2.scss';
+        Swal.fire({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success"
+        });
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -436,6 +302,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
