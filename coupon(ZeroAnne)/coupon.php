@@ -12,6 +12,8 @@ JOIN activity_category ON coupon.activity_num=activity_category.id WHERE coupon.
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 // var_dump($row);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -139,7 +141,7 @@ $row = $result->fetch_assoc();
                         <h6 class="collapse-header">Coupon Management</h6>
                         <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
                         <a class="collapse-item" href="add-coupon.php">優惠券新增</a>
-                        <a class="collapse-item" href="coupon-list-edit.php?page=1$order=1">編輯優惠券</a>
+                        <a class="collapse-item" href="coupon-list-edit.php?page=1$order=1">編輯/刪除優惠券</a>
                     </div>
                 </div>
             </li>

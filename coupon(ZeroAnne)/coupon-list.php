@@ -7,23 +7,16 @@ $search = isset($search) ? $search : '';
 if ($use !== null) {
     $use = $_GET["use"];
     $sqlTotal = "SELECT * FROM coupon WHERE coupon_valid='$use' ";
-    $sqlCount = "SELECT * FROM coupon WHERE coupon_valid='$use' "; //判斷幾筆資料
 } elseif (isset(($_GET["search"]))) {
-    $sqlTotal = "SELECT * FROM coupon WHERE (coupon_valid=2 OR coupon_valid=1)";
-    $sqlCount = "SELECT coupon.* ,coupon_valid_name, activity_name 
-    FROM coupon 
+    $search = $_GET["search"];
+    $sqlTotal = "SELECT * FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 
     JOIN activity_category ON coupon.activity_num=activity_category.id 
-    WHERE activity_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1)"; //幾筆資料
+    WHERE activity_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1) OR coupon_name LIKE '%$search%'AND (coupon_valid=2 OR coupon_valid=1)";
 } else {
     $sqlTotal = "SELECT * FROM coupon WHERE (coupon_valid=2 OR coupon_valid=1)";
-    $sqlCount = "SELECT * FROM coupon WHERE(coupon_valid=2 OR coupon_valid=1)"; //判斷幾筆資料
 }
-//幾筆資料
-$resultCount = $conn->query($sqlCount);
-$rowsCount = $resultCount->fetch_all(MYSQLI_ASSOC);
-$couponCount = $resultCount->num_rows;
-//查詢資料
+//查詢資料//幾筆資料
 $resultTotal = $conn->query($sqlTotal);
 $totalUser = $resultTotal->num_rows;
 $perPage = 5;
@@ -101,7 +94,43 @@ if (isset($_GET["search"])) {
 
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-// var_dump($rows)
+// var_dump($rows);
+
+//時間判斷
+foreach ($rows as $rowtime) {
+    // 假設你有一個日期時間字符串
+    $dateStringexpiresAt = $rowtime["expires_at"];
+    $dateStringstartAt = $rowtime["start_at"];
+    // 將日期時間字符串轉換為Unix時間戳
+    $timeStampexpiresAt = strtotime($dateStringexpiresAt);
+    $timeStampstartAt = strtotime($dateStringstartAt);
+    // 獲取當前的Unix時間戳
+    $currentTimeStamp = time();
+
+    // 進行時間比較
+    if ($timeStampexpiresAt < $currentTimeStamp || $timeStampstartAt > $currentTimeStamp) {
+        // echo "{$dateString} 在現在之前。";
+        $updatesql = "UPDATE coupon SET coupon_valid='2' WHERE id = '$rowtime[id]'";
+        // var_dump($updatesql);
+        if ($conn->query($updatesql) === TRUE) {
+            // echo "更新成功";
+        } else {
+            // echo "更新資料錯誤: " . $conn->error;
+        }
+    } elseif ($timeStampexpiresAt > $currentTimeStamp || $timeStampstartAt < $currentTimeStamp) {
+        // echo "{$dateString} 在現在之後。";
+        $updatesql = "UPDATE coupon SET coupon_valid='1' WHERE id = '$rowtime[id]'";
+        // var_dump($updatesql);
+        if ($conn->query($updatesql) === TRUE) {
+            // echo "更新成功";
+        } else {
+            // echo "更新資料錯誤: " . $conn->error;
+        }
+    } else {
+        // echo "{$dateString} 和現在是相同的時間。";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -229,7 +258,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <h6 class="collapse-header">Coupon Management</h6>
                         <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
                         <a class="collapse-item" href="add-coupon.php">新增優惠券</a>
-                        <a class="collapse-item" href="coupon-list-edit.php">編輯優惠券</a>
+                        <a class="collapse-item" href="coupon-list-edit.php">編輯/刪除優惠券</a>
                     </div>
                 </div>
             </li>
@@ -324,27 +353,27 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                     <?php if (!isset($_GET["order"])) : $order = 1; ?>
                                     <?php endif; ?>
                                     <?php if (isset($_GET["use"])) : ?>
-                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1&use=<?= $use ?>">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2&use=<?= $use ?>">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3&use=<?= $use ?>">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4&use=<?= $use ?>">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1&use=<?= $use ?>">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2&use=<?= $use ?>">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3&use=<?= $use ?>">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4&use=<?= $use ?>">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
                                     <?php else : ?>
-                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
                                     <?php endif; ?>
                                 </ul>
                             </div>
                         </div>
                         <?php if (!isset($_GET["search"])) : ?>
                             <div class="pb-2 text-end">
-                                共 <?= $couponCount ?> 筆
+                                共 <?= $totalUser ?> 筆
                             </div>
                         <?php else : ?>
-                            <div class="pb-2">
+                            <div class="pb-2 text-end">
                                 搜尋"<?= $_GET['search'] ?>"的結果,
-                                共 <?= $couponCount ?> 筆
+                                共 <?= $totalUser ?> 筆
                             </div>
                         <?php endif; ?>
                         <table class="table text-center text-nowrap align-items-center table-hover ">

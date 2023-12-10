@@ -17,7 +17,6 @@ $sqlActivity = "SELECT * FROM activity_category ";
 $resultActivity = $conn->query($sqlActivity);
 $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -145,7 +144,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                         <h6 class="collapse-header">Coupon Management</h6>
                         <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
                         <a class="collapse-item" href="add-coupon.php">優惠券新增</a>
-                        <a class="collapse-item" href="coupon-edit.php">編輯優惠券</a>
+                        <a class="collapse-item" href="coupon-edit.php">編輯/刪除優惠券</a>
                     </div>
                 </div>
             </li>
@@ -191,19 +190,6 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     登出
@@ -235,12 +221,14 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                     </div>
                 </div>
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <div class="d-sm-flex align-items-center justify-content-between">
                         <h1 class="h3 mb-0 text-gray-800">編輯優惠券</h1>
-                        <div class="d-flex align-items-center">
-                            <a href="coupon-list-edit.php" class="text-primary pe-3">回編輯列表</a>
-                            <a href="coupon-list-edit.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
-                        </div>
+                        <a href="coupon-list-edit.php" class="text-primary d-flex align-items-center">
+                            <div>
+                                回編輯列表
+                            </div>
+                            <i class="bi bi-box-arrow-right fs-4 ms-3"></i>
+                        </a>
                     </div>
                     <div class="container">
                         <form action="doUpdateCoupon.php" method="post">
@@ -267,15 +255,14 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                                 <label for="couponValid" class="col-sm-2 col-form-label">優惠券狀態</label>
                                 <div class="col-sm-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="1" <?php if ($row["coupon_valid"] == 1) echo "checked" ?>>
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid1" value="1">
                                         <label class="form-check-label" for="couponValid1">
                                             可使用
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="2" <?php if ($row["coupon_valid"] == 2) echo "checked" ?>>
-                                        <label class="form-check-label" for="couponValid0">
-                                            已停用
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid2" value="2">
+                                        已停用
                                         </label>
                                     </div>
                                 </div>
@@ -306,11 +293,11 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="row mb-3">
                                 <label for="startAt" class="col-sm-2 col-form-label">開始日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="startAt" name="startAt" value="<?= $row["start_at"] ?>">
+                                    <input type="date" class="form-control" id="startAt" name="startAt" value="<?= $row["start_at"] ?>" onchange="updateCouponStatus(this)">
                                 </div>
                                 <label for="expiresAt" class="col-sm-2 col-form-label">到期日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt" value="<?= $row["expires_at"] ?>">
+                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt" value="<?= $row["expires_at"] ?>" onchange="updateCouponStatus(this)">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -334,7 +321,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <button class="btn btn-primary" type="submit">儲存</button>
-                                    <a class="btn btn-primary" href="coupon.php?id=<?= $id ?>">取消</a>
+                                    <a class="btn btn-primary" href="coupon-list-edit.php">取消</a>
                                 </div>
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#alertModal" class="btn btn-danger">刪除</button>
                             </div>
@@ -385,6 +372,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
             </div>
         </div>
     </div>
+    <!-- Custom scripts for this template-->
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -398,6 +386,35 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
 
     <!-- Custom scripts for all pages-->
     <script src="js/govent.js"></script>
+    <script>
+        // 函數：根據到期日期更新優惠券狀態
+        function updateCouponStatus(dateInput) {
+            // 從 HTML 元素中獲取日期
+            let expirationDate = document.getElementById("expiresAt").value;
+            let startDate = document.getElementById("startAt").value;
+            if (!expirationDate) {
+                return;
+            }
+            // 將日期轉換為時間戳
+            let expirationTimestamp = new Date(expirationDate).getTime();
+            let startTimestamp = new Date(startDate).getTime();
+            // 獲取當前時間戳
+            let currentTimestamp = new Date().getTime();
+
+            // 比較時間戳並更新優惠券狀態
+            if (expirationTimestamp < currentTimestamp || startTimestamp > currentTimestamp) {
+                // 優惠券已過期
+                document.getElementById("couponValid2").checked = true;
+            } else {
+                // 優惠券仍然有效
+                document.getElementById("couponValid1").checked = true;
+            }
+        }
+
+        // 在頁面加載時調用該函數
+        window.onload = updateCouponStatus;
+    </script>
+
 
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>

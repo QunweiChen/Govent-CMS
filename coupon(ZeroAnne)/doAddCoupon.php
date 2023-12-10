@@ -11,6 +11,12 @@ if (!isset($_POST["name"])) {
 //     die;
 // }
 $_SESSION["error"]["filledData"] = $_POST;
+if($_POST["startAt"] > $_POST["expiresAt"]){
+    $message="請輸入正確日期";
+    $_SESSION["error"]["message"]=$message;
+    header("location: add-coupon.php");
+    exit;
+}
 if(empty($_POST["name"] && $_POST["couponValid"] && $_POST["discountType"] && $_POST["discountValid"] && $_POST["startAt"] && $_POST["expiresAt"] && $_POST["priceMin"] && $_POST["maxUsage"] && $_POST["activityNum"] )){
     $message="請輸入所有欄位資料";
     $_SESSION["error"]["message"]=$message;

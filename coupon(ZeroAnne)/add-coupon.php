@@ -3,8 +3,8 @@ session_start();
 session_destroy();
 require_once("./db_conntect_govent.php");
 $sqlActivity = "SELECT * FROM activity_category ";
-$resultActivity=$conn->query($sqlActivity);
-$rowsActivity=$resultActivity->fetch_all(MYSQLI_ASSOC);
+$resultActivity = $conn->query($sqlActivity);
+$rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
 // var_dump($rows)
 ?>
 <!DOCTYPE html>
@@ -133,7 +133,7 @@ $rowsActivity=$resultActivity->fetch_all(MYSQLI_ASSOC);
                         <h6 class="collapse-header">Coupon Management</h6>
                         <a class="collapse-item" href="coupon-list.php?page=1$order=1">優惠券清單</a>
                         <a class="collapse-item" href="add-coupon.php">優惠券新增</a>
-                        <a class="collapse-item" href="coupon-list-edit.php?page=1$order=1">編輯優惠券</a>
+                        <a class="collapse-item" href="coupon-list-edit.php?page=1$order=1">編輯/刪除優惠券</a>
                     </div>
                 </div>
             </li>
@@ -214,10 +214,12 @@ $rowsActivity=$resultActivity->fetch_all(MYSQLI_ASSOC);
                             <?php endif; ?>
                             <!-- session -->
                         </div>
-                        <div class="d-flex align-items-center">
-                            <a href="coupon-list.php" class="text-primary pe-3">回優惠券列表</a>
-                            <a href="coupon-list.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
-                        </div>
+                        <a href="coupon-list.php" class="text-primary d-flex align-items-center">
+                            <div>
+                                回優惠券列表
+                            </div>
+                            <i class="bi bi-box-arrow-right fs-4 ms-3"></i>
+                        </a>
                     </div>
                     <div class="container">
                         <form action="doAddCoupon.php" method="post">
@@ -239,13 +241,13 @@ $rowsActivity=$resultActivity->fetch_all(MYSQLI_ASSOC);
                                 <label for="couponValid" class="col-sm-2 col-form-label">優惠券狀態</label>
                                 <div class="col-sm-8">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="1" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 1) ? 'checked' : '' ?> require>
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid1" value="1" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 1) ? 'checked' : '' ?> require>
                                         <label class="form-check-label" for="couponValid1">
                                             可使用
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid" value="2" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 2) ? 'checked' : '' ?> require>
+                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid2" value="2" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 2) ? 'checked' : '' ?> require>
                                         <label class="form-check-label" for="couponValid0">
                                             已停用
                                         </label>
@@ -278,11 +280,11 @@ $rowsActivity=$resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="row mb-3">
                                 <label for="startAt" class="col-sm-2 col-form-label">開始日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="startAt" name="startAt" value="<?= isset($_SESSION['error']['filledData']['startAt']) ? $_SESSION['error']['filledData']['startAt'] : ' ' ?>" require>
+                                    <input type="date" class="form-control" id="startAt" name="startAt" value="<?= isset($_SESSION['error']['filledData']['startAt']) ? $_SESSION['error']['filledData']['startAt'] : ' ' ?>" onchange="updateCouponStatus(this)" require>
                                 </div>
                                 <label for="expiresAt" class="col-sm-2 col-form-label">到期日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt" value="<?= isset($_SESSION['error']['filledData']['expiresAt']) ? $_SESSION['error']['filledData']['expiresAt'] : ' ' ?>" require>
+                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt" value="<?= isset($_SESSION['error']['filledData']['expiresAt']) ? $_SESSION['error']['filledData']['expiresAt'] : ' ' ?>" onchange="updateCouponStatus(this)" require>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -298,8 +300,8 @@ $rowsActivity=$resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="row mb-3 ">
                                 <label for="activityNum" class="col-form-label col-sm-2">活動類型</label>
                                 <select class="form-select col-sm-10 " id="" name="activityNum">
-                                    <?php foreach($rowsActivity as $rowActivity) : ?>
-                                    <option name="activity<?= $rowActivity["id"] ?>" value="<?= $rowActivity["id"] ?>" <?= isset($_SESSION['error']['filledData']['activityNum']) && $_SESSION['error']['filledData']['activityNum'] == $rowActivity["id"] ? 'selected' : '' ?>><?= $rowActivity["activity_name"] ?></option>
+                                    <?php foreach ($rowsActivity as $rowActivity) : ?>
+                                        <option name="activity<?= $rowActivity["id"] ?>" value="<?= $rowActivity["id"] ?>" <?= isset($_SESSION['error']['filledData']['activityNum']) && $_SESSION['error']['filledData']['activityNum'] == $rowActivity["id"] ? 'selected' : '' ?>><?= $rowActivity["activity_name"] ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -408,7 +410,34 @@ $rowsActivity=$resultActivity->fetch_all(MYSQLI_ASSOC);
 
     <!-- Custom scripts for all pages-->
     <script src="js/govent.js"></script>
+    <script>
+        // 函數：根據到期日期更新優惠券狀態
+        function updateCouponStatus(dateInput) {
+            // 從 HTML 元素中獲取日期
+            let expirationDate = document.getElementById("expiresAt").value;
+            let startDate = document.getElementById("startAt").value;
+            if (!expirationDate) {
+                return;
+            }
+            // 將日期轉換為時間戳
+            let expirationTimestamp = new Date(expirationDate).getTime();
+            let startTimestamp = new Date(startDate).getTime();
+            // 獲取當前時間戳
+            let currentTimestamp = new Date().getTime();
 
+            // 比較時間戳並更新優惠券狀態
+            if (expirationTimestamp < currentTimestamp || startTimestamp > currentTimestamp) {
+                // 優惠券已過期
+                document.getElementById("couponValid2").checked = true;
+            } else {
+                // 優惠券仍然有效
+                document.getElementById("couponValid1").checked = true;
+            }
+        }
+
+        // 在頁面加載時調用該函數
+        window.onload = updateCouponStatus;
+    </script>
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
 
