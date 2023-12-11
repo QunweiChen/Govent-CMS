@@ -39,6 +39,8 @@ $row = $result->fetch_assoc();
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- 動畫效果 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- Custom styles for this template-->
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -112,7 +114,6 @@ $row = $result->fetch_assoc();
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Orangizer Management</h6>
                         <a class="collapse-item" href="organizer-list.php">主辦單位清單</a>
-                        <a class="collapse-item" href="organizer-review-list.php">待審核清單</a>
                         <a class="collapse-item" href="organizer-add.php">手動新增</a>
                     </div>
                 </div>
@@ -230,7 +231,7 @@ $row = $result->fetch_assoc();
                             </div>
                         </div>
                         <!-- Content Row -->
-                        <div class="mx-4 pb-4">
+                        <div class="mx-4 pb-4 animate__animated animate__fadeIn animate__faster">
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="card mb-4 border-0 shadow">
@@ -307,7 +308,7 @@ $row = $result->fetch_assoc();
                                                     <div class="col-sm-9">
                                                         <?php if (!isset($_GET["updateType"])) : ?>
                                                             <span class="btn mb-0 px-2 py-1 rounded disabled btn-warning text-black me-1">個人用戶</span>
-                                                            <a href="organizer-edit.php?id=<?= $id ?>&updateType=1" class="btn mb-0 btn-danger px-2 py-1 rounded">升級企業用戶</a>
+                                                            <a href="organizer-edit.php?id=<?= $id ?>&updateType=1" class="btn mb-0 btn-success px-2 py-1 rounded">升級企業用戶</a>
                                                         <?php else : ?>
                                                             <span class="btn mb-0 px-2 py-1 rounded disabled btn-success me-1">企業用戶</span>
                                                         <?php endif ?>

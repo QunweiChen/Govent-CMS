@@ -42,6 +42,8 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
     <!-- 字體連結 -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- 動畫效果 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <!-- Custom styles for this template-->
 
@@ -116,7 +118,6 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Orangizer Management</h6>
                         <a class="collapse-item" href="organizer-list.php">主辦單位清單</a>
-                        <a class="collapse-item" href="organizer-review-list.php">待審核清單</a>
                         <a class="collapse-item" href="organizer-add.php">手動新增</a>
                     </div>
                 </div>
@@ -261,7 +262,7 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                         </div>
                     </div>
                     <!-- Content Row -->
-                    <div class="mx-4 pb-4">
+                    <div class="mx-4 pb-4 animate__animated animate__fadeIn animate__faster">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="card mb-4 border-0 shadow">

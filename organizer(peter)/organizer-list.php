@@ -163,7 +163,6 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Orangizer Management</h6>
                         <a class="collapse-item" href="organizer-list.php">主辦單位清單</a>
-                        <a class="collapse-item" href="organizer-review-list.php">待審核清單</a>
                         <a class="collapse-item" href="organizer-add.php">手動新增</a>
                     </div>
                 </div>
@@ -300,7 +299,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <!-- Content Row -->
 
                     <div>
-                        <table class="table table-hover table-light mx-3">
+                        <table class="table table-hover table-light mx-3 animate__animated animate__fadeIn animate__faster">
                             <?php if (!isset($_GET["search"])) : ?>
                                 <thead>
                                     <tr class="text-nowrap">
