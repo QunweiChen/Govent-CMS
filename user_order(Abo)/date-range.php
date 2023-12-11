@@ -1,9 +1,10 @@
 <?php
 require_once("../connect_server.php");
 
-// if (!isset($_GET['endDateTime']) || !isset($_GET['startDateTime'])) {
-//     header('location: index-Abo.php');
-// }
+//沒有抓到兩個參數回去主頁面
+if (!isset($_GET['endDateTime']) || !isset($_GET['startDateTime'])) {
+    header('location: index-Abo.php');
+}
 // var_dump($_GET['startDateTime'], $_GET['endDateTime'], $_GET['status'], $_GET['page']);
 $startTime = $_GET['startDateTime'];
 $endTime = $_GET['endDateTime'];
@@ -13,6 +14,7 @@ $eventCategory = "SELECT * FROM event_category";
 $resultCategory = $conn->query($eventCategory);
 $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
 //--------------------------------------------------------//
+
 
 //計算頁數
 if (isset($_GET['status'])) {
@@ -83,7 +85,7 @@ if (isset($_GET['status']) && isset($_GET['page']) && isset($_GET['startDateTime
     $rows = $result->fetch_all(MYSQLI_ASSOC);
 } else {
     // 預設情況
-    $status = 1;
+    $status = 3;
     $page = 1;
     // 訂單資料庫串聯
     $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
@@ -93,11 +95,19 @@ if (isset($_GET['status']) && isset($_GET['page']) && isset($_GET['startDateTime
     JOIN user ON user.id = user_order.user_id
     JOIN event_category ON event_category.id = campaign.event_type_id
     JOIN organizer ON organizer.id = campaign.merchant_id
-    WHERE campaign.start_date BETWEEN '$startTime' AND '$endTime'
+    WHERE  campaign.start_date BETWEEN '$startTime' AND '$endTime'
     ORDER BY campaign.start_date ASC
     LIMIT 0, $perPage";
     $result = $conn->query($sql);
     $rows = $result->fetch_all(MYSQLI_ASSOC);
+    //從主頁跳過來要先計算一次頁數
+    $sqlFirstPage = "SELECT user_order.*, user_order.id,user_order.valid AS user_order_valid
+    FROM user_order
+    JOIN campaign ON campaign.id = user_order.event_id
+    WHERE  campaign.start_date BETWEEN '$startTime' AND '$endTime'";
+    $resultFirst = $conn->query($sqlFirstPage);
+    $rowsFirst = $resultFirst->num_rows;
+    $FirstPages = ceil($rowsFirst / $perPage);
 }
 //重制頁數
 if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
@@ -320,9 +330,15 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
                     <!-- 頁數 -->
                     <nav aria-label="Page navigation example ">
                         <ul class="pagination justify-content-center">
-                            <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                                <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><?= $i ?></a></li>
-                            <?php endfor; ?>
+                            <?php if (isset($_GET['status'])) : ?>
+                                <?php for ($i = 1; $i <= $pages; $i++) : ?>
+                                    <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><?= $i ?></a></li>
+                                <?php endfor; ?>
+                            <?php else :   ?>
+                                <?php for ($i = 1; $i <= $FirstPages; $i++) : ?>
+                                    <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><?= $i ?></a></li>
+                                <?php endfor; ?>
+                            <?php endif; ?>
                         </ul>
                     </nav>
                     <!-- 訂單內容 -->

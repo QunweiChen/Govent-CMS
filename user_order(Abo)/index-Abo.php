@@ -60,7 +60,7 @@ if (isset($_GET['status']) || isset($_GET['page'])) {
   $rows = $result->fetch_all(MYSQLI_ASSOC);
 } else {
   // 預設情況
-  $status = 1;
+  $status = 3;
   $page = 1;
   // 訂單資料庫串聯
   $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
