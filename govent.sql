@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-12-08 20:53:24
+-- 產生時間： 2023-12-11 18:37:38
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -213,10 +213,10 @@ INSERT INTO `event_category` (`id`, `event_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `organier`
+-- 資料表結構 `organizer`
 --
 
-CREATE TABLE `organier` (
+CREATE TABLE `organizer` (
   `id` int(11) DEFAULT NULL,
   `name` varchar(512) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -234,10 +234,10 @@ CREATE TABLE `organier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 傾印資料表的資料 `organier`
+-- 傾印資料表的資料 `organizer`
 --
 
-INSERT INTO `organier` (`id`, `name`, `user_id`, `organizer_type`, `bank_code`, `bank_branch`, `bank_name`, `amount_number`, `business_name`, `business_invoice`, `avatar`, `created_at`, `update_at`, `valid`) VALUES
+INSERT INTO `organizer` (`id`, `name`, `user_id`, `organizer_type`, `bank_code`, `bank_branch`, `bank_name`, `amount_number`, `business_name`, `business_invoice`, `avatar`, `created_at`, `update_at`, `valid`) VALUES
 (1, 'LIVE NATION', 392, '1', 807, '彰化分行', '一樂生活股份有限公司', 693218000000, '一樂生活股份有限公司', 93284517, 'd41e51bad07c72d81d454644b3f412cd.jpg', '2023-01-01 8:12:45', '2023-01-01 8:12:45', '1'),
 (2, 'AEG presents', 38, '0', 818, '鳳山分行', '陳怡君', 821747000000, '', 0, '', '2023-02-05 16:34:21', '2023-02-05 16:34:21', '1'),
 (3, '好玩國際文化', 273, '1', 54, '中山分行', '好玩國際文化 股份有限公司', 407529000000, '好玩國際文化 股份有限公司', 51897624, '', '2023-03-10 12:56:32', '2023-03-10 12:56:32', '1'),

@@ -4,6 +4,7 @@ require_once("../connect_server.php");
 // if (!isset($_GET['endDateTime']) || !isset($_GET['startDateTime'])) {
 //     header('location: index-Abo.php');
 // }
+// var_dump($_GET['startDateTime'], $_GET['endDateTime'], $_GET['status'], $_GET['page']);
 $startTime = $_GET['startDateTime'];
 $endTime = $_GET['endDateTime'];
 
@@ -17,54 +18,54 @@ $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
 if (isset($_GET['status'])) {
     $status = $_GET['status'];
     if ($status == 1) {
-        $sql = "SELECT * FROM user_order WHERE valid = 1";
+        $sqlPage = "SELECT user_order.*, user_order.id,user_order.valid AS user_order_valid
+        FROM user_order
+        JOIN campaign ON campaign.id = user_order.event_id
+        WHERE user_order.valid = 1
+        AND campaign.start_date BETWEEN '$startTime' AND '$endTime'";
     } else if ($status == 0) {
-        $sql = "SELECT * FROM user_order WHERE valid = 0";
+        $sqlPage = "SELECT user_order.*, user_order.id,user_order.valid AS user_order_valid
+        FROM user_order
+        JOIN campaign ON campaign.id = user_order.event_id
+        WHERE user_order.valid = 0
+        AND campaign.start_date BETWEEN '$startTime' AND '$endTime'";
     } else if ($status == 3) {
-        $sql = "SELECT * FROM user_order WHERE valid IN (1, 0)";
+        $sqlPage = "SELECT user_order.*, user_order.id,user_order.valid AS user_order_valid
+        FROM user_order
+        JOIN campaign ON campaign.id = user_order.event_id
+        WHERE user_order.valid IN (1, 0)
+        AND campaign.start_date BETWEEN '$startTime' AND '$endTime'";
     }
 } else {
-    $sql = "SELECT * FROM user_order";
+    $sqlPage = "SELECT * FROM user_order";
 }
-$resultCount = $conn->query($sql);
+$resultCount = $conn->query($sqlPage);
+$countrows = $resultCount->fetch_all(MYSQLI_ASSOC);
 $AllresultCount = $resultCount->num_rows;
 $perPage = 4;
 $pages = ceil($AllresultCount / $perPage);
 //--------------------------------------------------------//
-if (isset($startTime) && isset($endTime)) {
-    $page = $_GET['page'];
-    $startItem = ($page - 1) * $perPage;
-    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
-    FROM user_order 
-    JOIN campaign ON campaign.id = user_order.event_id
-    JOIN ticket ON ticket.id = user_order.ticket_number
-    JOIN user ON user.id = user_order.user_id
-    JOIN event_category ON event_category.id = campaign.event_type_id
-    JOIN organizer ON organizer.id = campaign.merchant_id
-    WHERE user_order.valid IN (1, 0)
-    WHERE campaign.start_date BETWEEN '$startTime' AND '$endTime'
-    ORDER BY campaign.start_date ASC 
-    LIMIT $startItem, $perPage";
-    $result = $conn->query($sql);
-    $rows = $result->fetch_all(MYSQLI_ASSOC);
-} else if (isset($_GET['status']) || isset($_GET['page'])) {
+
+if (isset($_GET['status']) && isset($_GET['page']) && isset($_GET['startDateTime']) && isset($_GET['endDateTime'])) {
     // 檢查訂單是否取消
+    $startTime = $_GET['startDateTime'];
+    $endTime = $_GET['endDateTime'];
     $status = $_GET["status"];
     $page = $_GET['page'];
     $startItem = ($page - 1) * $perPage;
+
     // 獲取 status=1 和 status=0 的資料
     if ($status == 3) {
-        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
-        FROM user_order 
-        JOIN campaign ON campaign.id = user_order.event_id
-        JOIN ticket ON ticket.id = user_order.ticket_number
-        JOIN user ON user.id = user_order.user_id
-        JOIN event_category ON event_category.id = campaign.event_type_id
-        JOIN organizer ON organizer.id = campaign.merchant_id
-        WHERE user_order.valid IN (1, 0)
-        WHERE campaign.start_date BETWEEN '$startTime' AND '$endTime'
-        ORDER BY campaign.start_date ASC 
-        LIMIT $startItem, $perPage";
+        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name FROM user_order 
+            JOIN campaign ON campaign.id = user_order.event_id
+            JOIN ticket ON ticket.id = user_order.ticket_number
+            JOIN user ON user.id = user_order.user_id
+            JOIN event_category ON event_category.id = campaign.event_type_id
+            JOIN organizer ON organizer.id = campaign.merchant_id
+            WHERE user_order.valid IN (1, 0)
+            AND campaign.start_date BETWEEN '$startTime' AND '$endTime'
+            ORDER BY campaign.start_date ASC 
+            LIMIT $startItem, $perPage";
     } else {
         $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
         FROM user_order 
@@ -74,11 +75,10 @@ if (isset($startTime) && isset($endTime)) {
         JOIN event_category ON event_category.id = campaign.event_type_id
         JOIN organizer ON organizer.id = campaign.merchant_id
         WHERE user_order.valid = $status
-        WHERE campaign.start_date BETWEEN '$startTime' AND '$endTime'
+        AND campaign.start_date BETWEEN '$startTime' AND '$endTime'
         ORDER BY campaign.start_date ASC 
         LIMIT $startItem, $perPage";
     }
-
     $result = $conn->query($sql);
     $rows = $result->fetch_all(MYSQLI_ASSOC);
 } else {
@@ -99,13 +99,12 @@ if (isset($startTime) && isset($endTime)) {
     $result = $conn->query($sql);
     $rows = $result->fetch_all(MYSQLI_ASSOC);
 }
-
 //重制頁數
 if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
     $page = 1;
 }
 
-var_dump($startTime, $endTime)
+// var_dump($startTime, $endTime)
 ?>
 
 
@@ -287,15 +286,15 @@ var_dump($startTime, $endTime)
 
                     <!-- 訂單資訊選項 -->
                     <div class="btn-group" role="group" aria-label="Basic outlined example">
-                        <a href="date-range.php?status=<?= 3 ?>&page=<?= $page ?>">
+                        <a href="date-range.php?status=<?= 3 ?>&page=<?= $page ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>">
                             <button type="button" class="btn btn-outline-primary">
                                 全部
                             </button>
                         </a>
-                        <a href="date-range.php?status=<?= 1 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
+                        <a href="date-range.php?status=<?= 1 ?>&page=<?= $page ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><button type="button" class="btn btn-outline-primary">
                                 已下單
                             </button></a>
-                        <a href="date-range.php?status=<?= 0 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
+                        <a href="date-range.php?status=<?= 0 ?>&page=<?= $page ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><button type="button" class="btn btn-outline-primary">
                                 已取消
                             </button></a>
 
@@ -305,9 +304,9 @@ var_dump($startTime, $endTime)
                         <div class="row justify-content-center">
                             <div class="col-md-8">
                                 <form class="form-inline justify-content-center" method="get" action="date-range.php">
-                                    <div class="form-group">
-                                        <label for="startDateTime">開始日期：</label>
-                                        <input type="date" class="form-control" id="startDateTime" value="<?= $startTime ?> " name="startDateTime">
+                                    <div class="form-group ml-2">
+                                        <label for="endDateTime">開始日期：</label>
+                                        <input type="date" class="form-control" id="startDateTime" name="startDateTime" value="<?= $startTime ?>">
                                     </div>
                                     <div class="form-group ml-2">
                                         <label for="endDateTime">結束日期：</label>
@@ -322,13 +321,14 @@ var_dump($startTime, $endTime)
                     <nav aria-label="Page navigation example ">
                         <ul class="pagination justify-content-center">
                             <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                                <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                                <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><?= $i ?></a></li>
                             <?php endfor; ?>
                         </ul>
                     </nav>
                     <!-- 訂單內容 -->
                     <div class="container my-3">
-                        <?php foreach ($rows as  $row) : ?>
+                        <?php foreach ($rows as  $row) :
+                        ?>
 
                             <div class="row">
                                 <div class="col-12 card card-body py-3 border-left-primary">

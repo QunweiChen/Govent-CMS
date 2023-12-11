@@ -10,16 +10,16 @@ $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
 if (isset($_GET['status'])) {
   $status = $_GET['status'];
   if ($status == 1) {
-    $sql = "SELECT * FROM user_order WHERE valid = 1";
+    $sqlPage = "SELECT * FROM user_order WHERE valid = 1";
   } else if ($status == 0) {
-    $sql = "SELECT * FROM user_order WHERE valid = 0";
+    $sqlPage = "SELECT * FROM user_order WHERE valid = 0";
   } else if ($status == 3) {
-    $sql = "SELECT * FROM user_order WHERE valid IN (1, 0)";
+    $sqlPage = "SELECT * FROM user_order WHERE valid IN (1, 0)";
   }
 } else {
-  $sql = "SELECT * FROM user_order";
+  $sqlPage = "SELECT * FROM user_order";
 }
-$resultCount = $conn->query($sql);
+$resultCount = $conn->query($sqlPage);
 $AllresultCount = $resultCount->num_rows;
 $perPage = 4;
 $pages = ceil($AllresultCount / $perPage);
