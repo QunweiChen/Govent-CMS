@@ -260,17 +260,11 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
 
           <!-- 訂單資訊選項 -->
           <div class="btn-group" role="group" aria-label="Basic outlined example">
-            <a href="index-Abo.php?status=<?= 3 ?>&page=<?= $page ?>">
-              <button type="button" class="btn btn-outline-primary">
-                全部
-              </button>
+            <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 3 ?>&page=<?= $page ?>">
+              全部
             </a>
-            <a href="index-Abo.php?status=<?= 1 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
-                已下單
-              </button></a>
-            <a href="index-Abo.php?status=<?= 0 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
-                已取消
-              </button></a>
+            <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 1 ?>&page=<?= $page ?>">已下單</a>
+            <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 0 ?>&page=<?= $page ?>">已取消</a>
 
           </div>
           <!-- 時間搜尋 -->

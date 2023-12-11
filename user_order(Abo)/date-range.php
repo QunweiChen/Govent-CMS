@@ -31,13 +31,27 @@ $AllresultCount = $resultCount->num_rows;
 $perPage = 4;
 $pages = ceil($AllresultCount / $perPage);
 //--------------------------------------------------------//
-
-if (isset($_GET['status']) || isset($_GET['page'])) {
+if (isset($startTime) && isset($endTime)) {
+    $page = $_GET['page'];
+    $startItem = ($page - 1) * $perPage;
+    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
+    FROM user_order 
+    JOIN campaign ON campaign.id = user_order.event_id
+    JOIN ticket ON ticket.id = user_order.ticket_number
+    JOIN user ON user.id = user_order.user_id
+    JOIN event_category ON event_category.id = campaign.event_type_id
+    JOIN organizer ON organizer.id = campaign.merchant_id
+    WHERE user_order.valid IN (1, 0)
+    WHERE campaign.start_date BETWEEN '$startTime' AND '$endTime'
+    ORDER BY campaign.start_date ASC 
+    LIMIT $startItem, $perPage";
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+} else if (isset($_GET['status']) || isset($_GET['page'])) {
     // 檢查訂單是否取消
     $status = $_GET["status"];
     $page = $_GET['page'];
     $startItem = ($page - 1) * $perPage;
-
     // 獲取 status=1 和 status=0 的資料
     if ($status == 3) {
         $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
@@ -85,6 +99,7 @@ if (isset($_GET['status']) || isset($_GET['page'])) {
     $result = $conn->query($sql);
     $rows = $result->fetch_all(MYSQLI_ASSOC);
 }
+
 //重制頁數
 if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
     $page = 1;
@@ -127,7 +142,7 @@ var_dump($startTime, $endTime)
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index-Abo.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="date-range.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-ticket"></i>
                 </div>
@@ -272,15 +287,15 @@ var_dump($startTime, $endTime)
 
                     <!-- 訂單資訊選項 -->
                     <div class="btn-group" role="group" aria-label="Basic outlined example">
-                        <a href="index-Abo.php?status=<?= 3 ?>&page=<?= $page ?>">
+                        <a href="date-range.php?status=<?= 3 ?>&page=<?= $page ?>">
                             <button type="button" class="btn btn-outline-primary">
                                 全部
                             </button>
                         </a>
-                        <a href="index-Abo.php?status=<?= 1 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
+                        <a href="date-range.php?status=<?= 1 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
                                 已下單
                             </button></a>
-                        <a href="index-Abo.php?status=<?= 0 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
+                        <a href="date-range.php?status=<?= 0 ?>&page=<?= $page ?>"><button type="button" class="btn btn-outline-primary">
                                 已取消
                             </button></a>
 
@@ -307,7 +322,7 @@ var_dump($startTime, $endTime)
                     <nav aria-label="Page navigation example ">
                         <ul class="pagination justify-content-center">
                             <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                                <li class="page-item"><a class="page-link" href="index-Abo.php?status=<?= $status ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                                <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>"><?= $i ?></a></li>
                             <?php endfor; ?>
                         </ul>
                     </nav>
