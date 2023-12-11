@@ -1,7 +1,10 @@
 <?php
 require_once("../connect_server.php");
 
-$sqlMember = "SELECT name, username FROM member_list";
+$sqlMember = "SELECT member_list.id, member_list.name, member_list.username AS user_id FROM member_list
+WHERE id NOT IN(SELECT user_id FROM organizer)
+ORDER BY member_list.id ASC
+";
 $resultMember = $conn->query($sqlMember);
 $rows = $resultMember->fetch_all(MYSQLI_ASSOC);
 
@@ -11,7 +14,7 @@ if (isset($_GET["id"])) {
     // $sql = "SELECT organizer.*, member_list.name AS user_name, member_list.email AS user_email, member_list.phone AS user_phone FROM organizer
     // JOIN member_list ON organizer.user_id = member_list.id WHERE organizer.id = $id";
     $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
+    $userRow = $result->fetch_assoc();
 }
 ?>
 
@@ -37,6 +40,9 @@ if (isset($_GET["id"])) {
     <!-- 字體連結 -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- 動畫效果 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <!-- Custom styles for this template-->
 
@@ -212,17 +218,16 @@ if (isset($_GET["id"])) {
                         <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">手動新增（主辦單位）</h1>
                     </div>
                     <div class="dropdown mx-4">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown button
+                        <button class="btn btn-main-color dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,10">
+                            可新增會員列表
                         </button>
-                        <!-- <?php print_r($rows) ?> -->
-                        <ul class="dropdown-menu" style="max-height: 500px; overflow-y:auto;">
+                        <ul class="dropdown-menu animate__animated animate__fadeIn animate__faster" style="max-height: 500px; overflow-y:auto;">
                             <?php foreach ($rows as $row) : ?>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="?id=<?= $row["id"] ?>">
                                         <div class="row" style="width: 450px">
                                             <div class="col-4">會員名：<?= $row["name"] ?></div>
-                                            <div class="col">帳號：<?= $row["username"] ?></div>
+                                            <div class="col">帳號：<?= $row["user_id"] ?></div>
                                         </div>
                                     </a>
                                 </li>
@@ -230,7 +235,41 @@ if (isset($_GET["id"])) {
                             <?php endforeach ?>
                         </ul>
                     </div>
+                    <div class="m-4">
+                        <div class="row">
+                            <div class="col-6">
+                                <form class="row g-3">
+                                    <div class="col-md-4">
+                                        <label for="inputEmail4" class="form-label">會員姓名</label>
+                                        <span class="form-control bg-light-subtle"><?= $userRow["name"] ?></span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="inputEmail4" class="form-label">性別</label>
+                                        <span class="form-control bg-light-subtle">
+                                            <?php if ($userRow["gender"] == 1) : ?>
+                                                男性
+                                            <?php else : ?>
+                                                女性
+                                            <?php endif ?>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputPassword4" class="form-label">出生年月日</label>
+                                        <span class="form-control bg-light-subtle"><?= $userRow["born_date"] ?></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputEmail4" class="form-label">帳號</label>
+                                        <span class="form-control bg-light-subtle"><?= $userRow["username"] ?></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputPassword4" class="form-label">手機</label>
+                                        <span class="form-control bg-light-subtle"><?= $userRow["phone"] ?></span>
+                                    </div>
 
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 

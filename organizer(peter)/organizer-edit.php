@@ -271,7 +271,7 @@ $row = $result->fetch_assoc();
                                                 <hr>
                                                 <div class="row align-items-center">
                                                     <div class="col-sm-3">
-                                                        <p class="mb-0">前台顯示名稱</p>
+                                                        <p class="mb-0">前台顯示名稱<i class="bi bi-pencil-square ms-2"></i></p>
                                                     </div>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control" name="name" value="<?= $row["name"] ?>">
@@ -280,7 +280,7 @@ $row = $result->fetch_assoc();
                                                 <hr>
                                                 <div class="row align-items-center">
                                                     <div class="col-sm-3">
-                                                        <p class="mb-0">公司抬頭</p>
+                                                        <p class="mb-0">公司抬頭<i class="bi bi-pencil-square ms-2"></i></p>
                                                     </div>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control" name="businessName" value="<?= $row["business_name"] ?>">
@@ -289,7 +289,7 @@ $row = $result->fetch_assoc();
                                                 <hr>
                                                 <div class="row align-items-center">
                                                     <div class="col-sm-3">
-                                                        <p class="mb-0">統一編號</p>
+                                                        <p class="mb-0">統一編號<i class="bi bi-pencil-square ms-2"></i></p>
                                                     </div>
                                                     <div class="col-sm-9">
                                                         <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="businessInvoice" maxlength="8" value="<?= $row["business_invoice"] ?>">
@@ -316,7 +316,7 @@ $row = $result->fetch_assoc();
                                                 <hr>
                                                 <div class="row align-items-center">
                                                     <div class="col-sm-3">
-                                                        <p class="mb-0">前台顯示名稱</p>
+                                                        <p class="mb-0">前台顯示名稱<i class="bi bi-pencil-square ms-2"></i></p>
                                                     </div>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control" name="name" value="<?= $row["name"] ?>">
@@ -326,7 +326,7 @@ $row = $result->fetch_assoc();
                                                     <hr>
                                                     <div class="row align-items-center">
                                                         <div class="col-sm-3">
-                                                            <p class="mb-0">公司抬頭</p>
+                                                            <p class="mb-0">公司抬頭<i class="bi bi-pencil-square ms-2"></i></p>
                                                         </div>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control" name="businessName" value="<?= $row["business_name"] ?>">
@@ -335,7 +335,7 @@ $row = $result->fetch_assoc();
                                                     <hr>
                                                     <div class="row align-items-center">
                                                         <div class="col-sm-3">
-                                                            <p class="mb-0">統一編號</p>
+                                                            <p class="mb-0">統一編號<i class="bi bi-pencil-square ms-2"></i></p>
                                                         </div>
                                                         <div class="col-sm-9">
                                                             <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="businessInvoice" maxlength="8" value="<?= $row["business_invoice"] ?>">
@@ -349,7 +349,7 @@ $row = $result->fetch_assoc();
                                         <div class="card-body">
                                             <div class="row align-items-center">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0">銀行戶名</p>
+                                                    <p class="mb-0">銀行戶名<i class="bi bi-pencil-square ms-2"></i></p>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" name="bankName" value="<?= $row["bank_name"] ?>">
@@ -358,7 +358,7 @@ $row = $result->fetch_assoc();
                                             <hr>
                                             <div class="row align-items-center">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0">銀行代碼</p>
+                                                    <p class="mb-0">銀行代碼<i class="bi bi-pencil-square ms-2"></i></p>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="bankCode" maxlength="3" value="<?= $row["bank_code"] ?>">
@@ -367,7 +367,7 @@ $row = $result->fetch_assoc();
                                             <hr>
                                             <div class="row align-items-center">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0">分行</p>
+                                                    <p class="mb-0">分行<i class="bi bi-pencil-square ms-2"></i></p>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" name="bankBranch" value="<?= $row["bank_branch"] ?>">
@@ -376,7 +376,7 @@ $row = $result->fetch_assoc();
                                             <hr>
                                             <div class="row align-items-center">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0">銀行帳號</p>
+                                                    <p class="mb-0">銀行帳號<i class="bi bi-pencil-square ms-2"></i></p>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <input type="text" onkeyup="value=value.replace(/[^\d]/g,'') " class="form-control" name="amountNumber" value="<?= $row["amount_number"] ?>">

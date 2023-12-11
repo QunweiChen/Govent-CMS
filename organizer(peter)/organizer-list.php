@@ -88,6 +88,9 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- 動畫效果 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <!-- Custom styles for this template-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="css/govent.css" rel="stylesheet">
@@ -264,10 +267,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">主辦單位清單</h1>
                         <?php if (!isset($_GET["search"])) : ?>
                             <div class="dropdown">
-                                <a class="btn btn-main-color dropdown-toggle py-1 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-main-color dropdown-toggle py-1 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,10">
                                     列表分頁
-                                </a>
-                                <ul class="dropdown-menu">
+                                </button>
+                                <ul class="dropdown-menu animate__animated animate__fadeIn animate__faster">
                                     <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
                                         <li><a class="dropdown-item" href="organizer-list.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
                                     <?php endfor ?>
