@@ -2,7 +2,7 @@
 require_once("../connect_server.php");
 
 $sqlMember = "SELECT member_list.id, member_list.name, member_list.username AS user_id FROM member_list
-WHERE id NOT IN(SELECT user_id FROM organizer)
+WHERE id NOT IN(SELECT user_id FROM organizer) AND valid = 1
 ORDER BY member_list.id ASC
 ";
 $resultMember = $conn->query($sqlMember);
@@ -117,7 +117,6 @@ if (isset($_GET["id"])) {
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Orangizer Management</h6>
                         <a class="collapse-item" href="organizer-list.php">主辦單位清單</a>
-                        <a class="collapse-item" href="organizer-review-list.php">待審核清單</a>
                         <a class="collapse-item" href="organizer-add.php">手動新增</a>
                     </div>
                 </div>
@@ -214,62 +213,169 @@ if (isset($_GET["id"])) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
-                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">手動新增（主辦單位）</h1>
-                    </div>
-                    <div class="dropdown mx-4">
-                        <button class="btn btn-main-color dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,10">
-                            可新增會員列表
-                        </button>
-                        <ul class="dropdown-menu animate__animated animate__fadeIn animate__faster" style="max-height: 500px; overflow-y:auto;">
-                            <?php foreach ($rows as $row) : ?>
-                                <li>
-                                    <a class="dropdown-item" href="?id=<?= $row["id"] ?>">
-                                        <div class="row" style="width: 450px">
-                                            <div class="col-4">會員名：<?= $row["name"] ?></div>
-                                            <div class="col">帳號：<?= $row["user_id"] ?></div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <hr class="m-1">
-                            <?php endforeach ?>
-                        </ul>
-                    </div>
-                    <div class="m-4">
-                        <div class="row">
-                            <div class="col-6">
-                                <form class="row g-3">
-                                    <div class="col-md-4">
-                                        <label for="inputEmail4" class="form-label">會員姓名</label>
-                                        <span class="form-control bg-light-subtle"><?= $userRow["name"] ?></span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="inputEmail4" class="form-label">性別</label>
-                                        <span class="form-control bg-light-subtle">
-                                            <?php if ($userRow["gender"] == 1) : ?>
-                                                男性
-                                            <?php else : ?>
-                                                女性
-                                            <?php endif ?>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="inputPassword4" class="form-label">出生年月日</label>
-                                        <span class="form-control bg-light-subtle"><?= $userRow["born_date"] ?></span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="inputEmail4" class="form-label">帳號</label>
-                                        <span class="form-control bg-light-subtle"><?= $userRow["username"] ?></span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="inputPassword4" class="form-label">手機</label>
-                                        <span class="form-control bg-light-subtle"><?= $userRow["phone"] ?></span>
-                                    </div>
-
-                                </form>
+                    <form action="organizer-doAdd.php" method="post" enctype="multipart/form-data">
+                        <div class="d-sm-flex align-items-center justify-content-between pt-3 mb-4 mx-4">
+                            <div class="d-sm-flex align-items-center">
+                                <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">手動新增（主辦單位）</h1>
+                                <div class="dropdown ms-1">
+                                    <button class="btn btn-main-color dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,10">
+                                        可新增會員列表
+                                    </button>
+                                    <ul class="dropdown-menu animate__animated animate__fadeIn animate__faster" style="max-height: 500px; overflow-y:auto;">
+                                        <?php foreach ($rows as $row) : ?>
+                                            <li>
+                                                <a class="dropdown-item" href="?id=<?= $row["id"] ?>">
+                                                    <div class="row" style="width: 450px">
+                                                        <div class="col-4">會員名：<?= $row["name"] ?></div>
+                                                        <div class="col">帳號：<?= $row["user_id"] ?></div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <hr class="m-1">
+                                        <?php endforeach ?>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                                <?php if (isset($_GET["id"])) : ?>
+                                    <input class="d-none" type="text" name="userId" value="<?= $_GET["id"] ?>">
+                                    <input class="btn btn-main-color" type="submit" name="submit" value="送出"></input>
+                                <?php endif ?>
                             </div>
                         </div>
-                    </div>
+                        <?php if (isset($_GET["id"])) : ?>
+                            <div class="m-4 animate__animated animate__fadeIn animate__faster">
+                                <div class="row">
+                                    <div class="col-4 pe-4">
+                                        <h4>會員資料</h4>
+                                        <hr>
+                                        <div class="row g-3">
+                                            <div class="col-md-8">
+                                                <label for="inputEmail4" class="form-label">會員姓名</label>
+                                                <span class="form-control bg-body-secondary"><?= $userRow["name"] ?></span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="inputEmail4" class="form-label">性別</label>
+                                                <span class="form-control bg-body-secondary">
+                                                    <?php if ($userRow["gender"] == 1) : ?>
+                                                        男性
+                                                    <?php else : ?>
+                                                        女性
+                                                    <?php endif ?>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="inputPassword4" class="form-label">出生年月日</label>
+                                                <span class="form-control bg-body-secondary"><?= $userRow["born_date"] ?></span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="inputEmail4" class="form-label">帳號</label>
+                                                <span class="form-control bg-body-secondary"><?= $userRow["username"] ?></span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="inputPassword4" class="form-label">手機</label>
+                                                <span class="form-control bg-body-secondary"><?= $userRow["phone"] ?></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="ps-4 col-8 animate__animated animate__fadeIn animate__faster">
+                                        <h4>新增主辦單位資料</h4>
+                                        <hr>
+                                        <div class="row g-3">
+                                            <div class="col-9">
+                                                <div class="row g-3">
+                                                    <div class="col-12">
+                                                        <div class="row">
+                                                            <div class="form-check col-3 ms-3">
+                                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                                    <input class="form-check-input" type="radio" name="organizerType" value="0" checked>
+                                                                    個人
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check col">
+                                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                                    <input class="form-check-input" type="radio" name="organizerType" value="1">
+                                                                    商家
+                                                                </label>
+                                                            </div>
+                                                            <script>
+                                                                let organizerType = document.getElementsByName("organizerType");
+
+                                                                organizerType[0].onclick = function() {
+                                                                    let companyForms = document.querySelectorAll("#company_form")
+                                                                    companyForms.forEach((form) => form.className = "d-none");
+                                                                }
+                                                                organizerType[1].onclick = function() {
+                                                                    let companyForms = document.querySelectorAll("#company_form")
+                                                                    companyForms.forEach((form) => form.className = "col-6 animate__animated animate__fadeIn");
+                                                                }
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="inputPassword4" class="form-label">前台顯示名稱</label>
+                                                        <input class="form-control bg-light-subtle" type="text" name="name">
+                                                    </div>
+                                                    <div class="d-none" id="company_form">
+                                                        <label for="inputPassword4" class="form-label">公司抬頭</label>
+                                                        <input class="form-control bg-light-subtle" type="text" name="businessName">
+                                                    </div>
+                                                    <div class="d-none" id="company_form">
+                                                        <label for="inputPassword4" class="form-label">統一編號</label>
+                                                        <input class="form-control bg-light-subtle" type="text" name="businessInvoice">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="inputPassword4" class="form-label">銀行戶名</label>
+                                                        <input class="form-control bg-light-subtle" type="text" name="bankName">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="inputPassword4" class="form-label">銀行代碼</label>
+                                                        <input class="form-control bg-light-subtle" type="text" name="bankCode">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="inputPassword4" class="form-label">分行</label>
+                                                        <input class="form-control bg-light-subtle" type="text" name="bankBranch">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="inputPassword4" class="form-label">銀行帳號</label>
+                                                        <input class="form-control bg-light-subtle" type="text" name="amountNumber">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 g-2">
+                                                <div class="row g-2">
+                                                    <div class="col-12 mt-4">
+                                                    <label for="inputPassword4" class="form-label">上傳大頭貼</label>
+                                                        <img class="img-fluid mt-2" src="organizer_avatar/default.png" alt="">
+                                                    </div>
+                                                    <div class="col-12" style="margin-top: 10px;">
+                                                        <label class="btn btn-secondary mt-2 me-1">
+                                                            <div>上傳</div>
+                                                            <input class="d-none" type="file" name="avatar" id="upload-avater" accept="image/gif,image/jpeg,image/png,.svg">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                let input = document.getElementById("upload-avater");
+                                                // let previewImg = document.getElementsById("preview");
+                                                var previewImg = document.getElementsByTagName('img')[2];
+
+                                                function upload(e) {
+                                                    let uploadImg = e.target.files || e.dataTransfer.files;
+                                                    console.log(uploadImg);
+                                                    previewImg.src = window.URL.createObjectURL(uploadImg[0]);
+                                                }
+
+                                                input.addEventListener('change', upload);
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif ?>
+                    </form>
                 </div>
                 <!-- /.container-fluid -->
 
