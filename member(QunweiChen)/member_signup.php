@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if(isset($_SESSION["menber"])){
-    // header("location: menber_dashboard.php");
+if(isset($_SESSION["member"])){
+    // header("location: member_dashboard.php");
     //若已登入 導入至dashboard
 }
 ?>
@@ -133,7 +133,7 @@ if(isset($_SESSION["menber"])){
                                 <a class="small" href="forgot-password.html">忘記密碼?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="menber_login.php">已經有帳號? 登入!</a>
+                                <a class="small" href="member_login.php">已經有帳號? 登入!</a>
                             </div>
                         </div>
                     </div>

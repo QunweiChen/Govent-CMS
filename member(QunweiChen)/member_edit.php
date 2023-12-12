@@ -1,23 +1,23 @@
 <?php
 
 if(!isset($_GET["id"])){
-    header("location: menbert_list.php");
+    header("location: member_list.php");
   }
 
 $id=$_GET["id"];//為連結到id來源
 
 
-require_once("govent_db_conntect.php");
+require_once("../connect_server.php");
 
-// $sql = "SELECT * FROM menber_list WHERE id=$id AND valid=1";
+// $sql = "SELECT * FROM member_list WHERE id=$id AND valid=1";
 
 $sql = "SELECT *
-FROM menber_list
+FROM member_list
 JOIN city 
-ON menber_list.address = city.city_id 
-JOIN menber_leval 
-ON menber_list.menber_leval = menber_leval.leval_id 
-WHERE menber_list.valid=1 AND menber_list.id = " . $id;
+ON member_list.address = city.city_id 
+JOIN member_leval 
+ON member_list.member_leval = member_leval.leval_id 
+WHERE member_list.valid=1 AND member_list.id = " . $id;
 
 $result = $conn->query($sql);
 // $userCount = $result->num_rows;?未知用途
@@ -26,10 +26,10 @@ $row = $result->fetch_assoc();
 
 
 // $sql = "SELECT *
-// FROM menber_list
-// JOIN menber_leval 
-// ON menber_list.menber_leval = menber_leval.leval_id 
-// WHERE menber_list.valid=1 AND menber_list.id = " . $row["id"];
+// FROM member_list
+// JOIN member_leval 
+// ON member_list.member_leval = member_leval.leval_id 
+// WHERE member_list.valid=1 AND member_list.id = " . $row["id"];
 
 
 ?>
@@ -45,7 +45,7 @@ $row = $result->fetch_assoc();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Menber Data</title>
+    <title>member Data</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -90,7 +90,7 @@ $row = $result->fetch_assoc();
                 <div class="modal-body">確認刪除帳號</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="doDelete.php">確認刪除</a>
+                    <a class="btn btn-primary" href="doDelete.php?id=<?= $row["id"] ?>">確認刪除</a>
                 </div>
             </div>
         </div>
@@ -103,112 +103,7 @@ $row = $result->fetch_assoc();
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="menber_dashboard.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-solid fa-ticket"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">GoVent</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="../image/1.png" alt="...">
-            </div>
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link text-shadow-20" href="menber_dashboard.php">
-                    <i class="bi bi-speedometer"></i>
-                    <span>平台管理</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseMember"
-                    aria-expanded="true" aria-controls="collapseMember">
-                    <i class="bi bi-people-fill"></i>
-                    <span>會員管理</span>
-                </a>
-                <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
-                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
-                        <h6 class="collapse-header">Member Management</h6>
-                        <a class="collapse-item" href="menber_list.php">會員清單</a>
-                        <a class="collapse-item" href="menber_signup.php">會員註冊（客戶端）</a>
-                        <a class="collapse-item" href="menber_login.php">會員登入（客戶端）</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseOrganizer"
-                    aria-expanded="true" aria-controls="collapseOrganizer">
-                    <i class="bi bi-building-fill"></i>
-                    <span>主辦單位管理</span>
-                </a>
-                <div id="collapseOrganizer" class="collapse" aria-labelledby="headingOrganizer"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
-                        <h6 class="collapse-header">Orangizer Management</h6>
-                        <a class="collapse-item" href="#">主辦單位清單</a>
-                        <a class="collapse-item" href="#">修改／新增</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseEvent"
-                    aria-expanded="true" aria-controls="collapseEvent">
-                    <i class="bi bi-calendar-event-fill"></i>
-                    <span>活動管理</span>
-                </a>
-                <div id="collapseEvent" class="collapse" aria-labelledby="headingEvent"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
-                        <h6 class="collapse-header">Event Management</h6>
-                        <a class="collapse-item" href="#">活動清單</a>
-                        <a class="collapse-item" href="#">票卷管理</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="">
-                    <i class="bi bi-border-width"></i>
-                    <span>訂單管理</span></a>
-            </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="">
-                    <i class="bi bi-ticket-fill"></i>
-                    <span>優惠卷管理</span></a>
-            </li>
-            <!-- Divider -->
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-
-
-        </ul>
-        <!-- End of Sidebar -->
+        <?php include('../sidebar.php'); ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -343,7 +238,7 @@ $row = $result->fetch_assoc();
                         <table>
                             <div class="py-2">
                                 <button class="btn btn-primary btn-info " type="submit">修改</button>
-                                <a class="btn btn-info text-white" href="menber_data.php?id=<?=$row["id"] ?>">取消</a>
+                                <a class="btn btn-info text-white" href="member_data.php?id=<?=$row["id"] ?>">取消</a>
                                 <!-- <a class="btn btn-info text-white" href="?id=<?= $row["id"] ?>">Cancel</a> -->
                             </div>
                             <div>
@@ -400,28 +295,13 @@ $row = $result->fetch_assoc();
                 <div class="modal-body">您確定要登出帳號嗎？</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="menber_login.php">登出</a>
+                    <a class="btn btn-primary" href="member_login.php">登出</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/govent.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <?php include('../public-js.php') ?>
 
 </body>
 

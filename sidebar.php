@@ -41,9 +41,9 @@
         <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
             <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                 <h6 class="collapse-header">Member Management</h6>
-                <a class="collapse-item" href="#">會員清單</a>
-                <a class="collapse-item" href="#">會員註冊（客戶端）</a>
-                <a class="collapse-item" href="#">會員登入（客戶端）</a>
+                <a class="collapse-item" href="../member(QunweiChen)/member_list.php">會員清單</a>
+                <a class="collapse-item" href="../member(QunweiChen)/member_signup.php">會員註冊（客戶端）</a>
+                <a class="collapse-item" href="../member(QunweiChen)/member_login.php">會員登入（客戶端）</a>
             </div>
         </div>
     </li>

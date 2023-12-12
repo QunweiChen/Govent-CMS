@@ -1,5 +1,5 @@
 <?php
-require_once("govent_db_conntect.php");
+require_once("../connect_server.php");
 
 if(!isset($_GET["id"])){
     echo "請循正常管道進入此頁";
@@ -12,7 +12,7 @@ $id=$_GET["id"];
 
 // var_dump($name, $email, $phone);
 
-$sql="UPDATE menber_list SET valid='0' WHERE id=$id";
+$sql="UPDATE member_list SET valid='0' WHERE id=$id";
 // var_dump($sql);
 
 
@@ -24,4 +24,4 @@ if($conn->query($sql)===TRUE){
 
 $conn->close();
 
-header("location: menber_list.php");
+header("location: member_list.php");

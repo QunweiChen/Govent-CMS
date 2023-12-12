@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if(isset($_SESSION["menber"])){
-    // header("location: menber_dashboard.php");
+if(isset($_SESSION["member"])){
+    // header("location: member_dashboard.php");
     //若已登入 導入至dashboard
 }
 
@@ -20,7 +20,7 @@ if(isset($_SESSION["menber"])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>menber login</title>
+    <title>member login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -112,7 +112,7 @@ if(isset($_SESSION["menber"])){
                                         <a class="small" href="forgot-password.html">忘記密碼?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="menber_signup.php">註冊新帳號!</a>
+                                        <a class="small" href="member_signup.php">註冊新帳號!</a>
                                     </div>
                                 </div>
                             </div>

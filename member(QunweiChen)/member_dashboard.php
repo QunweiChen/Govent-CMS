@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(!isset($_SESSION["menber"])){
-    header("location: menber_login.php");//若未登入 導入至login
+if(!isset($_SESSION["member"])){
+    header("location: member_login.php");//若未登入 導入至login
     exit;
 }
 
@@ -48,112 +48,7 @@ if(!isset($_SESSION["menber"])){
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="menber_dashboard.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-solid fa-ticket"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">GoVent</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="../image/1.png" alt="...">
-            </div>
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active text-shadow-20">
-                <a class="nav-link" href="menber_dashboard.php">
-                    <i class="bi bi-speedometer"></i>
-                    <span>平台管理</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseMember"
-                    aria-expanded="true" aria-controls="collapseMember">
-                    <i class="bi bi-people-fill"></i>
-                    <span>會員管理</span>
-                </a>
-                <div id="collapseMember" class="collapse" aria-labelledby="headingMember"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
-                        <h6 class="collapse-header">Member Management</h6>
-                        <a class="collapse-item" href="menber_list.php">會員清單</a>
-                        <a class="collapse-item" href="menber_signup.php">會員註冊（客戶端）</a>
-                        <a class="collapse-item" href="menber_login.php">會員登入（客戶端）</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseOrganizer"
-                    aria-expanded="true" aria-controls="collapseOrganizer">
-                    <i class="bi bi-building-fill"></i>
-                    <span>主辦單位管理</span>
-                </a>
-                <div id="collapseOrganizer" class="collapse" aria-labelledby="headingOrganizer"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
-                        <h6 class="collapse-header">Orangizer Management</h6>
-                        <a class="collapse-item" href="#">主辦單位清單</a>
-                        <a class="collapse-item" href="#">修改／新增</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseEvent"
-                    aria-expanded="true" aria-controls="collapseEvent">
-                    <i class="bi bi-calendar-event-fill"></i>
-                    <span>活動管理</span>
-                </a>
-                <div id="collapseEvent" class="collapse" aria-labelledby="headingEvent" data-parent="#accordionSidebar">
-                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
-                        <h6 class="collapse-header">Event Management</h6>
-                        <a class="collapse-item" href="#">活動清單</a>
-                        <a class="collapse-item" href="#">票卷管理</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="">
-                    <i class="bi bi-border-width"></i>
-                    <span>訂單管理</span></a>
-            </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="">
-                    <i class="bi bi-ticket-fill"></i>
-                    <span>優惠卷管理</span></a>
-            </li>
-            <!-- Divider -->
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-
-
-        </ul>
-        <!-- End of Sidebar -->
+        <?php include('../sidebar.php'); ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -577,7 +472,7 @@ if(!isset($_SESSION["menber"])){
                 <div class="modal-body">您確定要登出帳號嗎？</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="menber_login.php">確認</a>
+                    <a class="btn btn-primary" href="member_login.php">確認</a>
                 </div>
             </div>
         </div>
