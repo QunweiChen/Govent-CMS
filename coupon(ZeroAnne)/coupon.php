@@ -56,10 +56,12 @@ $row = $result->fetch_assoc();
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between pt-3 mb-4 mx-4">
                         <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">個別優惠券資訊</h1>
-                        <div class="d-flex align-items-center">
-                            <a href="coupon-list-edit.php" class="text-primary pe-3">回編輯列表</a>
-                            <a href="coupon-list-edit.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
-                        </div>
+                        <a href="coupon-list.php" class="text-primary d-flex align-items-center">
+                            <div>
+                                回優惠券列表
+                            </div>
+                            <i class="bi bi-box-arrow-right fs-4 ms-3"></i>
+                        </a>
                     </div>
                     <div class="mx-4 animate__animated animate__fadeIn animate__faster">
                         <table class="table table-bordered ">
