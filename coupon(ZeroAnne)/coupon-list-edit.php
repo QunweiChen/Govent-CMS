@@ -175,7 +175,7 @@ foreach ($rows as $rowtime) {
                     </div>
 
                     <!-- Content Row -->
-                    <div class="mx-4">
+                    <div class="mx-4 animate__animated animate__fadeIn animate__faster">
                         <div class="py-2">
                             <form action="">
                                 <div class="input-group mb-3 ">
@@ -262,7 +262,7 @@ foreach ($rows as $rowtime) {
                                             </div>
                                         </div>
                                     </div>
-                                    <tr>
+                                    <tr class="small">
                                         <td><?= $row["id"] ?></td>
                                         <td><?= $row["coupon_code"] ?></td>
                                         <td><?= $row["coupon_name"] ?></td>
@@ -275,9 +275,11 @@ foreach ($rows as $rowtime) {
                                         <td><?= $row["max_usage"] ?></td>
                                         <td><?= $row["activity_name"] ?></td>
                                         <td>
-                                            <a class="btn text-primary" href="coupon-edit.php?id=<?= $row["id"] ?>" title="編輯資料"><i class="bi bi-pencil-fill"></i></a>
+                                            <a class="btn text-primary p-1" href="coupon.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-ticket-perforated-fill"></i></a>
+                                            <a class="btn text-primary p-1" href="coupon-edit.php?id=<?= $row["id"] ?>" title="編輯資料"><i class="bi bi-pencil-fill"></i></a>
                                             <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#alertModal" class="btn btn-danger">刪除</button> -->
-                                            <a class="btn text-primary" data-bs-toggle="modal" data-bs-target="#alertModal" href="" title="刪除資料"><i class="bi bi-trash3"></i></a>
+                                            <a class="btn text-primary p-1" data-bs-toggle="modal" data-bs-target="#alertModal" href="" title="刪除資料"><i class="bi bi-trash3"></i></a>
+                                            
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

@@ -61,7 +61,7 @@ $row = $result->fetch_assoc();
                             <a href="coupon-list-edit.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
                         </div>
                     </div>
-                    <div class="mx-4">
+                    <div class="mx-4 animate__animated animate__fadeIn animate__faster">
                         <table class="table table-bordered ">
                             <tr>
                                 <th>ID</th>

@@ -175,7 +175,7 @@ foreach ($rows as $rowtime) {
                     </div>
 
                     <!-- Content Row -->
-                    <div class="mx-4">
+                    <div class="mx-4 animate__animated animate__fadeIn animate__faster">
                         <div class="py-2">
                             <form action="">
                                 <div class="input-group mb-3 ">
@@ -183,12 +183,13 @@ foreach ($rows as $rowtime) {
                                         <input type="text" class="form-control" value="<?= $_GET['search'] ?>" name="search">
                                         <button class="btn btn-primary" type="submit" id=""><i class="bi bi-search"></i></button>
                                     <?php else : ?>
-                                        <input type="text" class="form-control" placeholder="Search.." name="search">
+                                        <input type="text" class="form-control" placeholder="請輸入優惠卷名稱或適用活動" name="search">
                                         <button class="btn btn-primary" type="submit" id=""><i class=" bi bi-search"></i></button>
                                     <?php endif; ?>
                                 </div>
                             </form>
                         </div>
+                        <?php if(!isset($_GET["search"])): ?>
                         <div class="pb-2 d-flex justify-content-between orders align-items-center">
                             <div class="btn-group">
                                 <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=1&order=<?= $order ?>">總票券量</a>
@@ -196,10 +197,10 @@ foreach ($rows as $rowtime) {
                                 <a class="btn btn-outline-primary <?php if ($use == 2) echo "active"; ?>" href="coupon-list.php?page=1&use=2&order=<?= $order ?>">已停用</a>
                             </div>
                             <div class="dropdown">
-                                <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,10">
                                     排序方式
                                 </a>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu animate__animated animate__fadeIn animate__faster">
                                     <?php if (!isset($_GET["order"])) : $order = 1; ?>
                                     <?php endif; ?>
                                     <?php if (isset($_GET["use"])) : ?>
@@ -216,6 +217,7 @@ foreach ($rows as $rowtime) {
                                 </ul>
                             </div>
                         </div>
+                        <?php endif ?>
                         <?php if (!isset($_GET["search"])) : ?>
                             <div class="pb-2 text-end">
                                 共 <?= $totalUser ?> 筆
@@ -243,7 +245,7 @@ foreach ($rows as $rowtime) {
                                     <th>詳細資訊</th>
                                 </tr>
                             </thead>
-                            <tbody class="">
+                            <tbody class="small">
                                 <?php foreach ($rows as $row) : ?>
                                     <tr>
                                         <td><?= $row["id"] ?></td>
@@ -258,7 +260,10 @@ foreach ($rows as $rowtime) {
                                         <td><?= $row["max_usage"] ?></td>
                                         <td><?= $row["activity_name"] ?></td>
                                         <td>
-                                            <a class="btn text-primary" href="coupon.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-ticket-perforated-fill"></i></a>
+                                            <a class="btn text-primary p-1" href="coupon.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-ticket-perforated-fill"></i></a>
+                                            <a class="btn text-primary p-1" href="coupon-edit.php?id=<?= $row["id"] ?>" title="編輯資料"><i class="bi bi-pencil-fill"></i></a>
+                                            <a class="btn text-primary p-1" data-bs-toggle="modal" data-bs-target="#alertModal" href="" title="刪除資料"><i class="bi bi-trash3"></i></a>
+                                            
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

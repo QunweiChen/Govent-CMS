@@ -184,7 +184,7 @@ a {
 }
 
 a:hover {
-  color: rgb(229, 59, 33);
+  color: rgb(227, 55, 29);
   text-decoration: underline;
 }
 
@@ -2538,8 +2538,8 @@ fieldset:disabled a.btn {
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #2e59d9;
-  border-color: #2653d4;
+  background-color: #df492e;
+  border-color: #df492e;
 }
 
 .btn-primary:focus,
@@ -10035,7 +10035,7 @@ button.bg-dark:focus {
 
 a.text-primary:hover,
 a.text-primary:focus {
-  color: #224abe !important;
+  color: #e9481d !important;
 }
 
 .text-secondary {
@@ -11776,3 +11776,20 @@ body.sidebar-toggled footer.sticky-footer {
 .text-shadow-50 {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
+.btn-main-color{
+  background-color: #fd7e14;
+  color: #fff;
+}
+.btn-main-color:hover, .btn-main-color:focus{
+  background-color: rgb(253, 82, 20);
+  color: #fff;
+}
+.text-bg-company{
+  background-color: #588afe;
+  color: #fff;
+}
+.text-bg-main-color{
+  background-color: #fd7e14;
+  color: #fff;
+}
+

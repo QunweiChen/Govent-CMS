@@ -81,7 +81,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <i class="bi bi-box-arrow-right fs-4 ms-3"></i>
                         </a>
                     </div>
-                    <div class="mx-4">
+                    <div class="mx-4 animate__animated animate__fadeIn animate__faster">
                         <form action="doUpdateCoupon.php" method="post">
                             <input type="hidden" name="id" value="<?= $row["id"] ?>">
                             <div class="row mb-3 align-items-center">
@@ -104,34 +104,38 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             </div>
                             <div class="row mb-3 align-items-center">
                                 <label for="couponValid" class="col-sm-2 col-form-label">優惠券狀態</label>
-                                <div class="col-sm-8 d-flex">
-                                    <div class="form-check ms-1 mb-0">
+                                <div class="col-sm-8">
+                                    <div class="row ms-2">
+                                    <div class="form-check mb-0 col-3">
                                         <input class="form-check-input" type="radio" name="couponValid" id="couponValid1" value="1">
                                         <label class="form-check-label" for="couponValid1">
                                             可使用
                                         </label>
                                     </div>
-                                    <div class="form-check ms-3 mb-0">
+                                    <div class="form-check mb-0 col-3">
                                         <input class="form-check-input" type="radio" name="couponValid" id="couponValid2" value="2">
                                         已停用
                                         </label>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3 align-items-center">
                                 <label for="discountType" class="col-sm-2 col-form-label">折扣類型</label>
-                                <div class="col-sm-8 d-flex">
-                                    <div class="form-check ms-1 mb-0">
+                                <div class="col-sm-8">
+                                    <div class="row ms-2">
+                                    <div class="form-check mb-0 col-3">
                                         <input class="form-check-input" type="radio" name="discountType" id="discountType" value="打折" <?php if ($row["discount_type"] == "打折") echo "checked" ?>>
                                         <label class="form-check-label" for="discountType1">
                                             依百分比折扣
                                         </label>
                                     </div>
-                                    <div class="form-check ms-3 mb-0">
+                                    <div class="form-check mb-0 col-3">
                                         <input class="form-check-input" type="radio" name="discountType" id="discountType" value="金額" <?php if ($row["discount_type"] == "金額") echo "checked" ?>>
                                         <label class="form-check-label" for="discountType2">
                                             依金額折價
                                         </label>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
