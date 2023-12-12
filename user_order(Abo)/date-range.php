@@ -163,9 +163,9 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
             <hr class="sidebar-divider my-0" />
 
             <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
+            <!-- <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="../image/1.png" alt="..." />
-            </div>
+            </div> -->
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">

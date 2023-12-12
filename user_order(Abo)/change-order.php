@@ -60,7 +60,7 @@ $row = $result->fetch_assoc();
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index-Abo.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-ticket"></i>
                 </div>
@@ -71,9 +71,9 @@ $row = $result->fetch_assoc();
             <hr class="sidebar-divider my-0">
 
             <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
+            <!-- <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="../image/1.png" alt="...">
-            </div>
+            </div> -->
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
@@ -224,7 +224,7 @@ $row = $result->fetch_assoc();
                         <input type="hidden" name="ID" value="<?= $row['user_order_id'] ?>">
                         <div class="col-md-4">
                             <label for="validationCustom01" class="form-label">使用者</label>
-                            <input name="user_nmae" type="text" class="form-control" id="validationCustom01" value="<?= $row['user_name'] ?>" required>
+                            <input name="user_name" type="text" class="form-control" id="validationCustom01" value="<?= $row['user_name'] ?>" required>
                         </div>
                         <div class="col-md-4">
                             <label for="validationCustom02" class="form-label">活動名稱</label>

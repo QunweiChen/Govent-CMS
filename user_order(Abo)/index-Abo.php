@@ -126,9 +126,9 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
       <hr class="sidebar-divider my-0" />
 
       <!-- Sidebar Message -->
-      <div class="sidebar-card d-none d-lg-flex">
+      <!-- <div class="sidebar-card d-none d-lg-flex">
         <img class="sidebar-card-illustration mb-2" src="../image/1.png" alt="..." />
-      </div>
+      </div> -->
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
@@ -226,7 +226,7 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-3 d-none d-lg-inline text-gray-600 x-small">平台管理員</span>
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">妙蛙種子</span>
-                <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
+                <!-- <img class="img-profile rounded-circle" src="img/undraw_profile.svg" /> -->
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -255,11 +255,7 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <div class="container d-flex justify-content-end">
-            <a href="add-order.php">
-              <button type="button" class="btn btn-outline-warning h1 btn-lg">增加訂單</button>
-            </a>
-          </div>
+
 
 
           <!-- Page Heading -->

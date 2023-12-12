@@ -1,7 +1,7 @@
 <?php
 require_once("../connect_server.php");
 
-$user_name = $_POST["user_nmae"];
+$user_name = $_POST["user_name"];
 $userid = $_POST["ID"];
 //user資料庫
 $userSql = "SELECT user.id,user.user_name FROM user";
