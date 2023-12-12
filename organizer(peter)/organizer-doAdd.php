@@ -1,6 +1,8 @@
 <?php
 require_once("../connect_server.php");
 
+session_start();
+
 date_default_timezone_set("Asia/Taipei");
 
 $userId = $_POST["userId"];
@@ -53,11 +55,13 @@ $result = $stmt->get_result();
 //     echo "ID不存在於資料庫中";
 // }
 if ($result->num_rows > 0) {
-    echo "資料已經存在 請使用更新功能";
-    exit;
+    $_SESSION['message'] = "資料已存在";
+    header("Location: organizer-add.php");
+    exit();
 } elseif ($_FILES["avatar"]["error"] > 0) { //大於0即為判定上傳成功
-    echo "Error: " . $_FILES["avatar"]["error"];
-    exit;
+    $_SESSION['message'] = "圖片上傳檔案錯誤";
+    header("Location: organizer-add.php");
+    exit();
 }
 
 $extension = explode('.', $_FILES["avatar"]["name"]); //分割
@@ -73,7 +77,9 @@ if (move_uploaded_file(
 )) {
     if ($_POST["organizerType"] == 0) {
         if (empty($_POST["name"]) || empty($_POST["bankCode"]) || empty($_POST["bankName"]) || empty($_POST["bankBranch"]) || empty($_POST["amountNumber"])) {
-            echo "欄位不可為空";
+            $_SESSION['message'] = "欄位不可為空";
+            header("Location: organizer-add.php");
+            exit();
         } else {
 
             // echo $updateType . "個人更新成功";
@@ -81,11 +87,15 @@ if (move_uploaded_file(
             VALUES ('$name', '$userId', 0, '$bankCode', '$bankName', '$bankBranch', '$amountNumber', '$fileName', '$currentDateTime', '$currentDateTime', 1)";
 
             if ($conn->query($sql) === TRUE) {
-                echo "更新資料完成";
+                $_SESSION['message'] = "新增資料成功";
                 $last_id = $conn->insert_id;
-                echo "最新一筆為序號" . $last_id;
+                $_SESSION['addId'] = "$last_id";
+                header("Location: organizer-profile.php?id=$last_id");
+                exit();
             } else {
-                echo "新增資料錯誤: " . $conn->error;
+                $_SESSION['message'] = "新增資料錯誤";
+                header("Location: organizer-add.php");
+                exit();
             }
             // header("location: organizer-profile.php?id=$id");
             // $conn->close();
@@ -93,24 +103,31 @@ if (move_uploaded_file(
     }
     if ($_POST["organizerType"] == 1) {
         if (empty($_POST["name"]) || empty($_POST["bankCode"]) || empty($_POST["bankName"]) || empty($_POST["bankBranch"]) || empty($_POST["amountNumber"])) {
-            echo "欄位不可為空";
+            $_SESSION['message'] = "欄位不可為空";
+            header("Location: organizer-add.php");
+            exit();
         } else {
             // echo $updateType . "個人更新成功";
             $sql = "INSERT INTO organizer (name, user_id, organizer_type, bank_code, bank_name, bank_branch, amount_number, avatar, business_name, business_invoice, created_at, update_at, valid)
             VALUES ('$name', '$userId', 1, '$bankCode', '$bankName', '$bankBranch', '$amountNumber', '$fileName', '$businessName', '$businessInvoice', '$currentDateTime', '$currentDateTime', 1)";
 
             if ($conn->query($sql) === TRUE) {
-                echo "更新資料完成";
+                $_SESSION['message'] = "新增資料成功";
                 $last_id = $conn->insert_id;
-                echo "最新一筆為序號" . $last_id;
+                $_SESSION['addId'] = "$last_id";
+                header("Location: organizer-profile.php?id=$last_id");
+                exit();
             } else {
-                echo "新增資料錯誤: " . $conn->error;
+                $_SESSION['message'] = "新增資料錯誤";
+                header("Location: organizer-add.php");
+                exit();
             }
             // header("location: organizer-profile.php?id=$id");
             // $conn->close();
         }
     }
 } else {
-    echo "上傳檔案時出現錯誤";
-    exit;
+    $_SESSION['message'] = "新增資料錯誤";
+    header("Location: organizer-add.php");
+    exit();
 }

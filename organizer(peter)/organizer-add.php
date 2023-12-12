@@ -43,20 +43,21 @@ if (isset($_GET["id"])) {
 
     <!-- 動畫效果 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- alert效果 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Custom styles for this template-->
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="css/govent.css" rel="stylesheet">
     <link href="organizer.css" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
-
+    <!-- 照結果顯示alert -->
+    <?php include('alert.php'); ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -346,7 +347,7 @@ if (isset($_GET["id"])) {
                                             <div class="col-3 g-2">
                                                 <div class="row g-2">
                                                     <div class="col-12 mt-4">
-                                                    <label for="inputPassword4" class="form-label">上傳大頭貼</label>
+                                                        <label for="inputPassword4" class="form-label">上傳大頭貼</label>
                                                         <img class="img-fluid mt-2" src="organizer_avatar/default.png" alt="">
                                                     </div>
                                                     <div class="col-12" style="margin-top: 10px;">

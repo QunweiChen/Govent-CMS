@@ -1,15 +1,21 @@
 <?php
 require_once("../connect_server.php");
 
+session_start();
+
 $id = $_GET["id"];
 
 $sql = "UPDATE organizer SET valid = 0 WHERE id = $id";
 
 
 if ($conn->query($sql) === TRUE) {
-    echo "更新資料完成";
+    $_SESSION['message'] = "刪除成功";
+    header("Location: organizer-list.php");
+    exit();
 } else {
-    echo "新增資料錯誤: " . $conn->error;
+    $_SESSION['message'] = "刪除失敗";
+    header("Location: organizer-list.php");
+    exit();
 }
 $conn->close();
 

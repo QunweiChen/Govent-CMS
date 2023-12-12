@@ -1,10 +1,15 @@
 <?php
 require_once("../connect_server.php");
 
+session_start();
+
 $id = $_POST["id"];
 
 if ($_FILES["avatar"]["error"] > 0) { //大於0即為判定上傳成功
-    echo "Error: " . $_FILES["avatar"]["error"];
+    // echo "Error: " . $_FILES["avatar"]["error"];
+    $_SESSION['message'] = "更新圖片失敗";
+    header("Location: organizer-profile.php?id=$id");
+    exit();
 } else {
     // echo "id: " . $id . "<br/>";
     // echo "檔案名稱: " . $_FILES["avatar"]["name"] . "<br/>";
@@ -30,13 +35,18 @@ if ($_FILES["avatar"]["error"] > 0) { //大於0即為判定上傳成功
         $sql = "UPDATE organizer SET avatar = '$fileName' WHERE id = $id";
 
         if ($conn->query($sql) === TRUE) {
-            echo "更新資料完成";
+            $_SESSION['message'] = "更新圖片成功";
+            header("Location: organizer-profile.php?id=$id");
+            exit();
         } else {
-            echo "新增資料錯誤: " . $conn->error;
+            $_SESSION['message'] = "更新圖片失敗";
+            header("Location: organizer-profile.php?id=$id");
+            exit();
         }
         $conn->close();
     } else {
-        echo "檔案上傳失敗，請再試一次!";
+        $_SESSION['message'] = "更新圖片失敗";
+        header("Location: organizer-profile.php?id=$id");
+        exit();
     }
 }
-header("location: organizer-profile.php?id=$id");
