@@ -44,9 +44,9 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
 
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <div class="d-flex align-items-end ">
-                            <h1 class="h3 mb-0 text-gray-800">新增優惠券</h1>
+                    <div class="d-sm-flex align-items-center justify-content-between pt-3 mb-4 mx-4">
+                        <div class="d-flex align-items-end">
+                            <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">新增優惠券</h1>
                             <!-- session -->
                             <?php if (isset($_SESSION["error"]["message"])) : ?>
                                 <div class="ms-3 px-2 alert-danger text-danger" role="alert"><?= $_SESSION["error"]["message"] ?></div>
@@ -60,21 +60,25 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <i class="bi bi-box-arrow-right fs-4 ms-3"></i>
                         </a>
                     </div>
-                    <div class="container">
+                    <div class="mx-4">
                         <form action="doAddCoupon.php" method="post">
                             <div class="row mb-3">
                                 <label for="name" class="col-sm-2 col-form-label">優惠券名稱</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="例 : 清涼優惠" value="<?= isset($_SESSION['error']['filledData']['name']) ? $_SESSION['error']['filledData']['name'] : ' 例 : 清涼優惠 ' ?>" require>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="例 : 清涼優惠" value="<?= isset($_SESSION['error']['filledData']['name']) ? $_SESSION['error']['filledData']['name'] : '' ?>" require>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="code" class="col-sm-2 col-form-label">兌換代碼</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="code" name="code" placeholder="例: ABC1234" require>
+                                    <div id="passwordHelpBlock" class="form-text">
+                                        (自定義前三個字母後四個數字)
+                                    </div>
                                 </div>
-                                <button type="button" class="col-sm-2 btn text-primary" id="codebtn">隨機生成一組亂碼</button>
-                                <p class="fs-6">(自定義前三個字母後四個數字)</p>
+                                <div class="col-sm-2">
+                                    <span type="button" class="btn text-primary" id="codebtn">隨機生成一組亂碼</span>
+                                </div>
                             </div>
                             <div class="row mb-3 align-items-center">
                                 <label for="couponValid" class="col-sm-2 col-form-label">優惠券狀態</label>
@@ -113,7 +117,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="row mb-3">
                                 <label for="discountValid" class="col-sm-2 col-form-label">優惠券百分比折扣<br>/金額折價</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="discountValid" name="discountValid" placeholder="優惠券百分比折扣/金額折價 例:0.75/50" value="<?= isset($_SESSION['error']['filledData']['discountValid']) ? $_SESSION['error']['filledData']['discountValid'] : '優惠券百分比折扣/金額折價 例:0.75/50 ' ?>" require>
+                                    <input type="text" class="form-control" id="discountValid" name="discountValid" placeholder="優惠券百分比折扣/金額折價 例:0.75/50" value="<?= isset($_SESSION['error']['filledData']['discountValid']) ? $_SESSION['error']['filledData']['discountValid'] : '' ?>" require>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -138,11 +142,13 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             </div>
                             <div class="row mb-3 ">
                                 <label for="activityNum" class="col-form-label col-sm-2">活動類型</label>
-                                <select class="form-select col-sm-10 " id="" name="activityNum">
+                                <div class="col-sm-10">
+                                <select class="form-select" id="" name="activityNum">
                                     <?php foreach ($rowsActivity as $rowActivity) : ?>
                                         <option name="activity<?= $rowActivity["id"] ?>" value="<?= $rowActivity["id"] ?>" <?= isset($_SESSION['error']['filledData']['activityNum']) && $_SESSION['error']['filledData']['activityNum'] == $rowActivity["id"] ? 'selected' : '' ?>><?= $rowActivity["activity_name"] ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                                </div>
                             </div>
                             <button class="btn btn-primary" type="submit">送出</button>
                         </form>

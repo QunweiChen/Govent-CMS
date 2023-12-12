@@ -52,14 +52,16 @@ $row = $result->fetch_assoc();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">個別優惠券資訊</h1>
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between pt-3 mb-4 mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">個別優惠券資訊</h1>
                         <div class="d-flex align-items-center">
                             <a href="coupon-list-edit.php" class="text-primary pe-3">回編輯列表</a>
                             <a href="coupon-list-edit.php" class=""><i class="bi bi-box-arrow-right fs-4"></i></a>
                         </div>
                     </div>
-                    <div class="container">
+                    <div class="mx-4">
                         <table class="table table-bordered ">
                             <tr>
                                 <th>ID</th>

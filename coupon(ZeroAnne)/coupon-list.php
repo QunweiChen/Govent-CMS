@@ -170,12 +170,12 @@ foreach ($rows as $rowtime) {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">優惠券清單</h1>
+                    <div class="d-sm-flex align-items-center justify-content-between pt-3 mx-4 mb-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">優惠券清單</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <div>
+                    <div class="mx-4">
                         <div class="py-2">
                             <form action="">
                                 <div class="input-group mb-3 ">
