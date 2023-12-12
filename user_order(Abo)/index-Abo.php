@@ -318,9 +318,9 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
                     </div>
                     <div class="right">
                       <p class="d-inline-flex gap-1">
-                        <button class="btn btn-primary">
-                          <a href="change-order.php?id=<?= $row["user_order_id"] ?>"><i class="bi bi-info-circle text-white"></i></a>
-                        </button>
+
+                        <a class="btn btn-primary" href="change-order.php?id=<?= $row["user_order_id"] ?>"><i class="bi bi-info-circle "></i></a>
+
                       </p>
                       <p class="d-inline-flex gap-1">
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample<?= $row["id"] ?>" aria-expanded="false" aria-controls="collapseExample<?= $row["id"] ?>">
