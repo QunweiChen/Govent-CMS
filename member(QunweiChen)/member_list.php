@@ -62,24 +62,25 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             <div id="content">
 
                 <!-- Topbar -->
-                <!-- Topbar -->
-            <?php include('../topbar.php'); ?>
+                <?php include('../topbar.php'); ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">會員清單</h1>
+                    <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">會員清單</h1>
+                    </div>
                     <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p> -->
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
+                    <div class="mb-4 mx-4 animate__animated animate__fadeIn animate__faster">
                         <!-- <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                         </div> -->
-                        <div class="card-body">
+                        <div class="">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -107,17 +108,17 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php foreach($rows as $row) : ?>
-                                        <tr>
-                                            <td><?=$row["id"]?></td>
-                                            <td><?=$row["name"]?></td>
-                                            <td><?=$row["email"]?></td>
-                                            <td><?=$row["phone"]?></td>
-                                            <td><?=$row["national_id"]?></td>
-                                            <td><?=$row["city_name"]?><?=$row["dist_name"]?></td>
-                                            <td><?=$row["leval_name"]?></td>
-                                            <td><a class="btn btn-info text-white" href="member_data.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-info-circle-fill"></i></a></td>
-                                        </tr>
+                                        <?php foreach ($rows as $row) : ?>
+                                            <tr>
+                                                <td><?= $row["id"] ?></td>
+                                                <td><?= $row["name"] ?></td>
+                                                <td><?= $row["email"] ?></td>
+                                                <td><?= $row["phone"] ?></td>
+                                                <td><?= $row["national_id"] ?></td>
+                                                <td><?= $row["city_name"] ?><?= $row["dist_name"] ?></td>
+                                                <td><?= $row["leval_name"] ?></td>
+                                                <td><a class="btn btn-primary text-white" href="member_data.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-info-circle-fill"></i></a></td>
+                                            </tr>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
@@ -153,8 +154,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -185,7 +185,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <!-- Page level plugins -->
     <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    
+
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
 

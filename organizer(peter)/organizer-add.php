@@ -1,7 +1,7 @@
 <?php
 require_once("../connect_server.php");
 
-$sqlMember = "SELECT member_list.id, member_list.name, member_list.username AS user_id FROM member_list
+$sqlMember = "SELECT member_list.id, member_list.name, member_list.email AS user_id FROM member_list
 WHERE id NOT IN(SELECT user_id FROM organizer) AND valid = 1
 ORDER BY member_list.id ASC
 ";
@@ -112,8 +112,8 @@ if (isset($_GET["id"])) {
                                                 <span class="form-control bg-body-secondary"><?= $userRow["born_date"] ?></span>
                                             </div>
                                             <div class="col-md-12">
-                                                <label for="inputEmail4" class="form-label">帳號</label>
-                                                <span class="form-control bg-body-secondary"><?= $userRow["username"] ?></span>
+                                                <label for="inputEmail4" class="form-label">email</label>
+                                                <span class="form-control bg-body-secondary"><?= $userRow["email"] ?></span>
                                             </div>
                                             <div class="col-md-12">
                                                 <label for="inputPassword4" class="form-label">手機</label>

@@ -1,10 +1,10 @@
 <?php
 
-if(!isset($_GET["id"])){
+if (!isset($_GET["id"])) {
     header("location: member_list.php");
-  }
+}
 
-$id=$_GET["id"];//為連結到id來源
+$id = $_GET["id"]; //為連結到id來源
 
 
 require_once("../connect_server.php");
@@ -47,24 +47,7 @@ $row = $result->fetch_assoc();
 
     <title>member Data</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <!-- font awesome link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- bootstrap icon link -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <!-- 字體連結 -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="../Template/css/govent.css" rel="stylesheet">
+    <?php include('../public_head.php') ?>
 
 </head>
 
@@ -88,24 +71,23 @@ $row = $result->fetch_assoc();
 </div> -->
 
 
-<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="exampleModalLabel"> 警告</h1>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">確認刪除帳號</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="member_login.php">刪除</a>
-                </div>
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel"> 警告</h1>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">確認刪除帳號</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                <a class="btn btn-primary" href="member_login.php">刪除</a>
             </div>
         </div>
     </div>
+</div>
 
 <body id="page-top">
 
@@ -122,137 +104,92 @@ $row = $result->fetch_assoc();
             <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa-solid fa-bars" style="color: #fd7e14;"></i>
-                    </button>
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-3 d-none d-lg-inline text-gray-600 x-small">平台管理員</span>
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">妙蛙種子</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div> -->
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    登出
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
+                <?php include('../topbar.php'); ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">會員資料</h1>
+                    <div class="d-sm-flex align-items-center pt-2 mb-4 mx-4 justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <h1 class="h3 mb-0 me-3 text-gray-800 font-weight-bolder">會員資料</h1>
+                            <a class="btn btn-primary text-white" href="member_list.php"><i class="bi bi-arrow-left me-1"></i>回會員清單</a>
+                        </div>
+                        <div class="py-2">
+                            <a class="btn btn-primary me-1" href="member_edit.php?id=<?= $row["id"] ?>" title="詳細資料">修改會員資料<i class="ms-1 bi bi-pencil-square"></i></a>
+                            <!-- <a class="btn btn-info text-white" href="?id=<?= $row["id"] ?>">Cancel</a> -->
+                        </div>
                     </div>
 
                     <!-- Content Row -->
-                    <div>
+                    <div class="mx-4 animate__animated animate__fadeIn animate__faster">
                         <form action="doUpdate.php" method="post">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <input type="hidden" name="id" value="<?= $row["id"]?>">
-                            <tr>
-                                <th>ID</th>
-                                <td>
-                                <?= $row["id"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>會員等級</th>
-                                <td> <?= $row["leval_name"]?></td>
-                            </tr>
-                            <tr>
-                                <th>姓名</th>
-                                <td>
-                                    <?= $row["name"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>
-                                    <?= $row["email"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>電話</th>
-                                <td>
-                                    <?= $row["phone"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>密碼</th>
-                                <td>
-                                    <?= $row["password"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>身分證</th>
-                                <td>
-                                    <?= $row["national_id"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>地址</th>
-                                <td>
-                                <?=$row["city_name"]?><?=$row["dist_name"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>出生日期</th>
-                                <td>
-                                    <?= $row["born_date"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>電子發票</th>
-                                <td>
-                                    <?= $row["invoice"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>註冊日期</th>
-                                <td><?= $row["created_at"]?></td>
-                            </tr>
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                                <tr>
+                                    <th>ID</th>
+                                    <td>
+                                        <?= $row["id"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>會員等級</th>
+                                    <td> <?= $row["leval_name"] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>姓名</th>
+                                    <td>
+                                        <?= $row["name"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>
+                                        <?= $row["email"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>電話</th>
+                                    <td>
+                                        <?= $row["phone"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>密碼</th>
+                                    <td>
+                                        <?= $row["password"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>身分證</th>
+                                    <td>
+                                        <?= $row["national_id"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>地址</th>
+                                    <td>
+                                        <?= $row["city_name"] ?><?= $row["dist_name"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>出生日期</th>
+                                    <td>
+                                        <?= $row["born_date"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>電子發票</th>
+                                    <td>
+                                        <?= $row["invoice"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>註冊日期</th>
+                                    <td><?= $row["created_at"] ?></td>
+                                </tr>
 
-                        </table>
-                        <table>
-                            <div class="py-2">
-                                <a class="btn btn-primary " href="member_edit.php?id=<?= $row["id"] ?>" title="詳細資料">修改會員資料</a>
-                                <a class="btn btn-info text-white" href="member_list.php">回會員清單</a>
-                                <!-- <a class="btn btn-info text-white" href="?id=<?= $row["id"] ?>">Cancel</a> -->
-                            </div>
-                        </table>
+                            </table>
                         </form>
 
 
@@ -289,8 +226,7 @@ $row = $result->fetch_assoc();
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

@@ -1,10 +1,10 @@
 <?php
 
-if(!isset($_GET["id"])){
+if (!isset($_GET["id"])) {
     header("location: member_list.php");
-  }
+}
 
-$id=$_GET["id"];//為連結到id來源
+$id = $_GET["id"]; //為連結到id來源
 
 
 require_once("../connect_server.php");
@@ -47,54 +47,28 @@ $row = $result->fetch_assoc();
 
     <title>member Data</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <!-- font awesome link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- bootstrap icon link -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <!-- 字體連結 -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="../Template/css/govent.css" rel="stylesheet">
-
-     <!-- bs-5 -->
-     <!-- <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-        /> -->
+    <?php include('../public_head.php') ?>
 
 </head>
 
 
-<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="exampleModalLabel"> 警告</h1>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">確認刪除帳號</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="doDelete.php?id=<?= $row["id"] ?>">確認刪除</a>
-                </div>
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel"> 警告</h1>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">確認刪除帳號</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                <a class="btn btn-primary" href="doDelete.php?id=<?= $row["id"] ?>">確認刪除</a>
             </div>
         </div>
     </div>
+</div>
 
 <body id="page-top">
 
@@ -112,148 +86,93 @@ $row = $result->fetch_assoc();
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa-solid fa-bars" style="color: #fd7e14;"></i>
-                    </button>
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-3 d-none d-lg-inline text-gray-600 x-small">平台管理員</span>
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">妙蛙種子</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div> -->
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    登出
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
+                <?php include('../topbar.php'); ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">會員資料</h1>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div>
-                        <form action="doUpdate.php" method="post">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <input type="hidden" name="id" value="<?= $row["id"]?>">
-                            <tr>
-                                <th>ID</th>
-                                <td>
-                                <?= $row["id"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>會員等級</th>
-                                <td> <?= $row["leval_name"]?></td>
-                            </tr>
-                            <tr>
-                                <th>姓名</th>
-                                <td>
-                                    <input type="text" class="form-contriol" name="name" value="<?= $row["name"]?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>
-                                    <input type="text" class="form-contriol" name="email" value="<?= $row["email"]?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>電話</th>
-                                <td>
-                                    <input type="tel" class="form-contriol" name="phone" value="<?= $row["phone"]?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>密碼</th>
-                                <td>
-                                    <input type="text" class="form-contriol" name="password" value="<?= $row["password"]?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>身分證</th>
-                                <td>
-                                    <?= $row["national_id"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>地址</th>
-                                <td>
-                                <?=$row["city_name"]?><?=$row["dist_name"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>出生日期</th>
-                                <td>
-                                    <input type="date" class="form-contriol" name="born_date" value="<?= $row["born_date"]?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>電子發票</th>
-                                <td>
-                                    <input type="text" class="form-contriol" name="invoice" value="<?= $row["invoice"]?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>註冊日期</th>
-                                <td><?= $row["created_at"]?></td>
-                            </tr>
-
-                        </table>
-                        <table>
+                    <form action="doUpdate.php" method="post">
+                        <div class="d-sm-flex align-items-center pt-2 mb-4 mx-4 justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <h1 class="h3 mb-0 text-gray-800 font-weight-bolder me-2">編輯資料</h1>
+                            </div>
                             <div class="py-2">
-                                <button class="btn btn-primary btn-info " type="submit">修改</button>
-                                <a class="btn btn-info text-white" href="member_data.php?id=<?=$row["id"] ?>">取消</a>
-                                <!-- <a class="btn btn-info text-white" href="?id=<?= $row["id"] ?>">Cancel</a> -->
+                                <a type="button" href="#" data-toggle="modal" data-target="#alertModal" class="btn btn-danger me-3">刪除帳號<i class="ms-1 bi bi-trash3-fill"></i></a>
+                                <a class="btn btn-secondary text-white" href="member_data.php?id=<?= $row["id"] ?>">取消</a>
+                                <button class="btn btn-primary " type="submit">送出</button>
                             </div>
-                            <div>
-                                <a type="button" href="#" data-toggle="modal" data-target="#alertModal" class="btn btn-danger">刪除帳號</a>
-                                <!-- <a href="doDelete.php?id=<?= $row["id"] ?>" class="btn btn-danger">Delete</a> -->
-                            </div>
-                        </table>
-                        </form>
+                        </div>
 
-
-
-
-
-
-                    </div>
+                        <!-- Content Row -->
+                        <div class="mx-4 animate__animated animate__fadeIn animate__faster">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                                <tr>
+                                    <th>ID</th>
+                                    <td>
+                                        <?= $row["id"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>會員等級</th>
+                                    <td> <?= $row["leval_name"] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>姓名</th>
+                                    <td>
+                                        <input type="text" class="form-contriol" name="name" value="<?= $row["name"] ?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>
+                                        <input type="text" class="form-contriol" name="email" value="<?= $row["email"] ?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>電話</th>
+                                    <td>
+                                        <input type="tel" class="form-contriol" name="phone" value="<?= $row["phone"] ?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>密碼</th>
+                                    <td>
+                                        <input type="text" class="form-contriol" name="password" value="<?= $row["password"] ?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>身分證</th>
+                                    <td>
+                                        <?= $row["national_id"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>地址</th>
+                                    <td>
+                                        <?= $row["city_name"] ?><?= $row["dist_name"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>出生日期</th>
+                                    <td>
+                                        <input type="date" class="form-contriol" name="born_date" value="<?= $row["born_date"] ?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>電子發票</th>
+                                    <td>
+                                        <input type="text" class="form-contriol" name="invoice" value="<?= $row["invoice"] ?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>註冊日期</th>
+                                    <td><?= $row["created_at"] ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -282,8 +201,7 @@ $row = $result->fetch_assoc();
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

@@ -191,9 +191,9 @@ foreach ($rows as $rowtime) {
                         </div>
                         <div class="pb-2 d-flex justify-content-between orders align-items-center">
                             <div class="btn-group">
-                                <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list-edit.php?page=1&order=<?= $order ?>">總票券量</a>
-                                <a class="btn btn-outline-primary <?php if ($use == 1) echo "active"; ?>" href="coupon-list-edit.php?page=1&use=1&order=<?= $order ?>">可使用</a>
-                                <a class="btn btn-outline-primary <?php if ($use == 2) echo "active"; ?>" href="coupon-list-edit.php?page=1&use=2&order=<?= $order ?>">已停用</a>
+                                <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=1&order=<?= $order ?>">總票券量</a>
+                                <a class="btn btn-outline-primary <?php if ($use == 1) echo "active"; ?>" href="coupon-list.php?page=1&use=1&order=<?= $order ?>">可使用</a>
+                                <a class="btn btn-outline-primary <?php if ($use == 2) echo "active"; ?>" href="coupon-list.php?page=1&use=2&order=<?= $order ?>">已停用</a>
                             </div>
                             <div class="dropdown">
                                 <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -203,15 +203,15 @@ foreach ($rows as $rowtime) {
                                     <?php if (!isset($_GET["order"])) : $order = 1; ?>
                                     <?php endif; ?>
                                     <?php if (isset($_GET["use"])) : ?>
-                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list-edit.php?page=<?= $page ?>&order=1&use=<?= $use ?>">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list-edit.php?page=<?= $page ?>&order=2&use=<?= $use ?>">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list-edit.php?page=<?= $page ?>&order=3&use=<?= $use ?>">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list-edit.php?page=<?= $page ?>&order=4&use=<?= $use ?>">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1&use=<?= $use ?>">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2&use=<?= $use ?>">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3&use=<?= $use ?>">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4&use=<?= $use ?>">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
                                     <?php else : ?>
-                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list-edit.php?page=<?= $page ?>&order=1">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list-edit.php?page=<?= $page ?>&order=2">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list-edit.php?page=<?= $page ?>&order=3">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
-                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list-edit.php?page=<?= $page ?>&order=4">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
                                     <?php endif; ?>
                                 </ul>
                             </div>
@@ -291,25 +291,25 @@ foreach ($rows as $rowtime) {
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <?php if ($page == 1) : ?>
-                                                <a class="page-link" href="coupon-list-edit.php?page=<?= $page ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Previous">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             <?php else : ?>
-                                                <a class="page-link" href="coupon-list-edit.php?page=<?= $page - 1 ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Previous">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page - 1 ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             <?php endif; ?>
                                         </li>
                                         <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
-                                            <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="coupon-list-edit.php?page=<?= $i ?>&use=<?= $use ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                                            <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="coupon-list.php?page=<?= $i ?>&use=<?= $use ?>&order=<?= $order ?>"><?= $i ?></a></li>
                                         <?php endfor; ?>
                                         <li class="page-item">
                                             <?php if ($page == $pageCount) : ?>
-                                                <a class="page-link" href="coupon-list-edit.php?page=<?= $page ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Next">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             <?php else : ?>
-                                                <a class="page-link" href="coupon-list-edit.php?page=<?= $page + 1 ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Next">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page + 1 ?>&use=<?= $use ?>&order=<?= $order ?>" aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             <?php endif; ?>
@@ -321,25 +321,25 @@ foreach ($rows as $rowtime) {
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <?php if ($page == 1) : ?>
-                                                <a class="page-link" href="coupon-list-edit.php?page=<?= $page ?>&order=<?= $order ?>" aria-label="Previous">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page ?>&order=<?= $order ?>" aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             <?php else : ?>
-                                                <a class="page-link" href="coupon-list-edit.php?page=<?= $page - 1 ?>&order=<?= $order ?>" aria-label="Previous">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page - 1 ?>&order=<?= $order ?>" aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             <?php endif; ?>
                                         </li>
                                         <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
-                                            <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="coupon-list-edit.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                                            <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="coupon-list.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
                                         <?php endfor; ?>
                                         <li class="page-item">
                                             <?php if ($page == $pageCount) : ?>
-                                                <a class="page-link" href="coupon-list-edit.php?page=<?= $page ?>&order=<?= $order ?>" aria-label="Next">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page ?>&order=<?= $order ?>" aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             <?php else : ?>
-                                                <a class="page-link" href="coupon-list-edit.php?page=<?= $page + 1 ?>&order=<?= $order ?>" aria-label="Next">
+                                                <a class="page-link" href="coupon-list.php?page=<?= $page + 1 ?>&order=<?= $order ?>" aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             <?php endif; ?>

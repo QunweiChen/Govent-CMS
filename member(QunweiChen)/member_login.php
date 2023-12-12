@@ -22,24 +22,7 @@ if(isset($_SESSION["member"])){
 
     <title>member login</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <!-- font awesome link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- bootstrap icon link -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <!-- 字體連結 -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="../Template/css/govent.css" rel="stylesheet">
+    <?php include('../public_head.php') ?>
 
 </head>
 
@@ -60,7 +43,7 @@ if(isset($_SESSION["member"])){
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">歡迎回來!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4 font-weight-bolder">歡迎回來!</h1>
                                     </div>
                                     <?php if (isset($_GET['messageSuccess'])) {
                                         $resultMessage = urldecode($_GET['messageSuccess']);
@@ -98,19 +81,10 @@ if(isset($_SESSION["member"])){
                                         <button href="" type="submit" class="btn btn-primary btn-user btn-block">
                                             登入
                                         </button>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> 透過 Google登入
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> 透過 Facebook登入
-                                        </a>
+                                        
                                     </form>
                                     <?php endif;?>
                                     <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">忘記密碼?</a>
-                                    </div>
                                     <div class="text-center">
                                         <a class="small" href="member_signup.php">註冊新帳號!</a>
                                     </div>
