@@ -33,7 +33,7 @@ if (isset($_GET['status']) || isset($_GET['page'])) {
 
   // 獲取 status=1 和 status=0 的資料
   if ($status == 3) {
-    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
+    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name, organizer.id AS organizer_id,user_order.id AS user_order_id
         FROM user_order 
         JOIN campaign ON campaign.id = user_order.event_id
         JOIN ticket ON ticket.id = user_order.ticket_number
@@ -44,7 +44,7 @@ if (isset($_GET['status']) || isset($_GET['page'])) {
         ORDER BY campaign.start_date ASC 
         LIMIT $startItem, $perPage";
   } else {
-    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
+    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name, organizer.id AS organizer_id,user_order.id AS user_order_id
         FROM user_order 
         JOIN campaign ON campaign.id = user_order.event_id
         JOIN ticket ON ticket.id = user_order.ticket_number
@@ -63,15 +63,15 @@ if (isset($_GET['status']) || isset($_GET['page'])) {
   $status = 3;
   $page = 1;
   // 訂單資料庫串聯
-  $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
-    FROM user_order
-    JOIN campaign ON campaign.id = user_order.event_id
-    JOIN ticket ON ticket.id = user_order.ticket_number
-    JOIN user ON user.id = user_order.user_id
-    JOIN event_category ON event_category.id = campaign.event_type_id
-    JOIN organizer ON organizer.id = campaign.merchant_id
-    ORDER BY campaign.start_date ASC
-    LIMIT 0, $perPage";
+  $sql = "SELECT user_order.*, campaign.*, organizer.*, user_order.valid AS user_order_valid, organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name, organizer.id AS organizer_id,user_order.id AS user_order_id
+  FROM user_order
+  JOIN campaign ON campaign.id = user_order.event_id
+  JOIN ticket ON ticket.id = user_order.ticket_number
+  JOIN user ON user.id = user_order.user_id
+  JOIN event_category ON event_category.id = campaign.event_type_id
+  JOIN organizer ON organizer.id = campaign.merchant_id
+  ORDER BY campaign.start_date ASC
+  LIMIT 0, $perPage";
   $result = $conn->query($sql);
   $rows = $result->fetch_all(MYSQLI_ASSOC);
 }
@@ -255,6 +255,13 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+          <div class="container d-flex justify-content-end">
+            <a href="add-order.php">
+              <button type="button" class="btn btn-outline-warning h1 btn-lg">增加訂單</button>
+            </a>
+          </div>
+
+
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">訂單資訊</h1>
 
@@ -310,6 +317,11 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
                       <div class="number py-1">票券號碼 ： <?= $row["qr_code"] ?></div>
                     </div>
                     <div class="right">
+                      <p class="d-inline-flex gap-1">
+                        <button class="btn btn-primary">
+                          <a href="change-order.php?id=<?= $row["user_order_id"] ?>"><i class="bi bi-info-circle text-white"></i></a>
+                        </button>
+                      </p>
                       <p class="d-inline-flex gap-1">
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample<?= $row["id"] ?>" aria-expanded="false" aria-controls="collapseExample<?= $row["id"] ?>">
                           票券資訊

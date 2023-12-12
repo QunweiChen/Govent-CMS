@@ -58,7 +58,8 @@ if (isset($_GET['status']) && isset($_GET['page']) && isset($_GET['startDateTime
 
     // 獲取 status=1 和 status=0 的資料
     if ($status == 3) {
-        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name FROM user_order 
+        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name , organizer.id AS organizer_id,user_order.id AS user_order_id
+        FROM user_order 
             JOIN campaign ON campaign.id = user_order.event_id
             JOIN ticket ON ticket.id = user_order.ticket_number
             JOIN user ON user.id = user_order.user_id
@@ -69,7 +70,7 @@ if (isset($_GET['status']) && isset($_GET['page']) && isset($_GET['startDateTime
             ORDER BY campaign.start_date ASC 
             LIMIT $startItem, $perPage";
     } else {
-        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
+        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name, organizer.id AS organizer_id,user_order.id AS user_order_id
         FROM user_order 
         JOIN campaign ON campaign.id = user_order.event_id
         JOIN ticket ON ticket.id = user_order.ticket_number
@@ -88,7 +89,7 @@ if (isset($_GET['status']) && isset($_GET['page']) && isset($_GET['startDateTime
     $status = 3;
     $page = 1;
     // 訂單資料庫串聯
-    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name
+    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name, organizer.id AS organizer_id,user_order.id AS user_order_id
     FROM user_order
     JOIN campaign ON campaign.id = user_order.event_id
     JOIN ticket ON ticket.id = user_order.ticket_number
