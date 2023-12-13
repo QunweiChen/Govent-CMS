@@ -2545,8 +2545,8 @@ fieldset:disabled a.btn {
 .btn-primary:focus,
 .btn-primary.focus {
   color: #fff;
-  background-color: #2e59d9;
-  border-color: #2653d4;
+  background-color: #df492e;
+  border-color: #df492e;
   box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
 }
 
@@ -2561,8 +2561,8 @@ fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #2653d4;
-  border-color: #244ec9;
+  background-color: #df492e;
+  border-color: #df492e;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus,
@@ -4368,6 +4368,7 @@ input[type="button"].btn-block {
 }
 
 .nav-pills .nav-link {
+  color: #fd7e14;
   border-radius: 0.35rem;
 }
 

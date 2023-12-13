@@ -3,7 +3,7 @@ if (!isset($_GET["id"])) {
     header("location: coupon-list.php");
 }
 $id = $_GET["id"];
-require_once("./db_conntect_govent.php");
+require_once("../connect_server.php");
 
 $sql = "SELECT coupon.* ,coupon_valid_name, activity_name 
 FROM coupon 

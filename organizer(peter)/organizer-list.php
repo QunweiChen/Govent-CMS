@@ -86,7 +86,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 <body id="page-top">
     <!-- 照結果顯示alert -->
-    <?php include('alert.php'); ?>
+    <?php include('../alert.php'); ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -99,8 +99,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             <!-- Main Content -->
             <div id="content">
 
-            <!-- Topbar -->
-            <?php include('../topbar.php'); ?>
+                <!-- Topbar -->
+                <?php include('../topbar.php'); ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">

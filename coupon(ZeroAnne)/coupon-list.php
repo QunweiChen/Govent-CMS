@@ -1,5 +1,5 @@
 <?php
-require_once("./db_conntect_govent.php");
+require_once("../connect_server.php");
 
 if (isset($_GET["use"]) && isset($_GET["search"]) && isset($_GET["order"]) && isset($_GET["order"])) {
     header("location:coupon-list.php?page=1&order=1");
@@ -187,12 +187,17 @@ foreach ($rows as $rowtime) {
                                         <input type="text" class="form-control" value="<?= $_GET['search'] ?>" name="search">
                                         <button class="btn btn-primary" type="submit" id=""><i class="bi bi-search"></i></button>
                                     <?php else : ?>
+<<<<<<< HEAD
                                         <input type="text" class="form-control" placeholder="請輸入優惠券名稱或適用活動" name="search">
+=======
+                                        <input type="text" class="form-control" placeholder="Search.." name="search">
+>>>>>>> main
                                         <button class="btn btn-primary" type="submit" id=""><i class=" bi bi-search"></i></button>
                                     <?php endif; ?>
                                 </div>
                             </form>
                         </div>
+<<<<<<< HEAD
                         <?php if (!isset($_GET["search"])) : ?>
                             <div class="pb-2 d-flex justify-content-between orders align-items-center">
                                 <div class="btn-group">
@@ -222,6 +227,35 @@ foreach ($rows as $rowtime) {
                                 </div>
                             </div>
                         <?php endif; ?>
+=======
+                        <div class="pb-2 d-flex justify-content-between orders align-items-center">
+                            <div class="btn-group">
+                                <a class="btn btn-outline-primary <?php if (!isset($_GET["use"])) echo "active"; ?>" href="coupon-list.php?page=1&order=<?= $order ?>">總票券量</a>
+                                <a class="btn btn-outline-primary <?php if ($use == 1) echo "active"; ?>" href="coupon-list.php?page=1&use=1&order=<?= $order ?>">可使用</a>
+                                <a class="btn btn-outline-primary <?php if ($use == 2) echo "active"; ?>" href="coupon-list.php?page=1&use=2&order=<?= $order ?>">已停用</a>
+                            </div>
+                            <div class="dropdown">
+                                <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    排序方式
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <?php if (!isset($_GET["order"])) : $order = 1; ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_GET["use"])) : ?>
+                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1&use=<?= $use ?>">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2&use=<?= $use ?>">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3&use=<?= $use ?>">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4&use=<?= $use ?>">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                    <?php else : ?>
+                                        <li><a class="dropdown-item <?php if ($order == 1) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=1">ID由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 2) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=2">ID由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 3) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=3">活動類別由小<i class="bi bi-arrow-right-short"></i>大</a></li>
+                                        <li><a class="dropdown-item <?php if ($order == 4) echo "active"; ?>" href="coupon-list.php?page=<?= $page ?>&order=4">活動類別由大<i class="bi bi-arrow-right-short"></i>小</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
+                        </div>
+>>>>>>> main
                         <?php if (!isset($_GET["search"])) : ?>
                             <div class="pb-2 text-end">
                                 共 <?= $totalUser ?> 筆
@@ -258,6 +292,7 @@ foreach ($rows as $rowtime) {
                             </thead>
                             <tbody class="">
                                 <?php foreach ($rows as $row) : ?>
+<<<<<<< HEAD
                                     <?php if (!isset($_GET["search"])) : ?>
                                         <div class="modal fade" id="alertModal<?= $row["id"] ?><?= $_GET["page"] ?><?= $_GET["order"] ?><?php if (isset($_GET["use"]))  echo $_GET["use"] ?>" tabindex="-1" aria-labelledby="" aria-hidden="true">
                                         <?php elseif (!isset($_GET["search"])) : ?>
@@ -311,6 +346,46 @@ foreach ($rows as $rowtime) {
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
+=======
+                                    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">警告</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    確認刪除?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                                                    <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>" type="button" class="btn btn-danger">確定刪除</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <tr class="small">
+                                        <td><?= $row["id"] ?></td>
+                                        <td><?= $row["coupon_code"] ?></td>
+                                        <td><?= $row["coupon_name"] ?></td>
+                                        <td class="<?php if ($row["coupon_valid"] == 2) echo "text-danger"; ?>"><?= $row["coupon_valid_name"] ?></td>
+                                        <td><?= $row["discount_type"] ?></td>
+                                        <td><?= $row["discount_valid"] ?></td>
+                                        <td><?= $row["start_at"] ?></td>
+                                        <td><?= $row["expires_at"] ?></td>
+                                        <td><?= $row["price_min"] ?></td>
+                                        <td><?= $row["max_usage"] ?></td>
+                                        <td><?= $row["activity_name"] ?></td>
+                                        <td>
+                                            <a class="btn text-primary p-1" href="coupon.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-ticket-perforated-fill"></i></a>
+                                            <a class="btn text-primary p-1" href="coupon-edit.php?id=<?= $row["id"] ?>" title="編輯資料"><i class="bi bi-pencil-fill"></i></a>
+                                            <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#alertModal" class="btn btn-danger">刪除</button> -->
+                                            <a class="btn text-primary p-1" data-bs-toggle="modal" data-bs-target="#alertModal" href="" title="刪除資料"><i class="bi bi-trash3"></i></a>
+                                            
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+>>>>>>> main
                             </tbody>
                         </table>
                         <?php if (!isset($_GET["search"])) : ?>
