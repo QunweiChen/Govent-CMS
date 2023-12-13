@@ -1,10 +1,24 @@
 <?php
-session_start();
 
-if(isset($_SESSION["menber"])){
-    // header("location: menber_dashboard.php");
+session_start();
+session_destroy();
+if(isset($_SESSION["member"])){
+    // header("location: member_dashboard.php");
     //若已登入 導入至dashboard
 }
+
+// 拉取地址資歷庫
+require_once("govent_db_conntect.php");
+$sql = "SELECT * FROM city";
+$result = $conn->query($sql);
+// var_dump($result);
+
+if ($result->num_rows > 0) {
+    $addresses = $result->fetch_all(MYSQLI_ASSOC);
+    // echo "成功";
+}
+$conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -57,10 +71,12 @@ if(isset($_SESSION["menber"])){
                             </div>
                             <form action="doSignup.php" method="post" class="user">
                                 <!-- name -->
+                                <!-- <label>姓名</label> -->
                                 <div class="form-group">
                                     <!-- <div class="col-sm-6 mb-3 mb-sm-0"> -->
                                         <input type="text"  name="name" class="form-control form-control-user" id="exampleName"
-                                        placeholder="姓名">
+                                        placeholder="姓名"
+                                        maxlength="50">
                                     <!-- </div> -->
                                     <!-- <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="exampleLastName"
@@ -68,49 +84,94 @@ if(isset($_SESSION["menber"])){
                                     </div> -->
                                 </div>
                                 <!-- email -->
+                                <!-- <label>Email</label> -->
                                 <div class="form-group">
                                     <input name="email" 
                                     type="email" 
                                     class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="Email">
+                                    placeholder="Email" maxlength="50">
                                 </div>
                                 <!-- phone -->
+                                <!-- <label>phone</label> -->
                                 <div class="form-group">
                                     <input name="phone" 
                                     type="text" 
                                     class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="電話">
+                                    placeholder="電話" maxlength="30">
                                 </div>
                                 
                                 <!-- password -->
+                                <!-- <label>密碼</label> -->
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input name="password" type="password" class="form-control form-control-user"
-                                        id="exampleInputPassword" placeholder="密碼">
+                                        id="exampleInputPassword" placeholder="密碼"maxlength="50">
                                     </div>
                                     <div class="col-sm-6">
                                         <input name="repassword" type="password" class="form-control form-control-user"
-                                        id="exampleRepeatPassword" placeholder="密碼確認">
+                                        id="exampleRepeatPassword" placeholder="密碼確認" maxlength="50">
                                     </div>
                                 </div>
 
+                                <!-- national ID -->
+                                <!-- <label>身分證</label> -->
                                 <div class="form-group">
                                     <input name="national_id" 
                                     type="text" 
                                     class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="身分證">
+                                    placeholder="身分證" maxlength="30">
                                 </div>
+
+                                <!-- address -->
+                                <!-- <label class="col">居住地</label> -->
+                                <div class="form-group">
+                                    <!-- <label class="col-3">居住地</label> -->
+                                    <select type="text" name="address" class="input-group-text form-control-lg rounded-pill col" id="address" placeholder="居住地">
+                                        <?php foreach($addresses as $address): ?>
+                                            <option value="<?= $address["city_id"]; ?>">
+                                                <?= $address["city_name"]; ?>, <?= $address["dist_name"]; ?>
+                                            </option>
+                                        <?php endforeach; ?>                               
+                                    </select>          
+
+                                </div>
+
+                                <!-- gender -->
+                                <div class="form-group row">
+                                    <label class="col-3 m-s-5 text-gray-700">性別</label>
+                                    <label class="col text-gray-700">女性</label>
+                                    <div class="col">
+                                        <input name="gender" 
+                                        type="radio" 
+                                        class="form-control form-control-sm text-gray-700"
+                                        id="exampleInputGender" value="2"
+                                        >
+                                    </div>
+                                    <label class="col text-gray-700">男性</label>
+                                    <div class="col">
+                                        <input name="gender" 
+                                        type="radio" 
+                                        class="form-control form-control-sm text-gray-700" 
+                                        id="exampleInputGender" value="1"
+                                        >
+                                    </div>
+                                </div>
+
+                                <!-- born date -->
+                                <!-- <label>出生日期</label> -->
                                 <div class="form-group">
                                     <input name="born_date" 
-                                    type="text" 
+                                    type="date" 
                                     class="form-control form-control-user" id="exampleInputEmail"
                                     placeholder="出生日期">
                                 </div>
+                                <!-- invoice -->
+                                <!-- <label>電子發票</label> -->
                                 <div class="form-group">
                                     <input name="invoice" 
                                     type="text" 
                                     class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="電子發票">
+                                    placeholder="電子發票" maxlength="10">
                                 </div>
                                 <?php if(isset($_SESSION["error"]["message"])): ?>
                                     <div class="mt-2 text-danger">
@@ -120,20 +181,20 @@ if(isset($_SESSION["menber"])){
                                 <button type="submit" href="#" class="btn btn-primary btn-user btn-block">
                                     註冊新帳號
                                 </button>
-                                <hr>
+                                <!-- <hr>
                                 <a href="index.html" class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> 透過 google 註冊
                                 </a>
                                 <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                     <i class="fab fa-facebook-f fa-fw"></i> 透過 Facebook 註冊
-                                </a>
+                                </a> -->
                             </form>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">忘記密碼?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="menber_login.php">已經有帳號? 登入!</a>
+                                <a class="small" href="member_login.php">已經有帳號? 登入!</a>
                             </div>
                         </div>
                     </div>

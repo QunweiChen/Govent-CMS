@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if(isset($_SESSION["menber"])){
-    // header("location: menber_dashboard.php");
+if(isset($_SESSION["member"])){
+    // header("location: member_dashboard.php");
     //若已登入 導入至dashboard
 }
 
@@ -20,7 +20,7 @@ if(isset($_SESSION["menber"])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>menber login</title>
+    <title>member login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -72,6 +72,7 @@ if(isset($_SESSION["menber"])){
                                     <?php else: ?>
                                     <form class="user" action="doLogin.php" method="post">
                                         <div class="form-group">
+                                            <!-- <label for="address">Email:</label> -->
                                             <input type="email" 
                                             name="email"
                                             class="form-control form-control-user"
@@ -79,6 +80,7 @@ if(isset($_SESSION["menber"])){
                                                 placeholder="Email">
                                         </div>
                                         <div class="form-group">
+                                            <!-- <label for="address">密碼:</label> -->
                                             <input type="password" 
                                             name="password"
                                             class="form-control form-control-user"
@@ -98,13 +100,13 @@ if(isset($_SESSION["menber"])){
                                         <button href="" type="submit" class="btn btn-primary btn-user btn-block">
                                             登入
                                         </button>
-                                        <hr>
+                                        <!-- <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> 透過 Google登入
                                         </a>
                                         <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-facebook-f fa-fw"></i> 透過 Facebook登入
-                                        </a>
+                                        </a> -->
                                     </form>
                                     <?php endif;?>
                                     <hr>
@@ -112,7 +114,7 @@ if(isset($_SESSION["menber"])){
                                         <a class="small" href="forgot-password.html">忘記密碼?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="menber_signup.php">註冊新帳號!</a>
+                                        <a class="small" href="member_signup.php">註冊新帳號!</a>
                                     </div>
                                 </div>
                             </div>

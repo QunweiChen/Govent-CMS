@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-unset($_SESSION["menber"]);
+unset($_SESSION["member"]);
 
-header("location: menber_login.php");
+header("location: member_login.php");
 
 ?>
 

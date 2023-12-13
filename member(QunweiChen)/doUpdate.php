@@ -17,7 +17,7 @@ $invoice=$_POST["invoice"];
 
 // var_dump($name, $email, $phone);
 
-$sql="UPDATE menber_list SET name='$name', email='$email', phone='$phone', password='$password', born_date='$born_date', invoice='$invoice' WHERE id=$id";
+$sql="UPDATE member_list SET name='$name', email='$email', phone='$phone', password='$password', born_date='$born_date', invoice='$invoice' WHERE id=$id";
 var_dump($sql);
 
 
@@ -29,4 +29,4 @@ if($conn->query($sql)===TRUE){
 
 $conn->close();
 
-header("location: menber_data.php?id=$id");
+header("location: member_data.php?id=$id");

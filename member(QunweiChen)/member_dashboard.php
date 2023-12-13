@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(!isset($_SESSION["menber"])){
-    header("location: menber_login.php");//若未登入 導入至login
+if(!isset($_SESSION["member"])){
+    header("location: member_login.php");//若未登入 導入至login
     exit;
 }
 
@@ -51,7 +51,7 @@ if(!isset($_SESSION["menber"])){
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="menber_dashboard.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="member_dashboard.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-ticket"></i>
                 </div>
@@ -68,7 +68,7 @@ if(!isset($_SESSION["menber"])){
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active text-shadow-20">
-                <a class="nav-link" href="menber_dashboard.php">
+                <a class="nav-link" href="member_dashboard.php">
                     <i class="bi bi-speedometer"></i>
                     <span>平台管理</span></a>
             </li>
@@ -92,9 +92,9 @@ if(!isset($_SESSION["menber"])){
                     data-parent="#accordionSidebar">
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Member Management</h6>
-                        <a class="collapse-item" href="menber_list.php">會員清單</a>
-                        <a class="collapse-item" href="menber_signup.php">會員註冊（客戶端）</a>
-                        <a class="collapse-item" href="menber_login.php">會員登入（客戶端）</a>
+                        <a class="collapse-item" href="member_list.php">會員清單</a>
+                        <a class="collapse-item" href="member_signup.php">會員註冊（客戶端）</a>
+                        <a class="collapse-item" href="member_login.php">會員登入（客戶端）</a>
                     </div>
                 </div>
             </li>
@@ -577,7 +577,7 @@ if(!isset($_SESSION["menber"])){
                 <div class="modal-body">您確定要登出帳號嗎？</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="menber_login.php">確認</a>
+                    <a class="btn btn-primary" href="member_login.php">確認</a>
                 </div>
             </div>
         </div>

@@ -1,13 +1,13 @@
 <?php
 require_once("govent_db_conntect.php");
 
-// $sqlTotal = "SELECT * FROM menber_list  WHERE  valid=1";
+// $sqlTotal = "SELECT * FROM member_list  WHERE  valid=1";
 $sqlTotal = "SELECT *
-FROM menber_list
+FROM member_list
 JOIN city 
-ON menber_list.address = city.city_id 
-JOIN menber_leval 
-ON menber_list.menber_leval = menber_leval.leval_id 
+ON member_list.address = city.city_id 
+JOIN member_leval 
+ON member_list.member_leval = member_leval.leval_id 
 WHERE  valid=1";
 
 
@@ -80,7 +80,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="menber_dashboard.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="member_dashboard.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-ticket"></i>
                 </div>
@@ -97,7 +97,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link text-shadow-20" href="menber_dashboard.php">
+                <a class="nav-link text-shadow-20" href="member_dashboard.php">
                     <i class="bi bi-speedometer"></i>
                     <span>平台管理</span></a>
             </li>
@@ -120,9 +120,9 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Member Management</h6>
-                        <a class="collapse-item" href="menber_list.php">會員清單</a>
-                        <a class="collapse-item" href="menber_signup.php">會員註冊（客戶端）</a>
-                        <a class="collapse-item" href="menber_login.php">會員登入（客戶端）</a>
+                        <a class="collapse-item" href="member_list.php">會員清單</a>
+                        <a class="collapse-item" href="member_signup.php">會員註冊（客戶端）</a>
+                        <a class="collapse-item" href="member_login.php">會員登入（客戶端）</a>
                     </div>
                 </div>
             </li>
@@ -418,7 +418,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                             <th>Email</th>
                                             <th>電話</th>
                                             <th>身分證</th>
-                                            <th>地址</th>
+                                            <th>居住地</th>
                                             <th>會員等級</th>
                                             <th>詳細資料</th>
                                         </tr>
@@ -430,7 +430,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                             <th>Email</th>
                                             <th>電話</th>
                                             <th>身分證</th>
-                                            <th>地址</th>
+                                            <th>居住地</th>
                                             <th>會員等級</th>
                                             <th>詳細資料</th>
                                         </tr>
@@ -445,7 +445,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                             <td><?=$row["national_id"]?></td>
                                             <td><?=$row["city_name"]?><?=$row["dist_name"]?></td>
                                             <td><?=$row["leval_name"]?></td>
-                                            <td><a class="btn btn-info text-white" href="menber_data.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-info-circle-fill"></i></a></td>
+                                            <td><a class="btn btn-info text-white" href="member_data.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-info-circle-fill"></i></a></td>
                                         </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -495,7 +495,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="modal-body">您確定要登出帳號嗎？</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="menber_login.php">確認</a>
+                    <a class="btn btn-primary" href="member_login.php">確認</a>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <?php
 
 if(!isset($_GET["id"])){
-    header("location: menbert_list.php");
+    header("location: member_list.php");
   }
 
 $id=$_GET["id"];//為連結到id來源
@@ -9,15 +9,15 @@ $id=$_GET["id"];//為連結到id來源
 
 require_once("govent_db_conntect.php");
 
-// $sql = "SELECT * FROM menber_list WHERE id=$id AND valid=1";
+// $sql = "SELECT * FROM member_list WHERE id=$id AND valid=1";
 
 $sql = "SELECT *
-FROM menber_list
+FROM member_list
 JOIN city 
-ON menber_list.address = city.city_id 
-JOIN menber_leval 
-ON menber_list.menber_leval = menber_leval.leval_id 
-WHERE menber_list.valid=1 AND menber_list.id = " . $id;
+ON member_list.address = city.city_id 
+JOIN member_leval 
+ON member_list.member_leval = member_leval.leval_id 
+WHERE member_list.valid=1 AND member_list.id = " . $id;
 
 $result = $conn->query($sql);
 // $userCount = $result->num_rows;?未知用途
@@ -26,10 +26,10 @@ $row = $result->fetch_assoc();
 
 
 // $sql = "SELECT *
-// FROM menber_list
-// JOIN menber_leval 
-// ON menber_list.menber_leval = menber_leval.leval_id 
-// WHERE menber_list.valid=1 AND menber_list.id = " . $row["id"];
+// FROM member_list
+// JOIN member_leval 
+// ON member_list.member_leval = member_leval.leval_id 
+// WHERE member_list.valid=1 AND member_list.id = " . $row["id"];
 
 
 ?>
@@ -90,7 +90,7 @@ $row = $result->fetch_assoc();
                 <div class="modal-body">確認刪除帳號</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="doDelete.php">確認刪除</a>
+                    <a class="btn btn-primary" href="doDelete.php?id=<?= $row["id"] ?>">確認刪除</a>
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@ $row = $result->fetch_assoc();
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="menber_dashboard.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="member_dashboard.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-ticket"></i>
                 </div>
@@ -123,7 +123,7 @@ $row = $result->fetch_assoc();
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link text-shadow-20" href="menber_dashboard.php">
+                <a class="nav-link text-shadow-20" href="member_dashboard.php">
                     <i class="bi bi-speedometer"></i>
                     <span>平台管理</span></a>
             </li>
@@ -146,9 +146,9 @@ $row = $result->fetch_assoc();
                 <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Member Management</h6>
-                        <a class="collapse-item" href="menber_list.php">會員清單</a>
-                        <a class="collapse-item" href="menber_signup.php">會員註冊（客戶端）</a>
-                        <a class="collapse-item" href="menber_login.php">會員登入（客戶端）</a>
+                        <a class="collapse-item" href="member_list.php">會員清單</a>
+                        <a class="collapse-item" href="member_signup.php">會員註冊（客戶端）</a>
+                        <a class="collapse-item" href="member_login.php">會員登入（客戶端）</a>
                     </div>
                 </div>
             </li>
@@ -317,9 +317,19 @@ $row = $result->fetch_assoc();
                                 </td>
                             </tr>
                             <tr>
-                                <th>地址</th>
+                                <th>居住地</th>
                                 <td>
                                 <?=$row["city_name"]?><?=$row["dist_name"]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>性別</th>
+                                <td>
+                                <?php if($row["gender"]=1){
+                                    echo "男";
+                                }else{
+                                    echo "女";
+                                }?>
                                 </td>
                             </tr>
                             <tr>
@@ -343,7 +353,7 @@ $row = $result->fetch_assoc();
                         <table>
                             <div class="py-2">
                                 <button class="btn btn-primary btn-info " type="submit">修改</button>
-                                <a class="btn btn-info text-white" href="menber_data.php?id=<?=$row["id"] ?>">取消</a>
+                                <a class="btn btn-info text-white" href="member_data.php?id=<?=$row["id"] ?>">取消</a>
                                 <!-- <a class="btn btn-info text-white" href="?id=<?= $row["id"] ?>">Cancel</a> -->
                             </div>
                             <div>
@@ -400,7 +410,7 @@ $row = $result->fetch_assoc();
                 <div class="modal-body">您確定要登出帳號嗎？</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="menber_login.php">登出</a>
+                    <a class="btn btn-primary" href="member_login.php">登出</a>
                 </div>
             </div>
         </div>
