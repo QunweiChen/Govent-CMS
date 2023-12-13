@@ -120,14 +120,14 @@ $rowsImg = $imgResult->fetch_assoc();
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800"><a href="ticket-type.php?id=<?= $id ?>" title="回到票卷種類管理"><i class="bi bi-backspace px-1"></i>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4 mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder"><a href="ticket-type.php?id=<?= $id ?>" title="回到票卷種類管理"><i class="bi bi-backspace px-1"></i>
                             </a>票卷種類個別資料
                         </h1>
                     </div>
 
                     <!-- Content Row -->
-                    <div>
+                    <div class="animate__animated animate__fadeIn animate__faster">
                         <form action="doUpdateTicketType.php" method="post">
                             <input type="hidden" name="id" value="<?= $ticketTypeRow["id"] ?>">
                             <!-- <?php var_dump($ticketTypeRow["id"]); ?> -->

@@ -37,14 +37,14 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800"><a href="../ticket(Angus%20Lin)/ticket-list.php" title="回到票卷種類管理"><i class="bi bi-backspace px-1"></i>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4 mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder"><a href="../ticket(Angus%20Lin)/ticket-list.php" title="回到票卷種類管理"><i class="bi bi-backspace px-1"></i>
                         </a>新增票卷種類
                         </h1>
                     </div>
 
                     <!-- Content Row -->
-                    <form action="DoAddTicketType.php" method="post">
+                    <form action="DoAddTicketType.php" method="post" class="animate__animated animate__fadeIn animate__faster mx-4">
                         <div class="row">
                             <div class="form-group col-4">
                                 <label for="exampleFormControlSelect1">是否有座位選擇</label>

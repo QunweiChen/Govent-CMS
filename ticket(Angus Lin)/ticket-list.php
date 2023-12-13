@@ -128,7 +128,7 @@ $TicketTypeCount = $resultCount->num_rows;
                         </div>
                     </div>
                     <!-- ticket-type table -->
-                    <div class="mx-4">
+                    <div class="mx-4 animate__animated animate__fadeIn animate__faster">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>

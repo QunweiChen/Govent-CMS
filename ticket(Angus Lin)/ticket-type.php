@@ -121,7 +121,7 @@ $rowsImg = $imgResult->fetch_assoc();
 
                     <!-- Content Row -->
                     <div>
-                        <div class="card mb-3">
+                        <div class="card mb-3 animate__animated animate__fadeIn animate__faster">
                             <div class="row g-0">
                                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                                     <img class="image-thumbnail rounded" src="../ticket(Angus Lin)/images/<?=$rowsImg['images']?>" style="max-width:100%" alt="">
