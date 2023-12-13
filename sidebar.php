@@ -71,7 +71,7 @@
             <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                 <h6 class="collapse-header">Event Management</h6>
                 <a class="collapse-item" href="#">活動清單</a>
-                <a class="collapse-item" href="#">票卷管理</a>
+                <a class="collapse-item" href="../ticket(Angus%20Lin)/ticket-list.php">票卷管理</a>
             </div>
         </div>
     </li>
