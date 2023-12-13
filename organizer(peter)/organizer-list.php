@@ -99,8 +99,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             <!-- Main Content -->
             <div id="content">
 
-            <!-- Topbar -->
-            <?php include('../topbar.php'); ?>
+                <!-- Topbar -->
+                <?php include('../topbar.php'); ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">

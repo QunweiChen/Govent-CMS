@@ -120,21 +120,30 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
 
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">訂單資訊</h1>
-
-          <!-- 訂單資訊選項 -->
-          <div class="btn-group" role="group" aria-label="Basic outlined example">
-            <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 3 ?>&page=<?= $page ?>">
-              全部
-            </a>
-            <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 1 ?>&page=<?= $page ?>">已下單</a>
-            <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 0 ?>&page=<?= $page ?>">已取消</a>
-
+          <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
+            <h1 class="h3 mb-0 text-gray-800 font-weight-bolder me-3">訂單資訊</h1>
+            <!-- 訂單資訊選項 -->
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+              <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 3 ?>&page=<?= $page ?>">
+                全部
+              </a>
+              <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 1 ?>&page=<?= $page ?>">已下單</a>
+              <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 0 ?>&page=<?= $page ?>">已取消</a>
+            </div>
           </div>
           <!-- 時間搜尋 -->
-          <div class="container mt-5 mb-3">
+          <div class="d-flex justify-content-between mx-4">
+            <div>
+              <nav aria-label="Page navigation example ">
+                <ul class="pagination justify-content-center">
+                  <?php for ($i = 1; $i <= $pages; $i++) : ?>
+                    <li class="page-item"><a class="page-link" href="index-Abo.php?status=<?= $status ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                  <?php endfor; ?>
+                </ul>
+              </nav>
+            </div>
             <div class="row justify-content-center">
-              <div class="col-md-8">
+              <div class="col">
                 <form class="form-inline justify-content-center" action="date-range.php">
                   <div class="form-group">
                     <label for="startDateTime">開始日期：</label>
@@ -150,30 +159,24 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
             </div>
           </div>
           <!-- 頁數 -->
-          <nav aria-label="Page navigation example ">
-            <ul class="pagination justify-content-center">
-              <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                <li class="page-item"><a class="page-link" href="index-Abo.php?status=<?= $status ?>&page=<?= $i ?>"><?= $i ?></a></li>
-              <?php endfor; ?>
-            </ul>
-          </nav>
+
           <!-- 訂單內容 -->
-          <div class="container my-3">
+          <div class="mx-4 px-2 my-3 animate__animated animate__fadeIn animate__faster">
             <?php foreach ($rows as  $row) : ?>
 
               <div class="row">
-                <div class="col-12 card card-body py-3 border-left-primary">
+                <div class="col-12 card card-body py-3 border-left-primary mb-2">
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="left">
-                      <div class="title py-1">
+                      <div class="title py-1 font-weight-bold fs-5">
                         <?= $row["event_name"] ?>
                       </div>
-                      <div class="time py-1">
+                      <div class="time py-1 font-weight-light">
                         <?= $row["start_date"] ?> ~ <?= $row["end_date"] ?>
                       </div>
                       <div class="number py-1">票券號碼 ： <?= $row["qr_code"] ?></div>
                     </div>
-                    <div class="right">
+                    <div class="">
                       <p class="d-inline-flex gap-1">
 
                         <a class="btn btn-primary" href="change-order.php?id=<?= $row["user_order_id"] ?>"><i class="bi bi-info-circle "></i></a>
@@ -188,7 +191,7 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
                   </div>
                 </div>
                 <div class="collapse col-12 p-0" id="collapseExample<?= $row["id"] ?>">
-                  <div class="card card-body">
+                  <div class="card card-body mb-4">
                     <table>
                       <thead>
                         <tr>
@@ -276,27 +279,7 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
       </div>
     </div>
   </div>
-  <!-- Bootstrap JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
-  </script>
-  <script src="./vendor/jquery/jquery.min.js"></script>
-  <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="./vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="./js/govent.js"></script>
-
-  <!-- Page level plugins -->
-  <script src="./vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="./js/demo/chart-area-demo.js"></script>
-  <script src="./js/demo/chart-pie-demo.js"></script>
+  <?php include('../public-js.php') ?>
 </body>
 
 </html>
