@@ -22,11 +22,16 @@ if (isset($_GET["category"])) {
     // This means that if no specific page is requested, the script defaults to using page number 1.
     $startTicket = ($page - 1) * $perPage;
     $sqlTicketType = "SELECT * FROM ticket_type WHERE category_id = $category AND valid = '2' LIMIT $startTicket, $perPage";
+    $sqlTicketTypeCount = "SELECT * FROM ticket_type WHERE category_id = $category AND valid = '2'";
+    $resultTicketType = $conn->query($sqlTicketTypeCount);
+    $pageTotalCount = $resultTicketType->num_rows;
+    $pageCount = ceil($pageTotalCount / $perPage);
 } else {
     $page = isset($_GET["page"]) ? $_GET["page"] : 1;
     $category = isset($_GET["category"]) ? $_GET["category"] : 0;
     $startTicket = ($page - 1) * $perPage;
     $sqlTicketType = "SELECT * FROM ticket_type WHERE valid = '2' LIMIT $startTicket, $perPage";
+    $sqlTicketTypeCount = "SELECT * FROM ticket_type WHERE valid = '2'";
 }
 
 
@@ -52,8 +57,8 @@ $rowsTicketCategory = $result->fetch_all(MYSQLI_ASSOC);
 $resultTicketType = $conn->query($sqlTicketType);
 $rowsTicketType = $resultTicketType->fetch_all(MYSQLI_ASSOC);
 
-$TicketTypeCount = $resultTicketType->num_rows;
-// var_dump($rowsTicketType);
+$resultCount = $conn -> query($sqlTicketTypeCount);
+$TicketTypeCount = $resultCount->num_rows;
 ?>
 
 <!DOCTYPE html>
@@ -94,10 +99,10 @@ $TicketTypeCount = $resultTicketType->num_rows;
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">票卷種類管理</h1>
+                    <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">票卷種類管理</h1>
                     </div>
-                    <ul class="nav nav-pills">
+                    <ul class="nav nav-pills mx-4">
                         <li class="nav-item">
                             <?php if(!isset($_GET["category"])):?>
                             <a class="nav-link active" aria-current="page" href="ticket-list.php">全部票卷種類</a>
@@ -114,7 +119,7 @@ $TicketTypeCount = $resultTicketType->num_rows;
                         <?php endforeach; ?>
                     </ul>
                     <!-- total count and add-ticket-type button -->
-                    <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="d-flex justify-content-between align-items-center my-2 mx-4">
                         <div>
                             共 <?= $TicketTypeCount ?> 種票
                         </div>
@@ -123,7 +128,7 @@ $TicketTypeCount = $resultTicketType->num_rows;
                         </div>
                     </div>
                     <!-- ticket-type table -->
-                    <div>
+                    <div class="mx-4">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -216,7 +221,7 @@ $TicketTypeCount = $resultTicketType->num_rows;
                             </li>
                             <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
 
-                                <li class="page-item"><a class="page-link <?php if ($page == $i) echo "active" ?>" href="ticket-list.php?page=<?= $i ?><?php if (isset($category) && $category != '') echo "&category=$category" ?>" style="color:#fd7e14"><?= $i ?></a></li>
+                                <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="ticket-list.php?page=<?= $i ?><?php if (isset($category) && $category != '') echo "&category=$category" ?>"><?= $i ?></a></li>
 
                                 <!-- isset($_GET["category"]) ? &category=$category : ""; -->
                             <?php endfor; ?>

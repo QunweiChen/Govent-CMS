@@ -77,9 +77,9 @@ if (isset($_GET['status']) || isset($_GET['page'])) {
   $rows = $result->fetch_all(MYSQLI_ASSOC);
 }
 //重制頁數
-if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
-  $page = 1;
-}
+// if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
+//   $page = 1;
+// }
 ?>
 
 
@@ -124,24 +124,27 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
             <h1 class="h3 mb-0 text-gray-800 font-weight-bolder me-3">訂單資訊</h1>
             <!-- 訂單資訊選項 -->
             <div class="btn-group" role="group" aria-label="Basic outlined example">
-              <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 3 ?>&page=<?= $page ?>">
+              <a class="btn btn-outline-primary <?php if ($status == 3) echo "active"; ?>" href="index-Abo.php?status=<?= 3 ?>&page=1">
                 全部
               </a>
-              <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 1 ?>&page=<?= $page ?>">已下單</a>
-              <a class="btn btn-outline-primary" href="index-Abo.php?status=<?= 0 ?>&page=<?= $page ?>">已取消</a>
+              <a class="btn btn-outline-primary <?php if ($status == 1) echo "active"; ?>" href="index-Abo.php?status=<?= 1 ?>&page=1">已下單</a>
+              <a class="btn btn-outline-primary <?php if ($status == 0) echo "active"; ?>" href="index-Abo.php?status=<?= 0 ?>&page=1">已取消</a>
             </div>
           </div>
-          <!-- 時間搜尋 -->
+          <!-- 頁數 -->
           <div class="d-flex justify-content-between mx-4">
             <div>
               <nav aria-label="Page navigation example ">
                 <ul class="pagination justify-content-center">
                   <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                    <li class="page-item"><a class="page-link" href="index-Abo.php?status=<?= $status ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                    <li class="page-item <?php if ($page == $i) echo "active"; ?>">
+                      <a class="page-link" href="index-Abo.php?status=<?= $status ?>&page=<?= $i ?>"><?= $i ?></a>
+                    </li>
                   <?php endfor; ?>
                 </ul>
               </nav>
             </div>
+            <!-- 時間搜尋 -->
             <div class="row justify-content-center">
               <div class="col">
                 <form class="form-inline justify-content-center" action="date-range.php">
@@ -158,7 +161,6 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
               </div>
             </div>
           </div>
-          <!-- 頁數 -->
 
           <!-- 訂單內容 -->
           <div class="mx-4 px-2 my-3 animate__animated animate__fadeIn animate__faster">

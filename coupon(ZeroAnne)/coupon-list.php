@@ -1,7 +1,7 @@
 <?php
 require_once("../connect_server.php");
 
-if (isset($_GET["use"]) && isset($_GET["search"]) && isset($_GET["order"]) && isset($_GET["order"])) {
+if (!isset($_GET["page"]) || !isset($_GET["order"])) {
     header("location:coupon-list.php?page=1&order=1");
 }
 
@@ -201,7 +201,7 @@ foreach ($rows as $rowtime) {
                                     <a class="btn btn-outline-primary <?php if ($use == 2) echo "active"; ?>" href="coupon-list.php?page=1&use=2&order=<?= $order ?>">已停用</a>
                                 </div>
                                 <div class="dropdown">
-                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,10">
                                         排序方式
                                     </a>
                                     <ul class="dropdown-menu">

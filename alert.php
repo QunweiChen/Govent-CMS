@@ -8,7 +8,8 @@ if ($_SESSION['message'] == '資料已存在') {
     Swal.fire({
         title: "新增失敗",
         text: "資料已存在，請使用更新功能",
-        icon: "error"
+        icon: "error",
+        confirmButtonColor: "#fd7e14"
       });
     </script>';
     unset($_SESSION['message']);
@@ -17,7 +18,8 @@ if ($_SESSION['message'] == '資料已存在') {
     Swal.fire({
         title: "新增失敗",
         text: "圖片上傳檔案錯誤",
-        icon: "error"
+        icon: "error",
+        confirmButtonColor: "#fd7e14"
       });
     </script>';
     unset($_SESSION['message']);
@@ -26,7 +28,8 @@ if ($_SESSION['message'] == '資料已存在') {
     Swal.fire({
         title: "新增失敗",
         text: "欄位不可為空",
-        icon: "error"
+        icon: "error",
+        confirmButtonColor: "#fd7e14"
       });
     </script>';
     unset($_SESSION['message']);
@@ -36,7 +39,8 @@ if ($_SESSION['message'] == '資料已存在') {
     Swal.fire({
         title: "新增成功",
         text: "最新一筆序號為'.$id.'",
-        icon: "success"
+        icon: "success",
+        confirmButtonColor: "#fd7e14"
       });
     </script>';
     unset($_SESSION['message']);
@@ -44,7 +48,8 @@ if ($_SESSION['message'] == '資料已存在') {
     echo '<script>
     Swal.fire({
         title: "新增失敗",
-        icon: "error"
+        icon: "error",
+        confirmButtonColor: "#fd7e14"
       });
     </script>';
     unset($_SESSION['message']);
@@ -52,7 +57,8 @@ if ($_SESSION['message'] == '資料已存在') {
   echo '<script>
   Swal.fire({
       title: "更新圖片失敗",
-      icon: "error"
+      icon: "error",
+      confirmButtonColor: "#fd7e14"
     });
   </script>';
   unset($_SESSION['message']);
@@ -60,7 +66,8 @@ if ($_SESSION['message'] == '資料已存在') {
   echo '<script>
   Swal.fire({
       title: "更新圖片成功",
-      icon: "success"
+      icon: "success",
+      confirmButtonColor: "#fd7e14"
     });
   </script>';
   unset($_SESSION['message']);
@@ -68,7 +75,8 @@ if ($_SESSION['message'] == '資料已存在') {
   echo '<script>
   Swal.fire({
       title: "刪除資料成功",
-      icon: "success"
+      icon: "success",
+      confirmButtonColor: "#fd7e14"
     });
   </script>';
   unset($_SESSION['message']);
@@ -76,7 +84,8 @@ if ($_SESSION['message'] == '資料已存在') {
   echo '<script>
   Swal.fire({
       title: "刪除資料失敗",
-      icon: "error"
+      icon: "error",
+      confirmButtonColor: "#fd7e14"
     });
   </script>';
   unset($_SESSION['message']);
@@ -84,7 +93,8 @@ if ($_SESSION['message'] == '資料已存在') {
   echo '<script>
   Swal.fire({
       title: "編輯資料失敗",
-      icon: "error"
+      icon: "error",
+      confirmButtonColor: "#fd7e14"
     });
   </script>';
   unset($_SESSION['message']);
@@ -92,7 +102,8 @@ if ($_SESSION['message'] == '資料已存在') {
   echo '<script>
   Swal.fire({
       title: "編輯資料成功",
-      icon: "success"
+      icon: "success",
+      confirmButtonColor: "#fd7e14"
     });
   </script>';
   unset($_SESSION['message']);
