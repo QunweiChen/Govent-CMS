@@ -278,8 +278,8 @@ foreach ($rows as $rowtime) {
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
                                                             <?php if (!isset($_GET["search"])) : ?>
                                                                 <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>&page=<?= $_GET["page"] ?>&order=<?= $_GET["order"] ?><?php if (isset($_GET["use"]))  echo '&use=' . $_GET["use"] ?> " type="button" class="btn btn-danger">確定刪除</a>
-                                                            <?php elseif (!isset($_GET["search"])) : ?>
-                                                                <<a href="doDeleteCoupon.php?id=<?= $row["id"] ?>&search=<?= $_GET["search"] ?>" type="button" class="btn btn-danger">確定刪除</a>
+                                                            <?php elseif (isset($_GET["search"])) : ?>
+                                                                <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>&search=<?= $_GET["search"] ?>" type="button" class="btn btn-danger">確定刪除</a>
                                                                 <?php else : ?>
                                                                     <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>" type="button" class="btn btn-danger">確定刪除</a>
                                                                 <?php endif; ?>
