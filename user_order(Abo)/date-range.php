@@ -1,6 +1,7 @@
 <?php
 require_once("../connect_server.php");
 
+
 //沒有抓到兩個參數回去主頁面
 if (!isset($_GET['endDateTime']) || !isset($_GET['startDateTime'])) {
     header('location: index-Abo.php');
@@ -58,11 +59,11 @@ if (isset($_GET['status']) && isset($_GET['page']) && isset($_GET['startDateTime
 
     // 獲取 status=1 和 status=0 的資料
     if ($status == 3) {
-        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name , organizer.id AS organizer_id,user_order.id AS user_order_id
+        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, member_list.name, event_category.event_name AS event_category_name , organizer.id AS organizer_id,user_order.id AS user_order_id, organizer.name AS organizer_name
         FROM user_order 
             JOIN campaign ON campaign.id = user_order.event_id
             JOIN ticket ON ticket.id = user_order.ticket_number
-            JOIN user ON user.id = user_order.user_id
+            JOIN member_list ON member_list.id = user_order.user_id
             JOIN event_category ON event_category.id = campaign.event_type_id
             JOIN organizer ON organizer.id = campaign.merchant_id
             WHERE user_order.valid IN (1, 0)
@@ -70,11 +71,11 @@ if (isset($_GET['status']) && isset($_GET['page']) && isset($_GET['startDateTime
             ORDER BY campaign.start_date ASC 
             LIMIT $startItem, $perPage";
     } else {
-        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name, organizer.id AS organizer_id,user_order.id AS user_order_id
+        $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, member_list.name, event_category.event_name AS event_category_name, organizer.id AS organizer_id,user_order.id AS user_order_id, organizer.name AS organizer_name
         FROM user_order 
         JOIN campaign ON campaign.id = user_order.event_id
         JOIN ticket ON ticket.id = user_order.ticket_number
-        JOIN user ON user.id = user_order.user_id
+        JOIN member_list ON member_list.id = user_order.user_id
         JOIN event_category ON event_category.id = campaign.event_type_id
         JOIN organizer ON organizer.id = campaign.merchant_id
         WHERE user_order.valid = $status
@@ -89,11 +90,11 @@ if (isset($_GET['status']) && isset($_GET['page']) && isset($_GET['startDateTime
     $status = 3;
     $page = 1;
     // 訂單資料庫串聯
-    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, user.user_name, event_category.event_name AS event_category_name, organizer.id AS organizer_id,user_order.id AS user_order_id
+    $sql = "SELECT user_order.*, campaign.*,organizer.*,user_order.valid AS user_order_valid,organizer.valid AS organizer_valid, ticket.qr_code, member_list.name, event_category.event_name AS event_category_name, organizer.id AS organizer_id,user_order.id AS user_order_id, organizer.name AS organizer_name
     FROM user_order
     JOIN campaign ON campaign.id = user_order.event_id
     JOIN ticket ON ticket.id = user_order.ticket_number
-    JOIN user ON user.id = user_order.user_id
+    JOIN member_list ON member_list.id = user_order.user_id
     JOIN event_category ON event_category.id = campaign.event_type_id
     JOIN organizer ON organizer.id = campaign.merchant_id
     WHERE  campaign.start_date BETWEEN '$startTime' AND '$endTime'
@@ -149,146 +150,15 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
 <body>
     <!-- Page Wrapper -->
     <div id="wrapper">
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="date-range.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-solid fa-ticket"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">GoVent</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0" />
-
-            <!-- Sidebar Message -->
-            <!-- <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="../image/1.png" alt="..." />
-            </div> -->
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link text-shadow-20" href="index.html">
-                    <i class="bi bi-speedometer"></i>
-                    <span>平台管理</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider" />
-
-            <!-- Heading -->
-            <div class="sidebar-heading">Interface</div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseMember" aria-expanded="true" aria-controls="collapseMember">
-                    <i class="bi bi-people-fill"></i>
-                    <span>會員管理</span>
-                </a>
-                <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
-                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
-                        <h6 class="collapse-header">Member Management</h6>
-                        <a class="collapse-item" href="#">會員清單</a>
-                        <a class="collapse-item" href="#">會員註冊（客戶端）</a>
-                        <a class="collapse-item" href="#">會員登入（客戶端）</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseOrganizer" aria-expanded="true" aria-controls="collapseOrganizer">
-                    <i class="bi bi-building-fill"></i>
-                    <span>主辦單位管理</span>
-                </a>
-                <div id="collapseOrganizer" class="collapse" aria-labelledby="headingOrganizer" data-parent="#accordionSidebar">
-                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
-                        <h6 class="collapse-header">Orangizer Management</h6>
-                        <a class="collapse-item" href="#">主辦單位清單</a>
-                        <a class="collapse-item" href="#">修改／新增</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseEvent" aria-expanded="true" aria-controls="collapseEvent">
-                    <i class="bi bi-calendar-event-fill"></i>
-                    <span>活動管理</span>
-                </a>
-                <div id="collapseEvent" class="collapse" aria-labelledby="headingEvent" data-parent="#accordionSidebar">
-                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
-                        <h6 class="collapse-header">Event Management</h6>
-                        <a class="collapse-item" href="#">活動清單</a>
-                        <a class="collapse-item" href="#">票卷管理</a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="">
-                    <i class="bi bi-border-width"></i>
-                    <span>訂單管理</span></a>
-            </li>
-            <li class="nav-item text-shadow-20">
-                <a class="nav-link" href="">
-                    <i class="bi bi-ticket-fill"></i>
-                    <span>優惠卷管理</span></a>
-            </li>
-            <!-- Divider -->
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block" />
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-        </ul>
-        <!-- End of Sidebar -->
+        <!-- SideBar -->
+        <?php include('../sidebar.php'); ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa-solid fa-bars" style="color: #fd7e14"></i>
-                    </button>
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-3 d-none d-lg-inline text-gray-600 x-small">平台管理員</span>
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">妙蛙種子</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <!-- <a class="dropdown-item" href="#">
-                                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                      Profile
-                                  </a>
-                                  <a class="dropdown-item" href="#">
-                                      <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                      Settings
-                                  </a>
-                                  <a class="dropdown-item" href="#">
-                                      <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                      Activity Log
-                                  </a>
-                                  <div class="dropdown-divider"></div> -->
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    登出
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- End of Topbar -->
+            <?php include('../topbar.php'); ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -385,8 +255,8 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
                                             <tbody>
                                                 <tr>
                                                     <td><?= $row["qr_code"] ?></td>
+                                                    <td><?= $row["organizer_name"] ?></td>
                                                     <td><?= $row["name"] ?></td>
-                                                    <td><?= $row["user_name"] ?></td>
                                                     <td><?= $row["event_category_name"] ?></td>
                                                     <td><?= $row["event_price"] ?></td>
                                                     <td>

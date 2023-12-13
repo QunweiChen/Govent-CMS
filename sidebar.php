@@ -18,11 +18,11 @@
     </div>
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <!-- <li class="nav-item active">
         <a class="nav-link text-shadow-20" href="index.html">
             <i class="bi bi-speedometer"></i>
             <span>平台管理</span></a>
-    </li>
+    </li> -->
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -76,7 +76,7 @@
         </div>
     </li>
     <li class="nav-item text-shadow-20">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="../user_order(Abo)/index-Abo.php">
             <i class="bi bi-border-width"></i>
             <span>訂單管理</span></a>
     </li>

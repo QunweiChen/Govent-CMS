@@ -1,7 +1,6 @@
 <?php
 session_start();
-// session_destroy();
-
+session_destroy();
 if(isset($_SESSION['message'])){
     // 
 if ($_SESSION['message'] == '資料已存在') {

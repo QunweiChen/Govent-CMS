@@ -39,7 +39,7 @@ if (isset($_GET["id"])) {
 
 <body id="page-top">
     <!-- 照結果顯示alert -->
-    <?php include('alert.php'); ?>
+    <?php include('../alert.php'); ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->

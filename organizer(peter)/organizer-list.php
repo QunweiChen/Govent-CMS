@@ -86,7 +86,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 <body id="page-top">
     <!-- 照結果顯示alert -->
-    <?php include('alert.php'); ?>
+    <?php include('../alert.php'); ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
 

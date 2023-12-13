@@ -1,10 +1,12 @@
 <?php
 require_once("../connect_server.php");
 
-$user_name = $_POST["user_name"];
+session_start();
+
+$name = $_POST["name"];
 $userid = $_POST["ID"];
 //user資料庫
-$userSql = "SELECT user.id,user.user_name FROM user";
+$userSql = "SELECT member_list.id,member_list.name FROM member_list";
 $userResult = $conn->query($userSql);
 $userRows = $userResult->fetch_all(MYSQLI_ASSOC);
 //user_order資料庫
@@ -14,7 +16,7 @@ $userOrderRows = $userOrderResult->fetch_all(MYSQLI_ASSOC);
 
 $changeUserID = '';
 foreach ($userRows as $row) {
-    if ($row['user_name'] == $user_name) {
+    if ($row['name'] == $name) {
         $userExists = true;
         $changeUserID = $row["id"];
         break;
@@ -31,9 +33,11 @@ if ($userExists) {
 
 
 if ($conn->query($sql) === TRUE) {
-    echo "更新資料完成, ";
+    $_SESSION['message'] = "編輯資料成功";
+    header("location:change-order.php?id=$userid");
+    exit;
 } else {
-    echo "新增資料錯誤: " . $conn->error;
+    $_SESSION['message'] = "編輯資料失敗";
 }
 $conn->close();
 header("location:change-order.php?id=$userid");
