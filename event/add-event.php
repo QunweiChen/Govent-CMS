@@ -40,8 +40,8 @@ require_once("../connect_server.php");
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">新增活動</h1>
+                    <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">新增活動</h1>
                     </div>
 
                     <div class="container">
