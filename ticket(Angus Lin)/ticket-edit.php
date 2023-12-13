@@ -5,7 +5,7 @@
 
 $id = $_GET["id"];
 
-require_once("../ticket(Angus Lin)/ticket_db_connect.php");
+require_once("../connect_server.php");
 
 $sql = "SELECT * FROM ticket_type WHERE id=$id AND valid=2";
 

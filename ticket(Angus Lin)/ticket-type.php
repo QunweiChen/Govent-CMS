@@ -5,7 +5,7 @@ if(!isset($_GET["id"])){
 
 $id = $_GET["id"];
 
-require_once("../ticket(Angus Lin)/ticket_db_connect.php");
+require_once("../connect_server.php");
 
 $sql = "SELECT * FROM ticket_type WHERE id=$id AND valid=2";
 
@@ -268,7 +268,7 @@ $rowsImg = $imgResult->fetch_assoc();
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800"><a href="/mid-term-project/SQL-Project/ticket(Angus%20Lin)/ticket-list.php" title="回到票卷種類管理"><i class="bi bi-backspace px-1"></i>
+                        <h1 class="h3 mb-0 text-gray-800"><a href="../ticket(Angus%20Lin)/ticket-list.php" title="回到票卷種類管理"><i class="bi bi-backspace px-1"></i>
                             </a>票卷種類個別資料
                         </h1>
                     </div>

@@ -1,6 +1,6 @@
 <?php
 
-require_once("../ticket(Angus Lin)/ticket_db_connect.php");
+require_once("../connect_server.php");
 
 $sqlTicketCategory = "SELECT * FROM ticket_category";
 
