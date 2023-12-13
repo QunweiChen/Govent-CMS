@@ -1,7 +1,7 @@
 <?php
 session_start();
 session_destroy();
-require_once("./db_conntect_govent.php");
+require_once("../connect_server.php");
 $sqlActivity = "SELECT * FROM activity_category ";
 $resultActivity = $conn->query($sqlActivity);
 $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);

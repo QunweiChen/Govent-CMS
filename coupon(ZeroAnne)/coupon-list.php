@@ -1,5 +1,5 @@
 <?php
-require_once("./db_conntect_govent.php");
+require_once("../connect_server.php");
 
 $use = isset($_GET["use"]) ? $_GET["use"] : null;
 $search = isset($search) ? $search : '';

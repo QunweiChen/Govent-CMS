@@ -1,5 +1,5 @@
 <?php
-require_once("./db_conntect_govent.php");
+require_once("../connect_server.php");
 
 if (!isset($_POST["name"])) {
     echo "請循正常管道進入此頁";
