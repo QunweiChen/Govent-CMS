@@ -1,10 +1,6 @@
 <?php
 require_once("../connect_server.php");
 
-if (!isset($_GET["page"]) || !isset($_GET["order"])) {
-    header("location:coupon-list.php?page=1&order=1");
-}
-
 $use = isset($_GET["use"]) ? $_GET["use"] : null;
 $search = isset($search) ? $search : '';
 
