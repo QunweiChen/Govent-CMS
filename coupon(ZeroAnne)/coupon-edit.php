@@ -74,7 +74,6 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                     </div>
                 </div>
                 <div class="container-fluid">
-<<<<<<< HEAD
                     <div class="d-sm-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-end ">
                             <h1 class="h3 mb-0 text-gray-800">編輯優惠券</h1>
@@ -85,11 +84,6 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <!-- session -->
                         </div>
                         <a href="coupon-list.php?page=1&order=1" class="text-primary d-flex align-items-center">
-=======
-                    <div class="d-sm-flex align-items-center justify-content-between pt-3 mb-4 mx-4">
-                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">編輯優惠券</h1>
-                        <a href="coupon-list.php" class="text-primary d-flex align-items-center">
->>>>>>> main
                             <div>
                                 回編輯列表
                             </div>
@@ -188,11 +182,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <button class="btn btn-primary" type="submit">儲存</button>
-<<<<<<< HEAD
                                     <a class="btn btn-primary" href="coupon-list.php?page=1&order=1">取消</a>
-=======
-                                    <a class="btn btn-primary" href="coupon-list.php">取消</a>
->>>>>>> main
                                 </div>
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#alertModal" class="btn btn-danger">刪除</button>
                             </div>
