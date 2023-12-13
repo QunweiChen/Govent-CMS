@@ -53,7 +53,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <?php endif; ?>
                             <!-- session -->
                         </div>
-                        <a href="coupon-list.php" class="text-primary d-flex align-items-center">
+                        <a href="coupon-list.php?page=1&order=1" class="text-primary d-flex align-items-center">
                             <div>
                                 回優惠券列表
                             </div>

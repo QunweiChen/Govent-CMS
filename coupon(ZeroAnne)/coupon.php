@@ -56,7 +56,7 @@ $row = $result->fetch_assoc();
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between pt-3 mb-4 mx-4">
                         <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">個別優惠券資訊</h1>
-                        <a href="coupon-list.php" class="text-primary d-flex align-items-center">
+                        <a href="coupon-list.php?page=1&order=1" class="text-primary d-flex align-items-center">
                             <div>
                                 回優惠券列表
                             </div>
