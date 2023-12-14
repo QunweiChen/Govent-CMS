@@ -37,11 +37,12 @@ discount_valid='$discountValid', start_at='$startAt', expires_at='$expiresAt', p
 WHERE id='$id'";
 
 if ($conn->query($sql) === TRUE) {
-    // echo "更新成功";
+    $_SESSION['message'] = "編輯資料成功";
 } else {
-    echo "更新資料錯誤: " . $conn->error;
+    $_SESSION['message'] = "編輯資料失敗";
 }
-
+header("Location: coupon.php?id=$id");
+exit();
 $conn->close();
 
-header("location:coupon.php?id=$id");
+// header("location:coupon.php?id=$id");
