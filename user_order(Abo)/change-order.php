@@ -61,12 +61,12 @@ $row = $result->fetch_assoc();
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">編輯訂單</h1>
+                    <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder me-3">編輯訂單</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <form class="row g-3 needs-validation" action="do-change-order.php
+                    <form class="row g-3 mx-3 needs-validation" action="do-change-order.php
                     " method="post" novalidate>
                         <input type="hidden" name="ID" value="<?= $row['user_order_id'] ?>">
                         <div class="col-md-4">

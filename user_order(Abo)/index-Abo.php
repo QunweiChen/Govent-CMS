@@ -179,16 +179,14 @@ if (isset($_GET['status']) || isset($_GET['page'])) {
                       <div class="number py-1">票券號碼 ： <?= $row["qr_code"] ?></div>
                     </div>
                     <div class="">
-                      <p class="d-inline-flex gap-1">
-
+                      <div class="d-inline-flex gap-1">
                         <a class="btn btn-primary" href="change-order.php?id=<?= $row["user_order_id"] ?>"><i class="bi bi-info-circle "></i></a>
-
-                      </p>
-                      <p class="d-inline-flex gap-1">
+                      </div>
+                      <div class="d-inline-flex gap-1">
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample<?= $row["id"] ?>" aria-expanded="false" aria-controls="collapseExample<?= $row["id"] ?>">
                           票券資訊
                         </button>
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>
