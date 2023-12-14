@@ -94,7 +94,7 @@ if(isset($_SESSION["member"])){
                                     <?php endif;?>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="member_signup.php">註冊新帳號!</a>
+                                        <a class="small" href="member_signup.php">註冊新帳號</a>
                                     </div>
                                 </div>
                             </div>

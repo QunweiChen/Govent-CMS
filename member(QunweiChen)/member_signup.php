@@ -109,7 +109,7 @@ $conn->close();
                                 <!-- <label class="col">居住地</label> -->
                                 <div class="form-group">
                                     <!-- <label class="col-3">居住地</label> -->
-                                    <select type="text" name="address" class="input-group-text form-control-lg rounded-pill col" id="address" placeholder="居住地">
+                                    <select type="text" name="address" class="input-group-text form-control-lg rounded-pill col bg-white small " id="address" placeholder="居住地">
                                         <?php foreach($addresses as $address): ?>
                                             <option value="<?= $address["city_id"]; ?>">
                                                 <?= $address["city_name"]; ?>, <?= $address["dist_name"]; ?>
@@ -174,7 +174,7 @@ $conn->close();
                             </form>
                             <hr>    
                             <div class="text-center">
-                                <a class="small" href="member_login.php">已經有帳號? 登入!</a>
+                                <a class="small" href="member_login.php">已經有帳號？登入！</a>
                             </div>
                         </div>
                     </div>
