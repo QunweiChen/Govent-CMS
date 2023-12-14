@@ -1,5 +1,9 @@
 <?php
 require_once("../connect_server.php");
+
+$sql = "SELECT organizer.id, organizer.name FROM organizer WHERE valid=1";
+$result = $conn -> query($sql);
+$rows = $result -> fetch_all(MYSQLI_ASSOC); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +97,11 @@ require_once("../connect_server.php");
                             <div class="row mb-3 col-lg-6">
                                 <label for="merchant_id" class="col-sm-2 col-form-label">主辦單位</label>
                                 <div class="col-sm-10">
-                                    <input name="merchant_id" type="text" class="form-control" id="merchant_id" required>
+                                    <select class="form-control" type="text" name="merchant_id" aria-label="Default select example" required>
+                                        <?php foreach($rows as $row): ?>
+                                            <option value="<?=$row["id"]?>"><?=$row["name"]?></option>
+                                        <?php endforeach ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row mb-3 col-lg-6">
@@ -105,11 +113,11 @@ require_once("../connect_server.php");
                             </div>
 
                             <div class="row mb-3 col-lg-6">
-                                    <label for="event_price" class="col-sm-2 col-form-label">票價</label>
-                                    <div class="col-sm-10">
-                                        <input name="event_price" type="text" class="form-control" id="event_price" required>
-                                    </div>
+                                <label for="event_price" class="col-sm-2 col-form-label">票價</label>
+                                <div class="col-sm-10">
+                                    <input name="event_price" type="text" class="form-control" id="event_price" required>
                                 </div>
+                            </div>
 
                             <div class="col-lg-12">
                                 <button class="btn btn-primary text-white my-3" type="submit" name="add">送出</button>

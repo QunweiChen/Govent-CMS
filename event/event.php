@@ -38,11 +38,20 @@ $rowsActivityCategory = $result->fetch_all(MYSQLI_ASSOC);
 if (isset($_GET["search"])) {
     $sqlTotal = "SELECT * FROM event WHERE valid= 1";
     $search = $_GET["search"];
-    $sql = "SELECT event.*, activity_category.activity_name AS category_name FROM event
-    JOIN activity_category ON event.event_type_id = activity_category.id 
-    WHERE event_name LIKE '%$search%' AND valid=1";
+    $sql = "SELECT event.*, activity_category.activity_name AS category_name, organizer.name AS merchant_name
+    FROM event
+    JOIN activity_category ON event.event_type_id = activity_category.id
+    JOIN organizer ON event.merchant_id = organizer.id
+    WHERE event.event_name LIKE '%$search%' AND event.valid=1";
+
+    // $sql = "SELECT event.*, activity_category.activity_name AS category_name, organizer.name AS merchant_name
+    // FROM event
+    // JOIN activity_category ON event.event_type_id = activity_category.id
+    // JOIN organizer ON event.merchant_id = organizer.id
+    // WHERE event.valid=1 ORDER BY event.id ASC LIMIT 0, $perPage";
 
     $result = $conn->query($sql);
+    // $row = $result->fetch_all(MYSQLI_ASSOC);
 
     while ($row = $result->fetch_assoc()) {
         // echo $row['event_name'] . '<br>';
@@ -51,23 +60,13 @@ if (isset($_GET["search"])) {
 
     $eventTypeId = $_GET["event_type_id"];
     //var_dump($eventTypeId);
-    $sql = "SELECT event.*, activity_category.activity_name AS category_name
-    FROM event JOIN activity_category ON event.event_type_id = activity_category.id
+    $sql = "SELECT event.*, activity_category.activity_name AS category_name, organizer.name AS merchant_name
+    FROM event
+    JOIN activity_category ON event.event_type_id = activity_category.id
+    JOIN organizer ON event.merchant_id = organizer.id
     WHERE event.event_type_id=$eventTypeId LIMIT $perPage";
-    $sqlTotal = "SELECT * FROM event WHERE valid= 1";
-
-} elseif (isset($_GET["category"] )) {
-
-    $category = $_GET["category"];
-    $page = isset($_GET["page"]) ? $_GET["page"] : 1;
-    $startActivity = ($page - 1) * $perPage;
-
-    $sqlActivity = "SELECT *,activity_category.activity_name AS category_name FROM event
-    JOIN activity_category ON event.event_type_id = activity_category.id 
-    WHERE id = $category LIMIT $startActivity, $perPage";
 
     $sqlTotal = "SELECT * FROM event WHERE valid= 1";
-
 } elseif (isset($_GET["page"]) && isset($_GET["order"])) {
 
     $page = $_GET["page"];
@@ -91,19 +90,23 @@ if (isset($_GET["search"])) {
 
     $startItem = ($page - 1) * $perPage;
 
-    $sql = "SELECT event.*,activity_category.activity_name AS category_name FROM event
-    JOIN activity_category ON event.event_type_id = activity_category.id  WHERE valid=1 ORDER BY $orderSql LIMIT $startItem,$perPage";
+    $sql = "SELECT event.*,activity_category.activity_name AS category_name, organizer.name AS merchant_name
+    FROM event
+    JOIN activity_category ON event.event_type_id = activity_category.id
+    JOIN organizer ON event.merchant_id = organizer.id
+    WHERE event.valid=1 ORDER BY event.$orderSql LIMIT $startItem,$perPage";
 } else {
-
     $page = 1;
     $order = 1;
-    $sql = "SELECT event.*, activity_category.activity_name AS category_name
-    FROM event JOIN activity_category ON event.event_type_id = activity_category.id WHERE valid=1 ORDER BY id ASC LIMIT 0,$perPage";
-    
+    $sql = "SELECT event.*, activity_category.activity_name AS category_name, organizer.name AS merchant_name
+    FROM event
+    JOIN activity_category ON event.event_type_id = activity_category.id
+    JOIN organizer ON event.merchant_id = organizer.id
+    WHERE event.valid=1 ORDER BY event.id ASC LIMIT 0, $perPage";
 }
+
 $result = $conn->query($sql);
 $eventCount = $result->num_rows;
-
 
 
 
@@ -244,7 +247,6 @@ $eventCount = $result->num_rows;
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -336,7 +338,7 @@ $eventCount = $result->num_rows;
                                             <td><?= $row["start_date"] ?> ~ <br><?= $row["end_date"] ?></td>
                                             <td><?= $row["category_name"] ?></td>
                                             <td><?= $row["address"] ?></td>
-                                            <td><?= $row["merchant_id"] ?></td>
+                                            <td><?= $row["merchant_name"] ?></td>
                                             <td>
                                                 <img class="object-fit-cover" src="image/<?= $row["images"] ?>" alt="<?= $row["event_name"] ?>" style="height: 150px;">
                                             </td>
@@ -378,17 +380,19 @@ $eventCount = $result->num_rows;
                                 </tbody>
                             </table>
 
-                            <?php if (!isset($_GET["search"])) : ?>
-                                <div class="py-2">
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination">
-                                            <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
-                                                <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="event.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
-                                            <?php endfor; ?>
+                            <?php if (!isset($_GET["event_type_id"])) : ?>
+                                <?php if (!isset($_GET["search"])) : ?>
+                                    <div class="py-2">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <?php for ($i = 1; $i <= $pageCount; $i++) : ?>
+                                                    <li class="page-item <?php if ($page == $i) echo "active"; ?>"><a class="page-link" href="event.php?page=<?= $i ?>&order=<?= $order ?>"><?= $i ?></a></li>
+                                                <?php endfor; ?>
 
-                                        </ul>
-                                    </nav>
-                                </div>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                <?php endif; ?>
                             <?php endif; ?>
 
 

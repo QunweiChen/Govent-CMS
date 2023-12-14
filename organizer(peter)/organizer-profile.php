@@ -312,7 +312,7 @@ $rowsEvent = $resultEvent->fetch_all(MYSQLI_ASSOC);
                                         <p class="mb-4">上架活動</p>
                                         <ul class="p-0">
                                             <?php foreach ($rowsEvent as $row) : ?>
-                                                <li class="mb-2 list-unstyled"><i class="bi bi-record-fill me-2" style="color: #588afe"></i><?= $row["event_name"] ?></li>
+                                                <li class="mb-2 list-unstyled"><i class="bi bi-record-fill me-2" style="color: #588afe"></i><a class="text-black text-decoration-none" href="../event/update.php?id=<?=$row["id"] ?>"><?= $row["event_name"] ?></a></li>
                                             <?php endforeach ?>
                                         </ul>
                                     </div>

@@ -53,7 +53,9 @@ require_once("../connect_server.php");
 
                         if (isset($_GET["id"])) {
                             $id = $_GET["id"];
-                            $sql = "SELECT * FROM event WHERE id=$id AND valid= 1";
+                            $sql = "SELECT event.*, organizer.name AS merchant_name FROM event
+                            JOIN organizer ON organizer.id = event.merchant_id
+                            WHERE event.id=$id AND event.valid= 1";
 
                             $result = $conn->query($sql);
                             $eventCount = $result->num_rows;
@@ -123,7 +125,7 @@ require_once("../connect_server.php");
                                 <div class="row mb-3 col-lg-6">
                                     <label for="merchant_id" class="col-sm-2 col-form-label">主辦單位</label>
                                     <div class="col-sm-10">
-                                        <input name="merchant_id" type="text" class="form-control" id="merchant_id" value="<?= $row["merchant_id"] ?>" required>
+                                        <span name="merchant_id" type="text" class="form-control bg-body-secondary" id="merchant_id"><?= $row["merchant_name"] ?> </span>
                                     </div>
                                 </div>
                                 <div class="row mb-3 col-lg-6">
