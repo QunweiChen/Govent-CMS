@@ -118,7 +118,6 @@ if (isset($_SESSION['message'])) {
   </script>';
     unset($_SESSION['message']);
   } elseif ($_SESSION['message'] = "使用者不存在")
-
     echo '<script>
   Swal.fire({
       title: "無使用者",
