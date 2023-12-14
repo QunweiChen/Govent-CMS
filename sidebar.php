@@ -13,7 +13,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Sidebar Message -->
-    <div class="sidebar-card d-none d-lg-flex">
+    <div class="sidebar-card d-flex" id="sidebarCard">
         <img class="sidebar-card-illustration" src="../image/drawkit-transport-scene-8.png" alt="...">
     </div>
 
