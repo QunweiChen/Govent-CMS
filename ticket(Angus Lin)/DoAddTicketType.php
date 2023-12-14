@@ -54,8 +54,12 @@ if ($conn->query($insertSql) === TRUE) {
     $_SESSION['message'] = "新增資料錯誤" . $conn->error;
 }
 
+$sqlTotal = "SELECT * from ticket_type WHERE valid = '2'";
+$resultPage = $conn->query($sqlTotal);
+$pageTotalCount = $resultPage->num_rows;
+
 $perPage = 8;
-$pageCount = ceil($last_id / $perPage);
+$pageCount = ceil($pageTotalCount / $perPage);
 
 $conn->close();
 

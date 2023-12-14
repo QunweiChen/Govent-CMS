@@ -1,6 +1,8 @@
 <?php
 require_once("../connect_server.php");
 
+session_start();
+
 if(!isset($_GET["id"])){
     echo "請循正常管道進入此頁";
     exit;
@@ -17,9 +19,9 @@ $sql="UPDATE member_list SET valid='0' WHERE id=$id";
 
 
 if($conn->query($sql)===TRUE){
-    echo "刪除成功";
+    $_SESSION['message'] = '刪除成功';
 }else{
-    echo "刪除資料錯誤: ". $conn->error;
+    $_SESSION['message'] = '刪除失敗';
 }
 
 $conn->close();

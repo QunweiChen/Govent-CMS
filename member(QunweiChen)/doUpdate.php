@@ -1,6 +1,6 @@
 <?php
 require_once("../connect_server.php");
-
+session_start();
 if(!isset($_POST["name"])){
     echo "請循正常管道進入此頁";
     exit;
@@ -22,7 +22,7 @@ var_dump($sql);
 
 
 if($conn->query($sql)===TRUE){
-    echo "更新成功";
+    $_SESSION['message'] = '編輯資料成功';
 }else{
     echo "更新資料錯誤: ". $conn->error;
 }

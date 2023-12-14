@@ -127,21 +127,21 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="row mb-3">
                                 <label for="startAt" class="col-sm-2 col-form-label">開始日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="startAt" name="startAt" value="<?= isset($_SESSION['error']['filledData']['startAt']) ? $_SESSION['error']['filledData']['startAt'] : ' ' ?>" onchange="updateCouponStatus(this)" require>
+                                    <input type="date" class="form-control" id="startAt" name="startAt" value="<?= isset($_SESSION['error']['filledData']['startAt']) ? $_SESSION['error']['filledData']['startAt'] : '' ?>" onchange="updateCouponStatus(this)" require>
                                 </div>
                                 <label for="expiresAt" class="col-sm-2 col-form-label">到期日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt" value="<?= isset($_SESSION['error']['filledData']['expiresAt']) ? $_SESSION['error']['filledData']['expiresAt'] : ' ' ?>" onchange="updateCouponStatus(this)" require>
+                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt" value="<?= isset($_SESSION['error']['filledData']['expiresAt']) ? $_SESSION['error']['filledData']['expiresAt'] : '' ?>" onchange="updateCouponStatus(this)" require>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="priceMin" class="col-sm-2 col-form-label">最低消費金額</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="priceMin" name="priceMin" value="<?= isset($_SESSION['error']['filledData']['priceMin']) ? $_SESSION['error']['filledData']['priceMin'] : ' ' ?>" require>
+                                    <input type="text" class="form-control" id="priceMin" name="priceMin" value="<?= isset($_SESSION['error']['filledData']['priceMin']) ? $_SESSION['error']['filledData']['priceMin'] : '' ?>" require>
                                 </div>
                                 <label for="maxUsage" class="col-sm-2 col-form-label">可使用張數</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="priceMin" name="maxUsage" value="<?= isset($_SESSION['error']['filledData']['maxUsage']) ? $_SESSION['error']['filledData']['maxUsage'] : ' ' ?>" require>
+                                    <input type="text" class="form-control" id="maxUsage" name="maxUsage" value="<?= isset($_SESSION['error']['filledData']['maxUsage']) ? $_SESSION['error']['filledData']['maxUsage'] : '' ?>" require>
                                 </div>
                             </div>
                             <div class="row mb-3 ">

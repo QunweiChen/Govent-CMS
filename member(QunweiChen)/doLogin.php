@@ -9,6 +9,8 @@ if(!isset($_POST["email"])){
     exit;
 }
 
+$_SESSION["error"]["filledData"] = $_POST;
+
 $email=$_POST["email"];
 $password=$_POST["password"];
 

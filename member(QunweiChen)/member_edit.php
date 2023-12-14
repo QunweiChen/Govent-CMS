@@ -8,7 +8,6 @@ $id = $_GET["id"]; //為連結到id來源
 
 
 require_once("../connect_server.php");
-
 // $sql = "SELECT * FROM member_list WHERE id=$id AND valid=1";
 
 $sql = "SELECT *
@@ -71,7 +70,8 @@ $row = $result->fetch_assoc();
 </div>
 
 <body id="page-top">
-
+    <!-- 照結果顯示alert -->
+    <?php include('../alert.php'); ?>
 
     <!-- Page Wrapper -->
     <div id="wrapper">

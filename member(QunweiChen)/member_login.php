@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+session_destroy();
 if(isset($_SESSION["member"])){
     // header("location: member_dashboard.php");
     //若已登入 導入至dashboard
@@ -60,7 +60,7 @@ if(isset($_SESSION["member"])){
                                             name="email"
                                             class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Email">
+                                                placeholder="Email" value="<?= isset($_SESSION['error']['filledData']['email']) ? $_SESSION['error']['filledData']['email'] : '' ?>">
                                         </div>
                                         <div class="form-group">
                                             <!-- <label for="address">密碼:</label> -->

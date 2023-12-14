@@ -16,7 +16,7 @@ session_start();
 //     }
 // }
 
-
+$_SESSION["error"]["filledData"] = $_POST;
 
 $name=$_POST["name"];
 $email=$_POST["email"];
@@ -34,7 +34,7 @@ $valid="1";
 
 if(empty($name)||empty($email)||empty($password)||empty($repassword)||empty($phone)||empty($national_id)||empty($born_date)||empty($invoice)){
     // echo "請輸入必填欄位";
-    $message="請輸入必填欄位";
+    $message="請輸入所有欄位";
     $_SESSION["error"]["message"]=$message;
     header("location: member_signup.php");
     exit;
@@ -73,12 +73,13 @@ VALUES ('$name', '$email', '$password', '$phone', '$national_id', '$address', '$
 // $resultUser=$conn->query($sqlUser);//造成重複寫入
 
 if($conn->query($sqlUser) === TRUE){
-    // echo "註冊完成, ";
+    // echo "註冊完成 ";
     // $last_id=$conn -> insert_id;
     // echo "id序號為".$last_id;
 
     // 註冊完成後引導的登入畫面
-    $resultMessage= "註冊完成, id序號為" . $conn->insert_id;
+    // $resultMessage= "註冊完成, id序號為" . $conn->insert_id;
+    $resultMessage= "註冊完成";
     header("location: member_login.php?messageSuccess=" . urldecode($resultMessage));
     exit;
 }else{

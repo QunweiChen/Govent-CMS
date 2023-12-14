@@ -59,7 +59,7 @@ $conn->close();
                                     <!-- <div class="col-sm-6 mb-3 mb-sm-0"> -->
                                         <input type="text"  name="name" class="form-control form-control-user" id="exampleName"
                                         placeholder="姓名"
-                                        maxlength="50">
+                                        maxlength="50" value="<?= isset($_SESSION['error']['filledData']['name']) ? $_SESSION['error']['filledData']['name'] : '' ?>">
                                     <!-- </div> -->
                                     <!-- <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="exampleLastName"
@@ -72,15 +72,15 @@ $conn->close();
                                     <input name="email" 
                                     type="email" 
                                     class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="Email" maxlength="50">
+                                    placeholder="Email" maxlength="50" value="<?= isset($_SESSION['error']['filledData']['email']) ? $_SESSION['error']['filledData']['email'] :''?>">
                                 </div>
                                 <!-- phone -->
                                 <!-- <label>phone</label> -->
                                 <div class="form-group">
                                     <input name="phone" 
                                     type="text" 
-                                    class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="電話" maxlength="30">
+                                    class="form-control form-control-user" id="exampleInputPhone"
+                                    placeholder="電話" maxlength="30" value="<?= isset($_SESSION['error']['filledData']['phone']) ? $_SESSION['error']['filledData']['phone'] : '' ?>">
                                 </div>
                                 
                                 <!-- password -->
@@ -88,11 +88,11 @@ $conn->close();
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input name="password" type="password" class="form-control form-control-user"
-                                        id="exampleInputPassword" placeholder="密碼"maxlength="50">
+                                        id="exampleInputPassword" placeholder="密碼"maxlength="50" value="<?= isset($_SESSION['error']['filledData']['password']) ? $_SESSION['error']['filledData']['password'] : '' ?>">
                                     </div>
                                     <div class="col-sm-6">
                                         <input name="repassword" type="password" class="form-control form-control-user"
-                                        id="exampleRepeatPassword" placeholder="密碼確認" maxlength="50">
+                                        id="exampleRepeatPassword" placeholder="密碼確認" maxlength="50" value="<?= isset($_SESSION['error']['filledData']['repassword']) ? $_SESSION['error']['filledData']['repassword'] : '' ?>">
                                     </div>
                                 </div>
 
@@ -101,8 +101,8 @@ $conn->close();
                                 <div class="form-group">
                                     <input name="national_id" 
                                     type="text" 
-                                    class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="身分證" maxlength="30">
+                                    class="form-control form-control-user" id="exampleInputId"
+                                    placeholder="身分證" maxlength="30" value="<?= isset($_SESSION['error']['filledData']['national_id']) ? $_SESSION['error']['filledData']['national_id'] : '' ?>">
                                 </div>
 
                                 <!-- address -->
@@ -127,7 +127,7 @@ $conn->close();
                                         <input name="gender" 
                                         type="radio" 
                                         class="form-check-input text-gray-700"
-                                        id="exampleInputGender" value="2"
+                                        id="exampleInputGender" value="2" checked
                                         >
                                     </div>
                                     <label class="col text-gray-700">男性</label>
@@ -146,7 +146,7 @@ $conn->close();
                                     <input name="born_date" 
                                     type="date" 
                                     class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="出生日期">
+                                    placeholder="出生日期" value="<?= isset($_SESSION['error']['filledData']['born_date']) ? $_SESSION['error']['filledData']['born_date'] : '' ?>">
                                 </div>
                                 <!-- invoice -->
                                 <!-- <label>電子發票</label> -->
@@ -154,7 +154,7 @@ $conn->close();
                                     <input name="invoice" 
                                     type="text" 
                                     class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="電子發票" maxlength="10">
+                                    placeholder="電子發票" maxlength="10" value="<?= isset($_SESSION['error']['filledData']['invoice']) ? $_SESSION['error']['filledData']['invoice'] : '' ?>">
                                 </div>
                                 <?php if(isset($_SESSION["error"]["message"])): ?>
                                     <div class="mt-2 text-danger">

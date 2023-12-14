@@ -32,7 +32,7 @@ if (isset($_GET["category"])) {
     $pageCount = ceil($pageTotalCount / $perPage);
 } else {
     $page = isset($_GET["page"]) ? $_GET["page"] : 1;
-    $category = isset($_GET["category"]) ? $_GET["category"] : 0;
+    $category = isset($_GET["category"]) ? $_GET["category"] : "";
     $startTicket = ($page - 1) * $perPage;
     $sqlTicketType = "SELECT * FROM ticket_type WHERE valid = '2' LIMIT $startTicket, $perPage";
     $sqlTicketTypeCount = "SELECT * FROM ticket_type WHERE valid = '2'";

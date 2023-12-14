@@ -48,6 +48,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body id="page-top">
+    <!-- 照結果顯示alert -->
+    <?php include('../alert.php'); ?>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -192,10 +194,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 </body>
 
 </htm<?php
-require_once("govent_db_conntect.php");
+        require_once("govent_db_conntect.php");
 
-// $sqlTotal = "SELECT * FROM member_list  WHERE  valid=1";
-$sqlTotal = "SELECT *
+        // $sqlTotal = "SELECT * FROM member_list  WHERE  valid=1";
+        $sqlTotal = "SELECT *
 FROM member_list
 JOIN city 
 ON member_list.address = city.city_id 
@@ -205,22 +207,17 @@ WHERE  valid=1";
 
 
 
-// FROM ((Orders
-// INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
-// INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+        // FROM ((Orders
+        // INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+        // INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
 
-$resultTotal = $conn->query($sqlTotal);
-$totalUser = $resultTotal->num_rows;
+        $resultTotal = $conn->query($sqlTotal);
+        $totalUser = $resultTotal->num_rows;
 
-$result = $conn->query($sqlTotal);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
-// var_dump($rows);//有撈到資料
-?>
-
-
-
-
-<!DOCTYPE html>
+        $result = $conn->query($sqlTotal);
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        // var_dump($rows);//有撈到資料
+        ?> <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -236,18 +233,12 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <!-- font awesome link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- bootstrap icon link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- 字體連結 -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/govent.css" rel="stylesheet">
@@ -305,8 +296,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseMember"
-                    aria-expanded="true" aria-controls="collapseMember">
+                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseMember" aria-expanded="true" aria-controls="collapseMember">
                     <i class="bi bi-people-fill"></i>
                     <span>會員管理</span>
                 </a>
@@ -322,13 +312,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseOrganizer"
-                    aria-expanded="true" aria-controls="collapseOrganizer">
+                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseOrganizer" aria-expanded="true" aria-controls="collapseOrganizer">
                     <i class="bi bi-building-fill"></i>
                     <span>主辦單位管理</span>
                 </a>
-                <div id="collapseOrganizer" class="collapse" aria-labelledby="headingOrganizer"
-                    data-parent="#accordionSidebar">
+                <div id="collapseOrganizer" class="collapse" aria-labelledby="headingOrganizer" data-parent="#accordionSidebar">
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Orangizer Management</h6>
                         <a class="collapse-item" href="#">主辦單位清單</a>
@@ -337,13 +325,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseEvent"
-                    aria-expanded="true" aria-controls="collapseEvent">
+                <a class="nav-link collapsed text-shadow-20" href="#" data-toggle="collapse" data-target="#collapseEvent" aria-expanded="true" aria-controls="collapseEvent">
                     <i class="bi bi-calendar-event-fill"></i>
                     <span>活動管理</span>
                 </a>
-                <div id="collapseEvent" class="collapse" aria-labelledby="headingEvent"
-                    data-parent="#accordionSidebar">
+                <div id="collapseEvent" class="collapse" aria-labelledby="headingEvent" data-parent="#accordionSidebar">
                     <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
                         <h6 class="collapse-header">Event Management</h6>
                         <a class="collapse-item" href="#">活動清單</a>
@@ -410,18 +396,14 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -434,15 +416,13 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
                             <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
@@ -485,22 +465,19 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
                                     Message Center
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -511,8 +488,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -523,8 +499,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -535,8 +510,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -553,15 +527,12 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     會員資料
@@ -629,17 +600,17 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php foreach($rows as $row) : ?>
-                                        <tr>
-                                            <td><?=$row["id"]?></td>
-                                            <td><?=$row["name"]?></td>
-                                            <td><?=$row["email"]?></td>
-                                            <td><?=$row["phone"]?></td>
-                                            <td><?=$row["national_id"]?></td>
-                                            <td><?=$row["city_name"]?><?=$row["dist_name"]?></td>
-                                            <td><?=$row["leval_name"]?></td>
-                                            <td><a class="btn btn-info text-white" href="member_data.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-info-circle-fill"></i></a></td>
-                                        </tr>
+                                        <?php foreach ($rows as $row) : ?>
+                                            <tr>
+                                                <td><?= $row["id"] ?></td>
+                                                <td><?= $row["name"] ?></td>
+                                                <td><?= $row["email"] ?></td>
+                                                <td><?= $row["phone"] ?></td>
+                                                <td><?= $row["national_id"] ?></td>
+                                                <td><?= $row["city_name"] ?><?= $row["dist_name"] ?></td>
+                                                <td><?= $row["leval_name"] ?></td>
+                                                <td><a class="btn btn-info text-white" href="member_data.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-info-circle-fill"></i></a></td>
+                                            </tr>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
@@ -675,8 +646,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
