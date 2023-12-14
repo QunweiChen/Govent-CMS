@@ -55,6 +55,7 @@ if(isset($_SESSION["member"])){
                                     <?php else: ?>
                                     <form class="user" action="doLogin.php" method="post">
                                         <div class="form-group">
+                                            <!-- <label for="address">Email:</label> -->
                                             <input type="email" 
                                             name="email"
                                             class="form-control form-control-user"
@@ -62,6 +63,7 @@ if(isset($_SESSION["member"])){
                                                 placeholder="Email">
                                         </div>
                                         <div class="form-group">
+                                            <!-- <label for="address">密碼:</label> -->
                                             <input type="password" 
                                             name="password"
                                             class="form-control form-control-user"
@@ -81,7 +83,13 @@ if(isset($_SESSION["member"])){
                                         <button href="" type="submit" class="btn btn-primary btn-user btn-block">
                                             登入
                                         </button>
-                                        
+                                        <!-- <hr>
+                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> 透過 Google登入
+                                        </a>
+                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> 透過 Facebook登入
+                                        </a> -->
                                     </form>
                                     <?php endif;?>
                                     <hr>
@@ -102,15 +110,7 @@ if(isset($_SESSION["member"])){
     unset($_SESSION["error"]["message"]);
     ?>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/govent.js"></script>
+    <?php include('../public-js.php') ?>
 
 </body>
 

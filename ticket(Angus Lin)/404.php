@@ -1,3 +1,35 @@
+<<<<<<<< HEAD:ticket(Angus Lin)/404.php
+========
+<?php
+require_once("govent_db_conntect.php");
+
+// $sqlTotal = "SELECT * FROM member_list  WHERE  valid=1";
+$sqlTotal = "SELECT *
+FROM member_list
+JOIN city 
+ON member_list.address = city.city_id 
+JOIN member_leval 
+ON member_list.member_leval = member_leval.leval_id 
+WHERE  valid=1";
+
+
+
+// FROM ((Orders
+// INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+// INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+
+$resultTotal = $conn->query($sqlTotal);
+$totalUser = $resultTotal->num_rows;
+
+$result = $conn->query($sqlTotal);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+// var_dump($rows);//有撈到資料
+?>
+
+
+
+
+>>>>>>>> fec445a0867a14eee32a87426d4fb8bed269b43f:member(QunweiChen)/member_list.php
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +65,11 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
+<<<<<<<< HEAD:ticket(Angus Lin)/404.php
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+========
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="member_dashboard.php">
+>>>>>>>> fec445a0867a14eee32a87426d4fb8bed269b43f:member(QunweiChen)/member_list.php
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -44,11 +80,18 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
+<<<<<<<< HEAD:ticket(Angus Lin)/404.php
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
+========
+            <li class="nav-item active">
+                <a class="nav-link text-shadow-20" href="member_dashboard.php">
+                    <i class="bi bi-speedometer"></i>
+                    <span>平台管理</span></a>
+>>>>>>>> fec445a0867a14eee32a87426d4fb8bed269b43f:member(QunweiChen)/member_list.php
             </li>
 
             <!-- Divider -->
@@ -66,11 +109,20 @@
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Components</span>
                 </a>
+<<<<<<<< HEAD:ticket(Angus Lin)/404.php
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
                         <a class="collapse-item" href="buttons.html">Buttons</a>
                         <a class="collapse-item" href="cards.html">Cards</a>
+========
+                <div id="collapseMember" class="collapse" aria-labelledby="headingMember" data-parent="#accordionSidebar">
+                    <div class="bg-white-transparency py-2 collapse-inner rounded text-shadow-20">
+                        <h6 class="collapse-header">Member Management</h6>
+                        <a class="collapse-item" href="member_list.php">會員清單</a>
+                        <a class="collapse-item" href="member_signup.php">會員註冊（客戶端）</a>
+                        <a class="collapse-item" href="member_login.php">會員登入（客戶端）</a>
+>>>>>>>> fec445a0867a14eee32a87426d4fb8bed269b43f:member(QunweiChen)/member_list.php
                     </div>
                 </div>
             </li>
@@ -362,12 +414,70 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+<<<<<<<< HEAD:ticket(Angus Lin)/404.php
                     <!-- 404 Error Text -->
                     <div class="text-center">
                         <div class="error mx-auto" data-text="404">404</div>
                         <p class="lead text-gray-800 mb-5">Page Not Found</p>
                         <p class="text-gray-500 mb-0">看來你進入到了神秘的頁面</p>
                         <a href="../ticket(Angus Lin)/ticket-list.php">&larr; 回到票種名單</a>
+========
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">會員清單</h1>
+                    <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                        For more information about DataTables, please visit the <a target="_blank"
+                            href="https://datatables.net">official DataTables documentation</a>.</p> -->
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <!-- <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        </div> -->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>姓名</th>
+                                            <th>Email</th>
+                                            <th>電話</th>
+                                            <th>身分證</th>
+                                            <th>居住地</th>
+                                            <th>會員等級</th>
+                                            <th>詳細資料</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>姓名</th>
+                                            <th>Email</th>
+                                            <th>電話</th>
+                                            <th>身分證</th>
+                                            <th>居住地</th>
+                                            <th>會員等級</th>
+                                            <th>詳細資料</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <?php foreach($rows as $row) : ?>
+                                        <tr>
+                                            <td><?=$row["id"]?></td>
+                                            <td><?=$row["name"]?></td>
+                                            <td><?=$row["email"]?></td>
+                                            <td><?=$row["phone"]?></td>
+                                            <td><?=$row["national_id"]?></td>
+                                            <td><?=$row["city_name"]?><?=$row["dist_name"]?></td>
+                                            <td><?=$row["leval_name"]?></td>
+                                            <td><a class="btn btn-info text-white" href="member_data.php?id=<?= $row["id"] ?>" title="詳細資料"><i class="bi bi-info-circle-fill"></i></a></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+>>>>>>>> fec445a0867a14eee32a87426d4fb8bed269b43f:member(QunweiChen)/member_list.php
                     </div>
 
                 </div>
@@ -410,8 +520,13 @@
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
+<<<<<<<< HEAD:ticket(Angus Lin)/404.php
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="login.html">Logout</a>
+========
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                    <a class="btn btn-primary" href="member_login.php">確認</a>
+>>>>>>>> fec445a0867a14eee32a87426d4fb8bed269b43f:member(QunweiChen)/member_list.php
                 </div>
             </div>
         </div>

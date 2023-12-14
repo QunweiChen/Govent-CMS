@@ -149,9 +149,19 @@ $row = $result->fetch_assoc();
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>地址</th>
+                                    <th>居住地</th>
                                     <td>
-                                        <?= $row["city_name"] ?><?= $row["dist_name"] ?>
+                                    <?=$row["city_name"]?><?=$row["dist_name"]?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>性別</th>
+                                    <td>
+                                    <?php if($row["gender"]=1){
+                                        echo "男";
+                                    }else{
+                                        echo "女";
+                                    }?>
                                     </td>
                                 </tr>
                                 <tr>

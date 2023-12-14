@@ -59,7 +59,7 @@ if($result->num_rows==0){
 $rows=$result->fetch_all(MYSQLI_ASSOC);
 $_SESSION["member"]=$rows;
 unset($_SESSION["error"]);
-header("location: member_dashboard.php");
+header("location: member_list.php");
 
 
 ?>
