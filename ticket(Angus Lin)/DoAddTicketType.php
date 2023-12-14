@@ -45,7 +45,7 @@ VALUES ('$ticket_type_id', '$category_id', '$eventId','$name', '$price', '$max_q
 echo $sql;
 
 if ($conn->query($insertSql) === TRUE) {
-    $_SESSION['message'] = "新增資料成功";
+    $_SESSION['message'] = "新增票卷資料成功";
     $last_id = $conn->insert_id;
     $_SESSION['addId'] = $last_id;
     // echo "最新一筆為序號".$last_id;
