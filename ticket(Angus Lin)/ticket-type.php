@@ -94,6 +94,8 @@ $rowsImg = $imgResult->fetch_assoc();
 
 <body id="page-top">
 
+<?php include("../alert.php"); ?>
+
     <!-- Page Wrapper -->
     <div id="wrapper">
 

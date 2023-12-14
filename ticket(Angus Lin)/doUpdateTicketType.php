@@ -2,6 +2,8 @@
 
 require_once("../connect_server.php");
 
+session_start();
+
 if(!isset($_POST["id"])){
     header("location:404.php");
     exit;
@@ -19,10 +21,10 @@ $remaining_quantity=$_POST["remaining_quantity"];
 $sql= "UPDATE ticket_type SET name='$name',category_id='$category_id', ticket_type_id='$ticket_type_id', price='$price', max_quantity='$max_quantity', remaining_quantity='$remaining_quantity' WHERE id=$id";
 
 if ($conn->query($sql) === TRUE) {
-    echo "資料修改完成<br>";
-    echo "修改序號".$id;
+    $_SESSION['message'] = "編輯資料成功";
+    // echo "修改序號".$id;
 } else {
-    echo "修改資料錯誤: " . $conn->error;
+    $_SESSION['message'] = "編輯資料失敗".$conn->error;
 }
 
 header("location:ticket-type.php?id=$id")

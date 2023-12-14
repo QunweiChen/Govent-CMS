@@ -1,5 +1,9 @@
 <?php
 
+// catch error on webpage
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once("../connect_server.php");
 
 $sqlTicketCategory = "SELECT * FROM ticket_category";
@@ -57,7 +61,7 @@ $rowsTicketCategory = $result->fetch_all(MYSQLI_ASSOC);
 $resultTicketType = $conn->query($sqlTicketType);
 $rowsTicketType = $resultTicketType->fetch_all(MYSQLI_ASSOC);
 
-$resultCount = $conn -> query($sqlTicketTypeCount);
+$resultCount = $conn->query($sqlTicketTypeCount);
 $TicketTypeCount = $resultCount->num_rows;
 ?>
 
@@ -80,6 +84,10 @@ $TicketTypeCount = $resultCount->num_rows;
 </head>
 
 <body id="page-top">
+
+<?php
+include("../alert.php");
+?>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -104,10 +112,10 @@ $TicketTypeCount = $resultCount->num_rows;
                     </div>
                     <ul class="nav nav-pills mx-4">
                         <li class="nav-item">
-                            <?php if(!isset($_GET["category"])):?>
-                            <a class="nav-link active" aria-current="page" href="ticket-list.php">全部票卷種類</a>
-                            <?php else:?>
-                            <a class="nav-link" aria-current="page" href="ticket-list.php">全部票卷種類</a>
+                            <?php if (!isset($_GET["category"])) : ?>
+                                <a class="nav-link active" aria-current="page" href="ticket-list.php">全部票卷種類</a>
+                            <?php else : ?>
+                                <a class="nav-link" aria-current="page" href="ticket-list.php">全部票卷種類</a>
                             <?php endif ?>
                         </li>
                         <?php foreach ($rowsTicketCategory as $ticketCategory) : ?>
@@ -162,8 +170,8 @@ $TicketTypeCount = $resultCount->num_rows;
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                                                     <a href="doDeleteTicketType.php?id=<?= $ticketType["id"] ?>
-                                                    <?= isset($_GET["page"]) ? '&page=' .($_GET["page"]) : '' ?>
-                                                    <?= isset($_GET["category"]) ? '&category=' .($_GET["category"]) : '' ?>" class="btn btn-danger" class="btn btn-danger">確認</a>
+                                                    <?= isset($_GET["page"]) ? '&page=' . ($_GET["page"]) : '' ?>
+                                                    <?= isset($_GET["category"]) ? '&category=' . ($_GET["category"]) : '' ?>" class="btn btn-danger" class="btn btn-danger">確認</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -285,6 +293,16 @@ $TicketTypeCount = $resultCount->num_rows;
             </div>
         </div>
     </div>
+
+    <script>
+        import Swal from 'sweetalert2/dist/sweetalert2.js';
+        import 'sweetalert2/src/sweetalert2.scss';
+        Swal.fire({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success"
+        });
+    </script>
 
     <?php include('../public-js.php') ?>
 

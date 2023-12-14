@@ -2,6 +2,8 @@
 
 require_once("../connect_server.php");
 
+session_start();
+
 if(!isset($_GET["id"])){
     header("Location:404.php");
     exit;
@@ -16,11 +18,10 @@ $page=$_GET["page"];
 $sql="UPDATE ticket_type SET valid='1' WHERE id=$id";
 
 if ($conn->query($sql) === TRUE){
-    echo "刪除成功";
+    $_SESSION['message'] = "刪除成功";
 }else{
-    echo "刪除資料錯誤". $conn->error;
+    $_SESSION['message'] = "刪除失敗". $conn->error;
 }
-
 
 $conn->close();
 
