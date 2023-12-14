@@ -28,7 +28,9 @@ foreach ($userRows as $row) {
 if ($userExists) {
     $sql = "UPDATE user_order SET user_id ='$changeUserID' WHERE id =$userid ";
 } else {
-    echo "使用者不存在";
+    $_SESSION['message'] = "使用者不存在";
+    header("location:change-order.php?id=$userid");
+    exit;
 }
 
 
@@ -38,6 +40,8 @@ if ($conn->query($sql) === TRUE) {
     exit;
 } else {
     $_SESSION['message'] = "編輯資料失敗";
+    header("location:change-order.php?id=$userid");
+    exit;
 }
 $conn->close();
 header("location:change-order.php?id=$userid");
