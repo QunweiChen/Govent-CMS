@@ -306,20 +306,24 @@ $eventCount = $result->num_rows;
                                 <thead>
                                     <tr class="text-nowrap text-end">
                                         <th>編號
+                                        <?php if (!isset($_GET["event_type_id"])) : ?>
                                             <?php if (!isset($_GET["search"])) : ?>
                                                 <div class=" btn-group ">
                                                     <a class="btn btn-warning btn-sm  <?php if ($order == 1) echo "active" ?>" href="event.php?page=<?= $page ?>& order=1"> <i class="bi bi-sort-down-alt"></i></a>
                                                     <a class="btn btn-warning btn-sm <?php if ($order == 2) echo "active" ?>" href="event.php?page=<?= $page ?>&order=2"> <i class="bi bi-sort-down"></i></a>
                                                 </div>
                                             <?php endif; ?>
+                                            <?php endif; ?>
                                         </th>
                                         <th>活動名稱</th>
                                         <th>活動日期
+                                        <?php if (!isset($_GET["event_type_id"])) : ?>
                                             <?php if (!isset($_GET["search"])) : ?>
                                                 <div class="btn-group">
                                                     <a class="btn btn-warning btn-sm  <?php if ($order == 3) echo "active" ?>" href="event.php?page=<?= $page ?>& order=3"> <i class="bi bi-sort-down-alt"></i></a>
                                                     <a class="btn btn-warning btn-sm  <?php if ($order == 4) echo "active" ?>" href="event.php?page=<?= $page ?>&order=4"> <i class="bi bi-sort-down"></i></a>
                                                 </div>
+                                            <?php endif; ?>
                                             <?php endif; ?>
                                         </th>
                                         <th>活動類型</th>
@@ -340,7 +344,7 @@ $eventCount = $result->num_rows;
                                             <td><?= $row["address"] ?></td>
                                             <td><?= $row["merchant_name"] ?></td>
                                             <td>
-                                                <img class="object-fit-cover" src="image/<?= $row["images"] ?>" alt="<?= $row["event_name"] ?>" style="height: 150px;">
+                                                <img class="object-fit-contain" src="image/<?= $row["images"] ?>" alt="<?= $row["event_name"] ?>" style="max-width:100%; max-height:25vh">
                                             </td>
 
                                             <td><?= $row["event_price"] ?></td>
