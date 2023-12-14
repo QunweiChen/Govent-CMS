@@ -97,8 +97,17 @@ if ($_SESSION['message'] == '資料已存在') {
     });
   </script>';
   unset($_SESSION['message']);
+}elseif ($_SESSION['message'] == '新增票卷資料成功') {
+  $last_id = $_SESSION['addId'];
+  echo '<script>
+  Swal.fire({
+      title: "新增成功",
+      text: "最新一筆序號為'.$last_id.'",
+      icon: "success"
+    });
+  </script>';
+  unset($_SESSION['message']);
 }
-
 
 
 }
