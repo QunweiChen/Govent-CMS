@@ -273,7 +273,7 @@ $eventCount = $result->num_rows;
                         <div>
                             <ul class="nav nav-pills">
                                 <li class="nav-item">
-                                    <a class="nav-link <?php if (!isset($_GET["event_type_id"])) echo "active"; ?>" aria-current="page" href="event.php" >全部種類</a>
+                                    <a class="nav-link <?php if (!isset($_GET["event_type_id"])) echo "active"; ?>" aria-current="page" href="event.php">全部種類</a>
                                 </li>
                                 <?php foreach ($rowsActivityCategory as $ActivityCategory) : ?>
                                     <li class="nav-item">
@@ -284,26 +284,26 @@ $eventCount = $result->num_rows;
                                 <?php endforeach; ?>
                             </ul>
                         </div>
-                            <form class="mb-3 form-inline navbar-search " action="" method="get">
-                                <div class="d-flex">
-                                    <div class="input-group me-2">
-                                        <input type="text" class="form-control small" name="search" placeholder="搜尋活動.." aria-label="Search" aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="submit">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <a class=" btn btn-primary text-white" href="add-event.php"><i class="bi bi-plus"></i>新增活動</a>
+                        <form class="mb-3 form-inline navbar-search " action="" method="get">
+                            <div class="d-flex">
+                                <div class="input-group me-2">
+                                    <input type="text" class="form-control small" name="search" placeholder="搜尋活動.." aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
                                     </div>
                                 </div>
-                            </form>
+                                <div class="">
+                                    <a class=" btn btn-primary text-white" href="add-event.php"><i class="bi bi-plus"></i>新增活動</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
 
                     <!-- Content Row -->
                     <?php if ($eventCount > 0) : ?>
-                        <div class="table-responsive px-4">
+                        <div class="table-responsive px-4 animate__animated animate__fadeIn animate__faster">
                             <table class="table table-bordered bg-white align-middle rounded" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr class="text-nowrap text-center">

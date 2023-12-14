@@ -37,9 +37,9 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4 mx-4">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4 mx-4 pt-3">
                         <h1 class="h3 mb-0 text-gray-800 font-weight-bolder"><a href="../ticket(Angus%20Lin)/ticket-list.php" title="回到票卷種類管理"><i class="bi bi-backspace px-1"></i>
-                        </a>新增票卷種類
+                            </a>新增票卷種類
                         </h1>
                     </div>
 

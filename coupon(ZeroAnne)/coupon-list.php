@@ -7,7 +7,7 @@ $search = isset($search) ? $search : '';
 if ($use !== null) {
     $use = $_GET["use"];
     $sqlTotal = "SELECT * FROM coupon WHERE coupon_valid='$use' ";
-} elseif (isset(($_GET["search"]))) {
+} elseif (isset($_GET["search"])) {
     $search = $_GET["search"];
     $sqlTotal = "SELECT * FROM coupon 
     JOIN couponvalid ON coupon.coupon_valid=couponvalid.coupon_valid_id 

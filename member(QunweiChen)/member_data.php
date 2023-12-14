@@ -1,10 +1,10 @@
 <?php
 
-if(!isset($_GET["id"])){
+if (!isset($_GET["id"])) {
     header("location: member_list.php");
-  }
+}
 
-$id=$_GET["id"];//為連結到id來源
+$id = $_GET["id"]; //為連結到id來源
 
 
 require_once("../connect_server.php");
@@ -75,24 +75,23 @@ $row = $result->fetch_assoc();
 </div> -->
 
 
-<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title" id="exampleModalLabel"> 警告</h1>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">確認刪除帳號</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                    <a class="btn btn-primary" href="member_login.php">刪除</a>
-                </div>
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel"> 警告</h1>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">確認刪除帳號</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                <a class="btn btn-primary" href="member_login.php">刪除</a>
             </div>
         </div>
     </div>
+</div>
 
 <body id="page-top">
     <!-- 照結果顯示alert -->
@@ -117,96 +116,94 @@ $row = $result->fetch_assoc();
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">會員資料</h1>
+                    <div class="d-sm-flex align-items-center justify-content-between pt-3 mb-4 mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">會員資料</h1>
+                        <div class="">
+                            <a class="btn btn-info text-white" href="member_list.php">回會員清單</a>
+                            <a class="btn btn-primary ms-2" href="member_edit.php?id=<?= $row["id"] ?>" title="詳細資料">修改會員資料</a>
+                            <!-- <a class="btn btn-info text-white" href="?id=<?= $row["id"] ?>">Cancel</a> -->
+                        </div>
                     </div>
 
                     <!-- Content Row -->
-                    <div>
+                    <div class="mx-4">
                         <form action="doUpdate.php" method="post">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <input type="hidden" name="id" value="<?= $row["id"]?>">
-                            <tr>
-                                <th>ID</th>
-                                <td>
-                                <?= $row["id"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>會員等級</th>
-                                <td> <?= $row["leval_name"]?></td>
-                            </tr>
-                            <tr>
-                                <th>姓名</th>
-                                <td>
-                                    <?= $row["name"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>
-                                    <?= $row["email"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>電話</th>
-                                <td>
-                                    <?= $row["phone"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>密碼</th>
-                                <td>
-                                    <?= $row["password"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>身分證</th>
-                                <td>
-                                    <?= $row["national_id"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>居住地</th>
-                                <td>
-                                <?=$row["city_name"]?><?=$row["dist_name"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>性別</th>
-                                <td>
-                                <?php if($row["gender"]=1){
-                                    echo "男";
-                                }else{
-                                    echo "女";
-                                }?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>出生日期</th>
-                                <td>
-                                    <?= $row["born_date"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>電子發票</th>
-                                <td>
-                                    <?= $row["invoice"]?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>註冊日期</th>
-                                <td><?= $row["created_at"]?></td>
-                            </tr>
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                                <tr>
+                                    <th>ID</th>
+                                    <td>
+                                        <?= $row["id"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>會員等級</th>
+                                    <td> <?= $row["leval_name"] ?></td>
+                                </tr>
+                                <tr>
+                                    <th>姓名</th>
+                                    <td>
+                                        <?= $row["name"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>
+                                        <?= $row["email"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>電話</th>
+                                    <td>
+                                        <?= $row["phone"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>密碼</th>
+                                    <td>
+                                        <?= $row["password"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>身分證</th>
+                                    <td>
+                                        <?= $row["national_id"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>居住地</th>
+                                    <td>
+                                        <?= $row["city_name"] ?><?= $row["dist_name"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>性別</th>
+                                    <td>
+                                        <?php if ($row["gender"] = 1) {
+                                            echo "男";
+                                        } else {
+                                            echo "女";
+                                        } ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>出生日期</th>
+                                    <td>
+                                        <?= $row["born_date"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>電子發票</th>
+                                    <td>
+                                        <?= $row["invoice"] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>註冊日期</th>
+                                    <td><?= $row["created_at"] ?></td>
+                                </tr>
 
-                        </table>
-                        <table>
-                            <div class="py-2">
-                                <a class="btn btn-primary " href="member_edit.php?id=<?= $row["id"] ?>" title="詳細資料">修改會員資料</a>
-                                <a class="btn btn-info text-white" href="member_list.php">回會員清單</a>
-                                <!-- <a class="btn btn-info text-white" href="?id=<?= $row["id"] ?>">Cancel</a> -->
-                            </div>
-                        </table>
+                            </table>
                         </form>
 
 
@@ -243,8 +240,7 @@ $row = $result->fetch_assoc();
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
