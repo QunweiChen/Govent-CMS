@@ -269,72 +269,74 @@ $eventCount = $result->num_rows;
                     <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
                         <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">活動列表</h1>
                     </div>
-                    <div class="row m-2">
-                        <ul class="nav nav-pills col-lg-8">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="event.php" style="color:#fd7e14; background-color:wheat">全部種類</a>
-                            </li>
-                            <?php foreach ($rowsActivityCategory as $ActivityCategory) : ?>
+                    <div class="mx-4 mb-3 d-flex justify-content-between">
+                        <div>
+                            <ul class="nav nav-pills">
                                 <li class="nav-item">
-                                    <a class="nav-link  <?php if (isset($_GET["category"]) && $_GET["category"] == $ActivityCategory["id"]) echo "active"; ?>" href="event.php?event_type_id=<?= $ActivityCategory["id"] ?>">
-                                        <?= $ActivityCategory["activity_name"] ?>
-                                    </a>
+                                    <a class="nav-link <?php if (!isset($_GET["event_type_id"])) echo "active"; ?>" aria-current="page" href="event.php" >全部種類</a>
                                 </li>
-                            <?php endforeach; ?>
-                        </ul>
-                        <form class="col-lg-4 mb-3 form-inline mr-auto w-100 navbar-search " action="" method="get">
-
-                            <div class="input-group ">
-                                <input type="text" class="form-control small" name="search" placeholder="搜尋活動.." aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-warning" type="submit">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
+                                <?php foreach ($rowsActivityCategory as $ActivityCategory) : ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link <?php if (isset($_GET["event_type_id"]) && $_GET["event_type_id"] == $ActivityCategory["id"]) echo "active"; ?>" href="event.php?event_type_id=<?= $ActivityCategory["id"] ?>">
+                                            <?= $ActivityCategory["activity_name"] ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                            <form class="mb-3 form-inline navbar-search " action="" method="get">
+                                <div class="d-flex">
+                                    <div class="input-group me-2">
+                                        <input type="text" class="form-control small" name="search" placeholder="搜尋活動.." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <a class=" btn btn-primary text-white" href="add-event.php"><i class="bi bi-plus"></i>新增活動</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="ml-3">
-                                <a class=" btn btn-warning text-white" href="add-event.php"><i class="bi bi-plus"></i>新增活動</a>
-                            </div>
-                        </form>
+                            </form>
                     </div>
 
                     <!-- Content Row -->
                     <?php if ($eventCount > 0) : ?>
-                        <div class="table-responsive">
-
-                            <table class="table table-bordered bg-white" id="dataTable" width="100%" cellspacing="0">
+                        <div class="table-responsive px-4">
+                            <table class="table table-bordered bg-white align-middle rounded" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                    <tr class="text-nowrap text-end">
-                                        <th>編號
-                                        <?php if (!isset($_GET["event_type_id"])) : ?>
-                                            <?php if (!isset($_GET["search"])) : ?>
-                                                <div class=" btn-group ">
-                                                    <a class="btn btn-warning btn-sm  <?php if ($order == 1) echo "active" ?>" href="event.php?page=<?= $page ?>& order=1"> <i class="bi bi-sort-down-alt"></i></a>
-                                                    <a class="btn btn-warning btn-sm <?php if ($order == 2) echo "active" ?>" href="event.php?page=<?= $page ?>&order=2"> <i class="bi bi-sort-down"></i></a>
-                                                </div>
-                                            <?php endif; ?>
-                                            <?php endif; ?>
-                                        </th>
-                                        <th>活動名稱</th>
-                                        <th>活動日期
-                                        <?php if (!isset($_GET["event_type_id"])) : ?>
-                                            <?php if (!isset($_GET["search"])) : ?>
-                                                <div class="btn-group">
-                                                    <a class="btn btn-warning btn-sm  <?php if ($order == 3) echo "active" ?>" href="event.php?page=<?= $page ?>& order=3"> <i class="bi bi-sort-down-alt"></i></a>
-                                                    <a class="btn btn-warning btn-sm  <?php if ($order == 4) echo "active" ?>" href="event.php?page=<?= $page ?>&order=4"> <i class="bi bi-sort-down"></i></a>
-                                                </div>
-                                            <?php endif; ?>
+                                    <tr class="text-nowrap text-center">
+                                        <th class="align-middle">編號
+                                            <?php if (!isset($_GET["event_type_id"])) : ?>
+                                                <?php if (!isset($_GET["search"])) : ?>
+                                                    <div class=" btn-group m-1">
+                                                        <a class="btn btn-primary btn-sm  <?php if ($order == 1) echo "active" ?>" href="event.php?page=<?= $page ?>& order=1"> <i class="bi bi-sort-down-alt"></i></a>
+                                                        <a class="btn btn-primary btn-sm <?php if ($order == 2) echo "active" ?>" href="event.php?page=<?= $page ?>&order=2"> <i class="bi bi-sort-down"></i></a>
+                                                    </div>
+                                                <?php endif; ?>
                                             <?php endif; ?>
                                         </th>
-                                        <th>活動類型</th>
-                                        <th>地點</th>
-                                        <th>主辦單位</th>
-                                        <th>活動圖片</th>
-                                        <th>票價</th>
+                                        <th class="align-middle">活動名稱</th>
+                                        <th class="align-middle">活動日期
+                                            <?php if (!isset($_GET["event_type_id"])) : ?>
+                                                <?php if (!isset($_GET["search"])) : ?>
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-primary btn-sm  <?php if ($order == 3) echo "active" ?>" href="event.php?page=<?= $page ?>& order=3"> <i class="bi bi-sort-down-alt"></i></a>
+                                                        <a class="btn btn-primary btn-sm  <?php if ($order == 4) echo "active" ?>" href="event.php?page=<?= $page ?>&order=4"> <i class="bi bi-sort-down"></i></a>
+                                                    </div>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </th>
+                                        <th class="align-middle">活動類型</th>
+                                        <th class="align-middle">地點</th>
+                                        <th class="align-middle">主辦單位</th>
+                                        <th class="align-middle">活動圖片</th>
+                                        <th class="align-middle">票價</th>
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody class="small">
+                                <tbody class="small text-center">
                                     <?php while ($row = $result->fetch_assoc()) : ?>
                                         <tr>
                                             <td><?= $row["id"] ?></td>
@@ -349,11 +351,10 @@ $eventCount = $result->num_rows;
 
                                             <td><?= $row["event_price"] ?></td>
 
+                                            <td style="width: 4vw;">
+                                                <a class="m-2 btn btn-primary btn-sm" href="update.php?id=<?= $row["id"] ?>"><i class="bi bi-pencil-fill"></i></a>
 
-                                            <td>
-                                                <a class="m-2 btn btn-primary" href="update.php?id=<?= $row["id"] ?>"><i class="bi bi-pencil-fill"></i></a>
-
-                                                <button type="button" class="m-2 btn btn-danger" data-toggle="modal" data-target="#exampleModal"><i class="bi bi-trash-fill"></i>
+                                                <button type="button" class="m-2 btn btn-danger  btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="bi bi-trash-fill"></i>
                                                 </button>
 
                                                 <!-- Modal -->
@@ -386,7 +387,7 @@ $eventCount = $result->num_rows;
 
                             <?php if (!isset($_GET["event_type_id"])) : ?>
                                 <?php if (!isset($_GET["search"])) : ?>
-                                    <div class="py-2">
+                                    <div class="py-2 d-flex justify-content-center">
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination">
                                                 <?php for ($i = 1; $i <= $pageCount; $i++) : ?>

@@ -48,8 +48,8 @@ $rows = $result -> fetch_all(MYSQLI_ASSOC);
                         <h1 class="h3 mb-0 text-gray-800 font-weight-bolder">新增活動</h1>
                     </div>
 
-                    <div class="container">
-                        <div class="py-3 my-3">
+                    <div class="mx-4">
+                        <div class="pb-3 my-3">
                             <a class="btn btn-primary text-white" href="event.php">回活動列表</a>
                         </div>
                         <form action="doAddevent.php" method="post" enctype="multipart/form-data" class="row">

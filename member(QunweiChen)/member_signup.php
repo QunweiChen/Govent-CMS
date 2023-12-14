@@ -118,11 +118,11 @@ $conn->close();
                                     </select>          
 
                                 </div>
-
                                 <!-- gender -->
-                                <div class="form-group row">
-                                    <label class="col-3 m-s-5 text-gray-700">性別</label>
-                                    <label class="col text-gray-700">女性</label>
+                                <div class="form-group row rounded-pill">
+                                    <!-- <label class="col-3 m-s-5 text-gray-700">性別</label> -->
+                                    <div class="col-2 form-contorl">性別</div>
+                                    <label class="col-2 text-gray-700">女性</label>
                                     <div class="col">
                                         <input name="gender" 
                                         type="radio" 
