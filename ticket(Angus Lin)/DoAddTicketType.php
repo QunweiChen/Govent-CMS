@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once("../connect_server.php");
 
 if(!isset($_POST["ticketName"])){
@@ -43,12 +45,13 @@ VALUES ('$ticket_type_id', '$category_id', '$eventId','$name', '$price', '$max_q
 echo $sql;
 
 if ($conn->query($insertSql) === TRUE) {
-    echo "新增票卷種類完成";
+    $_SESSION['message'] = "新增資料成功";
     $last_id = $conn->insert_id;
-    echo "最新一筆為序號".$last_id;
+    $_SESSION['addId'] = $last_id;
+    // echo "最新一筆為序號".$last_id;
 
 } else {
-    echo "新增票卷種類錯誤: " . $conn->error;
+    $_SESSION['message'] = "新增資料錯誤" . $conn->error;
 }
 
 $perPage = 8;
