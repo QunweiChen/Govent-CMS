@@ -32,7 +32,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
 
         <!-- Sidebar -->
         <?php include('../sidebar.php'); ?>
-
+        
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -84,18 +84,18 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                                 <label for="couponValid" class="col-sm-2 col-form-label">優惠券狀態</label>
                                 <div class="col-sm-8">
                                     <div class="row ms-2">
-                                    <div class="form-check mb-0 col-3">
-                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid1" value="1" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 1) ? 'checked' : '' ?> require>
-                                        <label class="form-check-label" for="couponValid1">
-                                            可使用
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-0 col-3">
-                                        <input class="form-check-input" type="radio" name="couponValid" id="couponValid2" value="2" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 2) ? 'checked' : '' ?> require>
-                                        <label class="form-check-label" for="couponValid0">
-                                            已停用
-                                        </label>
-                                    </div>
+                                        <div class="form-check mb-0 col-3">
+                                            <input class="form-check-input" type="radio" name="couponValid" id="couponValid1" value="1" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 1) ? 'checked' : '' ?> require>
+                                            <label class="form-check-label" for="couponValid1">
+                                                可使用
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-0 col-3">
+                                            <input class="form-check-input" type="radio" name="couponValid" id="couponValid2" value="2" <?= (isset($_SESSION['error']['filledData']['couponValid']) && $_SESSION['error']['filledData']['couponValid'] == 2) ? 'checked' : '' ?> require>
+                                            <label class="form-check-label" for="couponValid0">
+                                                已停用
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -103,18 +103,18 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                                 <label for="discountType" class="col-sm-2 col-form-label">折扣類型</label>
                                 <div class="col-sm-8">
                                     <div class="row ms-2">
-                                    <div class="form-check mb-0 col-3">
-                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="打折" <?= (isset($_SESSION['error']['filledData']['discountType']) && $_SESSION['error']['filledData']['discountType'] == '打折') ? 'checked' : '' ?> require>
-                                        <label class="form-check-label" for="discountType1">
-                                            依百分比折扣
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-0 col-3">
-                                        <input class="form-check-input" type="radio" name="discountType" id="discountType" value="金額" <?= (isset($_SESSION['error']['filledData']['discountType']) && $_SESSION['error']['filledData']['discountType'] == '金額') ? 'checked' : '' ?> require>
-                                        <label class="form-check-label" for="discountType2">
-                                            依金額折價
-                                        </label>
-                                    </div>
+                                        <div class="form-check mb-0 col-3">
+                                            <input class="form-check-input" type="radio" name="discountType" id="discountType" value="打折" <?= (isset($_SESSION['error']['filledData']['discountType']) && $_SESSION['error']['filledData']['discountType'] == '打折') ? 'checked' : '' ?> require>
+                                            <label class="form-check-label" for="discountType1">
+                                                依百分比折扣
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-0 col-3">
+                                            <input class="form-check-input" type="radio" name="discountType" id="discountType" value="金額" <?= (isset($_SESSION['error']['filledData']['discountType']) && $_SESSION['error']['filledData']['discountType'] == '金額') ? 'checked' : '' ?> require>
+                                            <label class="form-check-label" for="discountType2">
+                                                依金額折價
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -147,11 +147,11 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="row mb-3 ">
                                 <label for="activityNum" class="col-form-label col-sm-2">活動類型</label>
                                 <div class="col-sm-10">
-                                <select class="form-select" id="" name="activityNum">
-                                    <?php foreach ($rowsActivity as $rowActivity) : ?>
-                                        <option name="activity<?= $rowActivity["id"] ?>" value="<?= $rowActivity["id"] ?>" <?= isset($_SESSION['error']['filledData']['activityNum']) && $_SESSION['error']['filledData']['activityNum'] == $rowActivity["id"] ? 'selected' : '' ?>><?= $rowActivity["activity_name"] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+                                    <select class="form-select" id="" name="activityNum">
+                                        <?php foreach ($rowsActivity as $rowActivity) : ?>
+                                            <option name="activity<?= $rowActivity["id"] ?>" value="<?= $rowActivity["id"] ?>" <?= isset($_SESSION['error']['filledData']['activityNum']) && $_SESSION['error']['filledData']['activityNum'] == $rowActivity["id"] ? 'selected' : '' ?>><?= $rowActivity["activity_name"] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit">送出</button>

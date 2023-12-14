@@ -41,17 +41,15 @@ $sql = "INSERT INTO coupon (coupon_code, coupon_name, coupon_valid, discount_typ
 VALUES ('$code', '$name', '$couponValid', '$discountType', '$discountValid', '$startAt', '$expiresAt', '$priceMin', '$maxUsage', '$activityNum')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "新增資料完成";
-    $last_id = $conn->insert_id; //抓新增id名
-    echo "最新一筆序號" . $last_id;
-    $sqlcoupon = "SELECT * FROM coupon WHERE id=$last_id";
-    $resultcoupon = $conn->query($sqlcoupon);
-    $rowcoupon = $resultcoupon->fetch_assoc();
-    var_dump($rowcoupon);
-    session_destroy();
-    header("location:coupon.php?id={$last_id}");
-    
+    $_SESSION['message'] = "新增資料成功";
+    $last_id = $conn->insert_id;
+    $_SESSION['addId'] = "$last_id";
+    header("Location: coupon.php?id=$last_id");
+    exit();
 } else {
-    echo "新增資料錯誤: " . $conn->error;
+    $_SESSION['message'] = "新增資料錯誤";
+    header("Location: coupon.php?id=$last_id");
+    exit();
 }
 $conn->close();
+
