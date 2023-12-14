@@ -1,9 +1,9 @@
 <?php
 require_once("../connect_server.php");
 
-if (!isset($_GET["page"]) || !isset($_GET["order"])) {
-    header("location:coupon-list.php?page=1&order=1");
-}
+// if (!isset($_GET["page"]) || !isset($_GET["order"])) {
+//     header("location:coupon-list.php?page=1&order=1");
+// }
 
 $use = isset($_GET["use"]) ? $_GET["use"] : null;
 $search = isset($search) ? $search : '';
@@ -154,7 +154,8 @@ foreach ($rows as $rowtime) {
 </head>
 
 <body id="page-top">
-
+    <!-- 照結果顯示alert -->
+    <?php include('../alert.php'); ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -227,16 +228,16 @@ foreach ($rows as $rowtime) {
                                 共 <?= $totalUser ?> 筆
                             </div>
                         <?php else : ?>
-                           
+
                             <div class="pb-2 text-end">
                                 搜尋"<?= $_GET['search'] ?>"的結果,
                                 共 <?= $totalUser ?> 筆
                                 <a href="coupon-list.php?page=1&order=1" class="text-primary">
-                                <div class="d-flex justify-content-end align-items-center">
-                                    <div>回優惠券列表</div>
-                                     <i class="bi bi-box-arrow-right fs-4 ms-3"></i>
-                                </div>
-                            </a>
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        <div>回優惠券列表</div>
+                                        <i class="bi bi-box-arrow-right fs-4 ms-3"></i>
+                                    </div>
+                                </a>
                             </div>
                         <?php endif; ?>
                         <table class="table text-center text-nowrap align-items-center table-hover ">
@@ -280,9 +281,9 @@ foreach ($rows as $rowtime) {
                                                                 <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>&page=<?= $_GET["page"] ?>&order=<?= $_GET["order"] ?><?php if (isset($_GET["use"]))  echo '&use=' . $_GET["use"] ?> " type="button" class="btn btn-danger">確定刪除</a>
                                                             <?php elseif (isset($_GET["search"])) : ?>
                                                                 <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>&search=<?= $_GET["search"] ?>" type="button" class="btn btn-danger">確定刪除</a>
-                                                                <?php else : ?>
-                                                                    <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>" type="button" class="btn btn-danger">確定刪除</a>
-                                                                <?php endif; ?>
+                                                            <?php else : ?>
+                                                                <a href="doDeleteCoupon.php?id=<?= $row["id"] ?>" type="button" class="btn btn-danger">確定刪除</a>
+                                                            <?php endif; ?>
                                                         </div>
                                                     </div>
                                                 </div>

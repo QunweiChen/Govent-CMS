@@ -39,13 +39,11 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body id="page-top">
-
+    
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <?php include('../sidebar.php'); ?>
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -93,7 +91,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                     <div class="container">
                         <form action="doUpdateCoupon.php" method="post">
                             <input type="hidden" name="id" value="<?= $row["id"] ?> ">
-                            
+
                             <div class="row mb-3 align-items-center">
                                 <label for="code" class="col-sm-2 col-form-label">ID</label>
                                 <div class="col-sm-8">
@@ -103,7 +101,9 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="row mb-3 align-items-center">
                                 <label for="name" class="col-sm-2 col-form-label">優惠券名稱</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="name" name="name" value="<?php if(isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["name"]; else : echo $row["coupon_name"] ; endif;?>">
+                                    <input type="text" class="form-control" id="name" name="name" value="<?php if (isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["name"];
+                                                                                                            else : echo $row["coupon_name"];
+                                                                                                            endif; ?>">
                                 </div>
                             </div>
                             <div class="row mb-3 align-items-center">
@@ -123,7 +123,7 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="couponValid" id="couponValid2" value="2">
-                                            已停用
+                                        已停用
                                         </label>
                                     </div>
                                 </div>
@@ -148,27 +148,37 @@ $rowsActivity = $resultActivity->fetch_all(MYSQLI_ASSOC);
                             <div class="row mb-3">
                                 <label for="discountValid" class="col-sm-2 col-form-label text-nowrap">百分比折扣/金額折價</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="discountValid" name="discountValid" value="<?php if(isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["discountValid"]; else : echo $row["discount_valid"] ; endif;?>">
+                                    <input type="text" class="form-control" id="discountValid" name="discountValid" value="<?php if (isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["discountValid"];
+                                                                                                                            else : echo $row["discount_valid"];
+                                                                                                                            endif; ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="startAt" class="col-sm-2 col-form-label">開始日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="startAt" name="startAt" value="<?php if(isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["startAt"]; else : echo $row["start_at"] ; endif;?>" onchange="updateCouponStatus(this)">
+                                    <input type="date" class="form-control" id="startAt" name="startAt" value="<?php if (isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["startAt"];
+                                                                                                                else : echo $row["start_at"];
+                                                                                                                endif; ?>" onchange="updateCouponStatus(this)">
                                 </div>
                                 <label for="expiresAt" class="col-sm-2 col-form-label">到期日期</label>
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt" value="<?php if(isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["expiresAt"]; else : echo $row["expires_at"] ; endif;?>" onchange="updateCouponStatus(this)">
+                                    <input type="date" class="form-control" id="expiresAt" name="expiresAt" value="<?php if (isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["expiresAt"];
+                                                                                                                    else : echo $row["expires_at"];
+                                                                                                                    endif; ?>" onchange="updateCouponStatus(this)">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="priceMin" class="col-sm-2 col-form-label">最低消費金額</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="priceMin" name="priceMin" value="<?php if(isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["priceMin"]; else : echo $row["price_min"] ; endif;?>">
+                                    <input type="text" class="form-control" id="priceMin" name="priceMin" value="<?php if (isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["priceMin"];
+                                                                                                                    else : echo $row["price_min"];
+                                                                                                                    endif; ?>">
                                 </div>
                                 <label for="maxUsage" class="col-sm-2 col-form-label">可使用張數</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="priceMin" name="maxUsage" value="<?php if(isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["maxUsage"]; else : echo $row["max_usage"] ; endif;?>">
+                                    <input type="text" class="form-control" id="priceMin" name="maxUsage" value="<?php if (isset($_SESSION["error"]["filledData"])) : echo $_SESSION["error"]["filledData"]["maxUsage"];
+                                                                                                                    else : echo $row["max_usage"];
+                                                                                                                    endif; ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
