@@ -132,19 +132,7 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
 
     <title>訂單資訊</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
-    <!-- font awesome link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- bootstrap icon link -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
-    <!-- 字體連結 -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-    <!-- Custom styles for this template-->
-    <link href="../Template/css/govent.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./style.css" />
+    <?php include('../public_head.php') ?>
 </head>
 
 <body>
@@ -158,33 +146,47 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-            <?php include('../topbar.php'); ?>
+                <?php include('../topbar.php'); ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">訂單資訊</h1>
+                    <div class="d-sm-flex align-items-center pt-3 mb-4 mx-4">
+                        <h1 class="h3 mb-0 text-gray-800 font-weight-bolder me-3">訂單資訊</h1>
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                            <a href="date-range.php?status=<?= 3 ?>&page=<?= $page ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>">
+                                <button type="button" class="btn btn-outline-primary">
+                                    全部
+                                </button>
+                            </a>
+                            <a href="date-range.php?status=<?= 1 ?>&page=<?= $page ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><button type="button" class="btn btn-outline-primary">
+                                    已下單
+                                </button></a>
+                            <a href="date-range.php?status=<?= 0 ?>&page=<?= $page ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><button type="button" class="btn btn-outline-primary">
+                                    已取消
+                                </button></a>
+                        </div>
+                    </div>
 
                     <!-- 訂單資訊選項 -->
-                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                        <a href="date-range.php?status=<?= 3 ?>&page=<?= $page ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>">
-                            <button type="button" class="btn btn-outline-primary">
-                                全部
-                            </button>
-                        </a>
-                        <a href="date-range.php?status=<?= 1 ?>&page=<?= $page ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><button type="button" class="btn btn-outline-primary">
-                                已下單
-                            </button></a>
-                        <a href="date-range.php?status=<?= 0 ?>&page=<?= $page ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><button type="button" class="btn btn-outline-primary">
-                                已取消
-                            </button></a>
-
-                    </div>
                     <!-- 時間搜尋 -->
-                    <div class="container mt-5 mb-3">
-                        <div class="row justify-content-center">
-                            <div class="col-md-8">
-                                <form class="form-inline justify-content-center" method="get" action="date-range.php">
+                    <div class="mx-4 mt-4 mb-3">
+                        <div class="d-flex justify-content-between">
+                            <nav aria-label="Page navigation example ">
+                                <ul class="pagination justify-content-center">
+                                    <?php if (isset($_GET['status'])) : ?>
+                                        <?php for ($i = 1; $i <= $pages; $i++) : ?>
+                                            <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><?= $i ?></a></li>
+                                        <?php endfor; ?>
+                                    <?php else :   ?>
+                                        <?php for ($i = 1; $i <= $FirstPages; $i++) : ?>
+                                            <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><?= $i ?></a></li>
+                                        <?php endfor; ?>
+                                    <?php endif; ?>
+                                </ul>
+                            </nav>
+                            <div>
+                                <form class="form-inline" method="get" action="date-range.php">
                                     <div class="form-group ml-2">
                                         <label for="endDateTime">開始日期：</label>
                                         <input type="date" class="form-control" id="startDateTime" name="startDateTime" value="<?= $startTime ?>">
@@ -199,26 +201,12 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
                         </div>
                     </div>
                     <!-- 頁數 -->
-                    <nav aria-label="Page navigation example ">
-                        <ul class="pagination justify-content-center">
-                            <?php if (isset($_GET['status'])) : ?>
-                                <?php for ($i = 1; $i <= $pages; $i++) : ?>
-                                    <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><?= $i ?></a></li>
-                                <?php endfor; ?>
-                            <?php else :   ?>
-                                <?php for ($i = 1; $i <= $FirstPages; $i++) : ?>
-                                    <li class="page-item"><a class="page-link" href="date-range.php?status=<?= $status ?>&page=<?= $i ?>&startDateTime=<?= $startTime ?>&endDateTime=<?= $endTime ?>"><?= $i ?></a></li>
-                                <?php endfor; ?>
-                            <?php endif; ?>
-                        </ul>
-                    </nav>
                     <!-- 訂單內容 -->
-                    <div class="container my-3">
+                    <div class="mx-4 px-2 my-3">
                         <?php foreach ($rows as  $row) :
                         ?>
-
                             <div class="row">
-                                <div class="col-12 card card-body py-3 border-left-primary">
+                                <div class="col-12 card card-body py-3 border-left-primary mb-2">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="left">
                                             <div class="title py-1">
@@ -238,7 +226,7 @@ if (isset($_GET['status']) && in_array($status, [1, 0, 3])) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="collapse col-12 p-0" id="collapseExample<?= $row["id"] ?>">
+                                <div class="collapse col-12 p-0 mb-3" id="collapseExample<?= $row["id"] ?>">
                                     <div class="card card-body">
                                         <table>
                                             <thead>

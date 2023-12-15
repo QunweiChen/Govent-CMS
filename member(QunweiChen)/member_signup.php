@@ -72,7 +72,7 @@ $conn->close();
                                 <!-- phone -->
                                 <!-- <label>phone</label> -->
                                 <div class="form-group">
-                                    <input name="phone" type="text" class="form-control form-control-user" id="exampleInputPhone" placeholder="電話" maxlength="30" value="<?= isset($_SESSION['error']['filledData']['phone']) ? $_SESSION['error']['filledData']['phone'] : '' ?>">
+                                    <input name="phone" type="text" class="form-control form-control-user" id="exampleInputPhone" placeholder="電話" maxlength="10" value="<?= isset($_SESSION['error']['filledData']['phone']) ? $_SESSION['error']['filledData']['phone'] : '' ?>">
                                 </div>
 
                                 <!-- password -->
@@ -89,7 +89,7 @@ $conn->close();
                                 <!-- national ID -->
                                 <!-- <label>身分證</label> -->
                                 <div class="form-group row px-2">
-                                    <input name="national_id" type="text" class="form-control form-control-user col-7" id="exampleInputId" placeholder="身分證" maxlength="30" value="<?= isset($_SESSION['error']['filledData']['national_id']) ? $_SESSION['error']['filledData']['national_id'] : '' ?>">
+                                    <input name="national_id" type="text" class="form-control form-control-user col-7" id="exampleInputId" placeholder="身分證" maxlength="10" value="<?= isset($_SESSION['error']['filledData']['national_id']) ? $_SESSION['error']['filledData']['national_id'] : '' ?>">
                                     <!-- gender -->
                                     <div class="col p-0 me-1 ms-4">
                                         <div class="border rounded-pill">
@@ -129,7 +129,7 @@ $conn->close();
                                 <!-- invoice -->
                                 <!-- <label>電子發票</label> -->
                                 <div class="form-group">
-                                    <input name="invoice" type="text" class="form-control form-control-user" id="exampleInputEmail" placeholder="電子發票" maxlength="10" value="<?= isset($_SESSION['error']['filledData']['invoice']) ? $_SESSION['error']['filledData']['invoice'] : '' ?>">
+                                    <input name="invoice" type="text" class="form-control form-control-user" id="exampleInputEmail" placeholder="電子發票" maxlength="8" value="<?= isset($_SESSION['error']['filledData']['invoice']) ? $_SESSION['error']['filledData']['invoice'] : '' ?>">
                                 </div>
                                 <?php if (isset($_SESSION["error"]["message"])) : ?>
                                     <div class="mt-2 text-danger">

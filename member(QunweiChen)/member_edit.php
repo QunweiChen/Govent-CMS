@@ -133,7 +133,7 @@ $row = $result->fetch_assoc();
                                 <tr>
                                     <th>電話</th>
                                     <td>
-                                        <input type="tel" class="form-contriol" name="phone" value="<?= $row["phone"] ?>">
+                                        <input type="tel" class="form-contriol" name="phone" maxlength="10" value="<?= $row["phone"] ?>">
                                     </td>
                                 </tr>
                                 <tr>
@@ -173,7 +173,7 @@ $row = $result->fetch_assoc();
                                 <tr>
                                     <th>電子發票</th>
                                     <td>
-                                        <input type="text" class="form-contriol" name="invoice" value="<?= $row["invoice"] ?>">
+                                        <input type="text" class="form-contriol" name="invoice" maxlength="8" value="<?= $row["invoice"] ?>">
                                     </td>
                                 </tr>
                                 <tr>

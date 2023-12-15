@@ -203,7 +203,7 @@ if (isset($_GET["id"])) {
                                             <script>
                                                 let input = document.getElementById("upload-avater");
                                                 // let previewImg = document.getElementsById("preview");
-                                                var previewImg = document.getElementsByTagName('img')[2];
+                                                var previewImg = document.getElementsByTagName('img')[3];
 
                                                 function upload(e) {
                                                     let uploadImg = e.target.files || e.dataTransfer.files;
