@@ -54,7 +54,6 @@ if (!isset($_POST["id"])) {
         }
         header("Location: organizer-profile.php?id=$id");
         exit();
-        $conn->close();
     }
 } elseif ($_POST["organizerType"] == 0) {
     if (empty($_POST["name"]) || empty($_POST["bankCode"]) || empty($_POST["bankName"]) || empty($_POST["bankBranch"]) || empty($_POST["amountNumber"])) {
@@ -73,7 +72,6 @@ if (!isset($_POST["id"])) {
         }
         header("Location: organizer-profile.php?id=$id");
         exit();
-        $conn->close();
     }
 } elseif ($_POST["organizerType"] == 1) {
     if (empty($_POST["name"]) || empty($_POST["businessName"]) || empty($_POST["businessInvoice"]) || empty($_POST["bankCode"]) || empty($_POST["bankName"]) || empty($_POST["bankBranch"]) || empty($_POST["amountNumber"])) {
@@ -92,6 +90,5 @@ if (!isset($_POST["id"])) {
         }
         header("Location: organizer-profile.php?id=$id");
         exit();
-        $conn->close();
     }
 }

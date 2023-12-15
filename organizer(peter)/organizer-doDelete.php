@@ -17,6 +17,3 @@ if ($conn->query($sql) === TRUE) {
     header("Location: organizer-list.php");
     exit();
 }
-$conn->close();
-
-header("location: organizer-list.php");

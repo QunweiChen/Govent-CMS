@@ -33,7 +33,8 @@ WHERE event.id=$id AND event.valid= 1";
 </head>
 
 <body id="page-top">
-
+    <!-- 照結果顯示alert -->
+    <?php include('../alert.php'); ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
 

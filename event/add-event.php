@@ -2,8 +2,8 @@
 require_once("../connect_server.php");
 
 $sql = "SELECT organizer.id, organizer.name FROM organizer WHERE valid=1";
-$result = $conn -> query($sql);
-$rows = $result -> fetch_all(MYSQLI_ASSOC); 
+$result = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +24,8 @@ $rows = $result -> fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body id="page-top">
-
+    <!-- 照結果顯示alert -->
+    <?php include('../alert.php'); ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -98,8 +99,8 @@ $rows = $result -> fetch_all(MYSQLI_ASSOC);
                                 <label for="merchant_id" class="col-sm-2 col-form-label">主辦單位</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" type="text" name="merchant_id" aria-label="Default select example" required>
-                                        <?php foreach($rows as $row): ?>
-                                            <option value="<?=$row["id"]?>"><?=$row["name"]?></option>
+                                        <?php foreach ($rows as $row) : ?>
+                                            <option value="<?= $row["id"] ?>"><?= $row["name"] ?></option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>

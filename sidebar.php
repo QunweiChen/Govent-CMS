@@ -4,17 +4,17 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fa-solid fa-ticket"></i>
+            <!-- <i class="fa-solid fa-ticket"></i> -->
         </div>
-        <div class="sidebar-brand-text mx-3">GoVent</div>
+        <div class="sidebar-brand-text mx-3"><img src="../logo.png" alt="" style="width: 80%;"></div>
     </a>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
     <!-- Sidebar Message -->
-    <div class="sidebar-card d-flex" id="sidebarCard">
-        <img class="sidebar-card-illustration" src="../image/drawkit-transport-scene-8.png" alt="...">
+    <div class="sidebar-card d-flex overflow-hidden" id="sidebarCard">
+        <img class="sidebar-card-illustration" src="../image/drawkit-transport-scene-8.png" style="width: auto;" alt="...">
     </div>
 
     <!-- Nav Item - Dashboard -->
